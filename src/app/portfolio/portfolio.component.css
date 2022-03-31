@@ -1,0 +1,55 @@
+.portfolio-container {
+  height: 100%;
+}
+
+.founder-label {
+  font-size: 10px;
+}
+
+.app-divisor {
+  height: 1px;
+  background-color: rgba(85, 85, 85, 0.5);
+  border: none;
+  border-radius: 1px;
+  margin: 0 2px 0 2px;
+}
+
+.app-tile-flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+
+.app-tile-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.app-tile {
+  width: 75px;
+  height: 75px;
+  background-color: rgb(249, 203, 255);
+  margin: 5px;
+  padding: 15px;
+  border-radius: 17px;
+  background-image: url("../../assets/under_construction.png");
+  background-size: cover;
+}
+
+.app-label {
+  font-size: 10px;
+  color: white;
+}
+
+@media (hover: hover) {
+  .app-tile:hover {
+    background-color: rgba(95, 158, 160, 0.5);
+  }
+}
+
+.tab-panel {
+  overflow-y: auto;
+}

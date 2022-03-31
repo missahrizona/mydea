@@ -1,0 +1,56 @@
+<div class="portfolio-container">
+  <div *ngFor="let person of founders">
+    <span class="founder-label">{{ person }}</span>
+    <hr class="app-divisor" />
+    <div class="app-tile-flex">
+      <div *ngFor="let app of groupedApps[person]" class="app-tile-wrap">
+        <div (click)="appClicked(app)" class="app-tile"></div>
+        <div class="app-label">{{ app.name }}</div>
+      </div>
+    </div>
+  </div>
+
+  <p-sidebar
+    styleClass="p-sidebar-md"
+    [(visible)]="isSidebarOpen"
+    position="bottom"
+  >
+    <p-tabView>
+      <p-tabPanel header="Features">
+        <div class="tab-panel">
+          <p-listbox [options]="selectedApp.features">
+            <ng-template let-feature pTemplate="item">
+              <div class="country-item">
+                <div>
+                  <i
+                    [ngStyle]="{ color: 'var(--green-400)' }"
+                    class="pi pi-check"
+                  ></i
+                  >&nbsp;&nbsp;{{ feature }}
+                </div>
+              </div>
+            </ng-template>
+          </p-listbox>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Timeline">
+        <p-timeline [value]="selectedApp.timeline" align="alternate">
+          <ng-template pTemplate="marker" let-event>
+            <p-progressSpinner *ngIf="event.isProgress"></p-progressSpinner>
+            <i *ngIf="event.isDone" class="pi pi-heart-fill"></i>
+            <i
+              *ngIf="!event.isDone && !event.isProgress"
+              class="pi pi-heart"
+            ></i>
+          </ng-template>
+          <ng-template pTemplate="content" let-event>
+            <span [style.color]="event.isProgress ? 'var(--green-300)' : ''">{{
+              event.status
+            }}</span>
+          </ng-template>
+        </p-timeline>
+      </p-tabPanel>
+      <p-tabPanel header="Resources"> Coming soon </p-tabPanel>
+    </p-tabView>
+  </p-sidebar>
+</div>
