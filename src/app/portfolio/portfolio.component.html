@@ -20,37 +20,125 @@
         <div class="tab-panel">
           <p-listbox [options]="selectedApp.features">
             <ng-template let-feature pTemplate="item">
-              <div class="country-item">
-                <div>
-                  <i
-                    [ngStyle]="{ color: 'var(--green-400)' }"
-                    class="pi pi-check"
-                  ></i
-                  >&nbsp;&nbsp;{{ feature }}
-                </div>
+              <div>
+                <i
+                  *ngIf="!isEditingFeatures"
+                  [ngStyle]="{ color: 'var(--green-400)' }"
+                  class="pi pi-check"
+                ></i>
+
+                <i
+                  *ngIf="isEditingFeatures"
+                  [ngStyle]="{ color: 'var(--red-400)' }"
+                  class="pi pi-trash"
+                  (click)="deleteFeatureClicked(feature)"
+                ></i>
+
+                &nbsp;&nbsp;{{ feature }}
               </div>
+            </ng-template>
+            <ng-template class="list-header" pTemplate="footer"
+              ><button
+                pButton
+                type="button"
+                class="p-button-text"
+                label="Add"
+                (click)="addFeaturesClicked()"
+                [disabled]="isEditingFeatures"
+              ></button>
+              <button
+                *ngIf="!isEditingFeatures"
+                pButton
+                type="button"
+                class="p-button-text"
+                label="Edit"
+                (click)="editFeaturesClicked()"
+              ></button>
+              <button
+                *ngIf="isEditingFeatures"
+                pButton
+                type="button"
+                class="p-button-text"
+                label="Done"
+                (click)="doneFeaturesClicked()"
+              ></button>
             </ng-template>
           </p-listbox>
         </div>
       </p-tabPanel>
       <p-tabPanel header="Timeline">
-        <p-timeline [value]="selectedApp.timeline" align="alternate">
-          <ng-template pTemplate="marker" let-event>
-            <p-progressSpinner *ngIf="event.isProgress"></p-progressSpinner>
-            <i *ngIf="event.isDone" class="pi pi-heart-fill"></i>
-            <i
-              *ngIf="!event.isDone && !event.isProgress"
-              class="pi pi-heart"
-            ></i>
-          </ng-template>
-          <ng-template pTemplate="content" let-event>
-            <span [style.color]="event.isProgress ? 'var(--green-300)' : ''">{{
-              event.status
-            }}</span>
-          </ng-template>
-        </p-timeline>
+        <ng-container
+          *ngIf="
+            selectedApp.timeline != undefined && selectedApp.timeline.length > 0
+          "
+          class="timeline-container"
+        >
+          <p-timeline [value]="selectedApp.timeline" align="alternate">
+            <ng-template pTemplate="marker" let-event>
+              <p-progressSpinner *ngIf="event.isProgress"></p-progressSpinner>
+              <i *ngIf="event.isDone" class="pi pi-heart-fill"></i>
+              <i
+                *ngIf="!event.isDone && !event.isProgress"
+                class="pi pi-heart"
+              ></i>
+            </ng-template>
+            <ng-template pTemplate="content" let-event>
+              <span
+                [style.color]="event.isProgress ? 'var(--green-300)' : ''"
+                >{{ event.status }}</span
+              >
+            </ng-template>
+          </p-timeline>
+        </ng-container>
+
+        <ng-container
+          *ngIf="
+            selectedApp.timeline == undefined ||
+            selectedApp.timeline.length == 0
+          "
+        >
+          <div class="timeline-container">
+            <p-card header="Begin your journey!" subheader="Be fearless">
+              <ng-template pTemplate="header">
+                <img alt="Card" src="../../assets/images/startup.png" />
+              </ng-template>
+              <ng-template pTemplate="content">
+                <p-button
+                  styleClass="p-button-success"
+                  label="Initiate"
+                  (click)="initiateStartupClicked()"
+                ></p-button>
+              </ng-template>
+            </p-card>
+          </div>
+        </ng-container>
       </p-tabPanel>
       <p-tabPanel header="Resources"> Coming soon </p-tabPanel>
     </p-tabView>
   </p-sidebar>
+
+  <p-dialog [(visible)]="isNewFeatureOpen" [modal]="true">
+    <ng-template pTemplate="header"> Describe your feature </ng-template>
+    <ng-template pTemplate="content">
+      <textarea
+        rows="3"
+        cols="30"
+        pInputTextarea
+        [(ngModel)]="newFeatureText"
+      ></textarea>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        type="button"
+        class="p-button-text"
+        label="Save"
+        (click)="newFeatureSaved()"
+      ></button>
+    </ng-template>
+  </p-dialog>
+
+  <p-toast
+    [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
+  ></p-toast>
 </div>

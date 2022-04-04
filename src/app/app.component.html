@@ -1,13 +1,20 @@
-<div class="root-container">
+<div
+  class="root-container p-component"
+  [style.color]="this.isDarkMode ? 'white' : 'black'"
+>
   <div class="menubar-wrap">
     <p-menubar class="custom-menubar" [model]="items">
       <ng-template pTemplate="end">
-        <img src="../assets/girlcode.png" height="40" class="mr-2" />
+        <img src="../assets/images/girlcode.png" height="40" class="mr-2" />
       </ng-template>
     </p-menubar>
   </div>
 
-  <div class="vanta-wrap" #vantaWrap></div>
+  <div
+    id="animated-background"
+    [style.backgroundColor]="this.isDarkMode ? '#2b2b2b' : 'white'"
+    class="animated-background-wrap"
+  ></div>
 
   <div class="content-viewport">
     <router-outlet></router-outlet>

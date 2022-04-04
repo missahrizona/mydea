@@ -9,9 +9,9 @@ body {
     rgba(2, 0, 33, 1) 0%,
     rgba(66, 0, 69, 1) 100%
   ); */
-  font-family: -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, Helvetica,
-    Arial, sans-serif, “Apple Color Emoji”, “Segoe UI Emoji”, “Segoe UI Symbol”;
-  color: rgb(182, 182, 182);
+  font-family: -apple-system, BlinkMacSystemFont, “Segoe UI”, Helvetica, Arial,
+    sans-serif, “Apple Color Emoji”, “Segoe UI Emoji”, “Segoe UI Symbol”;
+  /* color: rgb(182, 182, 182); */
 }
 
 .p-menubar,
@@ -20,7 +20,18 @@ body {
   border: 0px !important;
 }
 
-.p-progress-spinner {
+app-portfolio .p-progress-spinner {
   height: 25px !important;
   width: 25px !important;
+}
+
+app-portfolio .p-listbox-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+app-portfolio .p-card-content {
+  display: flex;
+  justify-content: center;
 }

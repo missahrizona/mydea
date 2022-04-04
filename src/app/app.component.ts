@@ -1,14 +1,9 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
-} from '@angular/core';
+import { ThemeSwitcherService } from './services/theme-switcher.service';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PrimeIcons } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
 
-import NET from 'vanta/dist/vanta.net.min.js';
+declare var particlesJS: any;
 
 @Component({
   selector: 'app-root',
@@ -16,27 +11,16 @@ import NET from 'vanta/dist/vanta.net.min.js';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  constructor() {}
-
-  @ViewChild('vantaWrap') vantaWrap: any;
+  constructor(private themeSwitcher: ThemeSwitcherService) {}
 
   items: MenuItem[] = [];
+  isDarkMode: boolean = false;
 
   ngAfterViewInit(): void {
-    NET({
-      el: this.vantaWrap.nativeElement,
-      mouseControls: true,
-      touchControls: true,
-      gyroControls: false,
-      minHeight: 200.0,
-      minWidth: 200.0,
-      scale: 1.0,
-      scaleMobile: 1.0,
-      color: 0xd2d2,
-      backgroundColor: 0x1525,
-      maxDistance: 10.0,
-      spacing: 10.0,
-    });
+    particlesJS.load(
+      'animated-background',
+      '../assets/json/particlesjs-config.json'
+    );
   }
 
   ngOnInit() {
@@ -56,6 +40,15 @@ export class AppComponent implements OnInit, AfterViewInit {
         icon: PrimeIcons.CHART_LINE,
         routerLink: ['/metrics'],
       },
+      {
+        label: 'Settings',
+        icon: PrimeIcons.COG,
+        routerLink: ['/settings'],
+      },
     ];
+
+    this.themeSwitcher.darkMode.subscribe((val) => {
+      this.isDarkMode = val;
+    });
   }
 }

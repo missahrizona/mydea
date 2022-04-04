@@ -1,0 +1,10 @@
+<div class="settings-component">
+  <p-panel header="Dark mode" [toggleable]="true">
+    <div class="input-switch-wrap">
+      <p-inputSwitch
+        (click)="toggleDarkMode()"
+        [(ngModel)]="checked"
+      ></p-inputSwitch>
+    </div>
+  </p-panel>
+</div>

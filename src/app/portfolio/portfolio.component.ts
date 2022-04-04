@@ -1,7 +1,8 @@
-import { PrimeIcons } from 'primeng/api';
+import { HttpClient } from '@angular/common/http';
+import { MessageService, PrimeIcons } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 
-import * as _ from 'underscore';
+import * as _ from 'lodash';
 
 import { StartupApp } from './classes';
 
@@ -9,120 +10,108 @@ import { StartupApp } from './classes';
   selector: 'app-portfolio',
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.css'],
+  animations: [],
 })
 export class PortfolioComponent implements OnInit {
-  constructor() {}
+  constructor(private messenger: MessageService, private http: HttpClient) {}
 
+  webapi: string = 'https://girl-code-346204.uk.r.appspot.com';
   founders: string[] = ['Mark', 'Maria', 'Marcus', 'Robert'];
-
   isSidebarOpen: boolean = false;
-
+  isNewFeatureOpen: boolean = false;
   selectedApp: StartupApp = new StartupApp();
+  newFeatureText: string = '';
+  isEditingFeatures: boolean = false;
+  apps: StartupApp[] = [];
+  groupedApps: any = {};
 
-  apps: StartupApp[] = [
-    {
-      name: 'famILY',
-      description: 'Family collaboration app',
-      features: [
-        'Shared account data',
-        'Family meals',
-        'Events',
-        'Group Messaging',
-        'Households visualization',
-      ],
-      founder: 'Mark',
-      timeline: [
-        {
-          status: 'Minimum Viable Product',
-          isProgress: true,
-          isDone: false,
-        },
-        {
-          status: 'User Growth',
-          isProgress: false,
-          isDone: false,
-        },
-        {
-          status: 'Revenue',
-          isProgress: false,
-          isDone: false,
-        },
-        {
-          status: 'Profitability',
-          isProgress: false,
-          isDone: false,
-        },
-      ],
-    },
-    {
-      name: 'Make Me Up',
-      description: '3D Interactive Makeup Visualization',
-      features: [
-        '3D interactive head model',
-        'Techniques for Blush, Eyes, Lips, Contouring, Highlights, Bronzing',
-      ],
-      founder: 'Mark',
-      timeline: StartupApp.getDefaultTimeline(),
-    },
-    {
-      name: 'Bioscope',
-      description: 'Personality trait dating',
-      features: [
-        'Connect 23 & Me account',
-        'Compatibility algorithm based off 5 Major Personality types with scaling',
-      ],
-      founder: 'Mark',
-      timeline: StartupApp.getDefaultTimeline(),
-    },
-    {
-      name: 'Smart Dog',
-      description: 'Smart dog wearable technology',
-      features: [],
-      founder: 'Mark',
-      timeline: StartupApp.getDefaultTimeline(),
-    },
-    {
-      name: 'NFTropolis',
-      founder: 'Marcus',
-      features: [],
-      timeline: StartupApp.getDefaultTimeline(),
-    },
-    {
-      name: 'Flypto',
-      founder: 'Marcus',
-      features: [],
-      timeline: StartupApp.getDefaultTimeline(),
-    },
-    {
-      name: 'Profile Dating',
-      founder: 'Marcus',
-      features: [],
-      timeline: StartupApp.getDefaultTimeline(),
-    },
-    {
-      name: "We 'ed",
-      founder: 'Maria',
-      features: [],
-      timeline: StartupApp.getDefaultTimeline(),
-    },
-    {
-      name: 'Notice Me',
-      description: 'Fashion Critique and opinions',
-      features: [
-        'Free tier: anonymous public critique',
-        'Premium tier: curated, specializted stylist critique',
-      ],
-      founder: 'Robert',
-      timeline: StartupApp.getDefaultTimeline(),
-    },
-  ];
-
-  groupedApps: any = _.groupBy(this.apps, 'founder');
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // get all apps from monogdb
+    this.http.get(`${this.webapi}/apps`).subscribe((data) => {
+      this.groupedApps = _.groupBy(data, 'founder');
+    });
+  }
 
   appClicked(app: any): void {
     this.isSidebarOpen = true;
     this.selectedApp = app;
   }
+
+  addFeaturesClicked(): void {
+    this.isNewFeatureOpen = true;
+  }
+
+  editFeaturesClicked(): void {
+    this.isEditingFeatures = true;
+  }
+
+  doneFeaturesClicked(): void {
+    this.isEditingFeatures = false;
+  }
+
+  deleteFeatureClicked(feature: string): void {
+    let index = this.selectedApp.features.findIndex((e) => e == feature);
+    if (index != -1) {
+      this.selectedApp.features.splice(index, 1);
+    }
+
+    this.http
+      .post(`${this.webapi}/features/delete`, {
+        _id: this.selectedApp._id,
+        feature: feature,
+      })
+      .subscribe((res: any) => {
+        if (res.acknowledged && res.modifiedCount == 1) {
+          this.messenger.add({
+            severity: 'success',
+            summary: 'Deleted feature: ' + feature,
+            detail: 'Not feeling it?',
+          });
+        }
+      });
+  }
+
+  newFeatureSaved(): void {
+    // check:  empty input
+    if (this.newFeatureText == '') {
+      return;
+    }
+    // check:  features property doesnt exist
+    else if (this.selectedApp.features == undefined) {
+      this.selectedApp.features = [this.newFeatureText];
+    }
+    // check:  duplicates
+    else if (this.selectedApp.features.indexOf(this.newFeatureText) != -1) {
+      this.messenger.add({
+        severity: 'warning',
+        summary: 'No need for duplicates!',
+        detail: "Don't give up :)",
+      });
+      return;
+    } else {
+      this.selectedApp.features = this.selectedApp.features.concat(
+        this.newFeatureText
+      );
+    }
+
+    this.http
+      .post(`${this.webapi}/features/save`, {
+        _id: this.selectedApp._id,
+        feature: this.newFeatureText,
+      })
+      .subscribe((res: any) => {
+        if (res.acknowledged && res.modifiedCount == 1) {
+          this.messenger.add({
+            severity: 'success',
+            summary: 'New feature added!',
+            detail: 'Keep it up :)',
+          });
+        }
+      });
+
+    this.isNewFeatureOpen = false;
+    this.newFeatureText = '';
+  }
+
+  initiateStartupClicked(): void {}
 }

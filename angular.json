@@ -25,14 +25,22 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.css",
-              "./node_modules/primeng/resources/themes/arya-purple/theme.css",
               "./node_modules/primeng/resources/primeng.min.css",
-              "./node_modules/primeicons/primeicons.css"
+              "./node_modules/primeicons/primeicons.css",
+              {
+                "input": "./src/assets/themes/material-compact-indigo-light.scss",
+                "bundleName": "material-compact-indigo-light",
+                "inject": false
+              },
+              {
+                "input": "./src/assets/themes/material-compact-indigo-dark.scss",
+                "bundleName": "material-compact-indigo-dark",
+                "inject": false
+              }
             ],
             "scripts": [
-              "./node_modules/three/build/three.min.js",
-              "./node_modules/vanta/dist/vanta.net.min.js",
-              "./node_modules/chart.js/dist/Chart.js"
+              "./node_modules/chart.js/dist/Chart.js",
+              "./node_modules/particles.js/particles.js"
             ]
           },
           "configurations": {
