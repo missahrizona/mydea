@@ -1,9 +1,13 @@
 <div class="portfolio-container">
   <div *ngFor="let person of founders">
     <span class="founder-label">{{ person }}</span>
-    <hr class="app-divisor" />
+    <!-- <hr class="app-divisor" /> -->
+    <p-divider></p-divider>
     <div class="app-tile-flex">
-      <div *ngFor="let app of groupedApps[person]" class="app-tile-wrap">
+      <div
+        *ngFor="let app of groupedApps[person]"
+        class="app-tile-wrap p-component"
+      >
         <div (click)="appClicked(app)" class="app-tile"></div>
         <div class="app-label">{{ app.name }}</div>
       </div>

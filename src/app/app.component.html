@@ -16,6 +16,27 @@
     class="animated-background-wrap"
   ></div>
 
+  <ng-particles
+    *ngIf="particlesOptions == 'Background Mask'"
+    [options]="particlePresets.BACKGROUND_MASK"
+    (particlesLoaded)="particlesLoaded($event)"
+  ></ng-particles>
+  <ng-particles
+    *ngIf="particlesOptions == 'Big Particles'"
+    [options]="particlePresets.BIG_PARTICLES"
+    (particlesLoaded)="particlesLoaded($event)"
+  ></ng-particles>
+  <ng-particles
+    *ngIf="particlesOptions == 'Multiple Images'"
+    [options]="particlePresets.MULTIPLE_IMAGES"
+    (particlesLoaded)="particlesLoaded($event)"
+  ></ng-particles>
+  <ng-particles
+    *ngIf="particlesOptions == 'Parallax'"
+    [options]="particlePresets.PARALLAX"
+    (particlesLoaded)="particlesLoaded($event)"
+  ></ng-particles>
+
   <div class="content-viewport">
     <router-outlet></router-outlet>
   </div>

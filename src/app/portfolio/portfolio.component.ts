@@ -1,3 +1,4 @@
+import { GlobalsService } from './../services/globals.service';
 import { HttpClient } from '@angular/common/http';
 import { MessageService, PrimeIcons } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
@@ -13,9 +14,8 @@ import { StartupApp } from './classes';
   animations: [],
 })
 export class PortfolioComponent implements OnInit {
-  constructor(private messenger: MessageService, private http: HttpClient) {}
+  constructor(private messenger: MessageService, private http: HttpClient, public globals: GlobalsService) {}
 
-  webapi: string = 'https://girl-code-346204.uk.r.appspot.com';
   founders: string[] = ['Mark', 'Maria', 'Marcus', 'Robert'];
   isSidebarOpen: boolean = false;
   isNewFeatureOpen: boolean = false;
@@ -27,7 +27,7 @@ export class PortfolioComponent implements OnInit {
 
   ngOnInit(): void {
     // get all apps from monogdb
-    this.http.get(`${this.webapi}/apps`).subscribe((data) => {
+    this.http.get(`${this.globals.webapi}/apps`).subscribe((data) => {
       this.groupedApps = _.groupBy(data, 'founder');
     });
   }
@@ -56,7 +56,7 @@ export class PortfolioComponent implements OnInit {
     }
 
     this.http
-      .post(`${this.webapi}/features/delete`, {
+      .post(`${this.globals.webapi}/features/delete`, {
         _id: this.selectedApp._id,
         feature: feature,
       })
@@ -95,7 +95,7 @@ export class PortfolioComponent implements OnInit {
     }
 
     this.http
-      .post(`${this.webapi}/features/save`, {
+      .post(`${this.globals.webapi}/features/save`, {
         _id: this.selectedApp._id,
         feature: this.newFeatureText,
       })

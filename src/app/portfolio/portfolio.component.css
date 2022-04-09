@@ -1,5 +1,7 @@
 .portfolio-container {
   height: 100%;
+  overflow-y: auto;
+  padding: 5px;
 }
 
 .founder-label {
@@ -19,6 +21,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: left;
+  margin-bottom: 1rem;
 }
 
 .app-tile-wrap {

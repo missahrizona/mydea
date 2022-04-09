@@ -1,10 +1,115 @@
 <div class="settings-component">
-  <p-panel header="Dark mode" [toggleable]="true">
-    <div class="input-switch-wrap">
+  <p-panel header="Display" [toggleable]="true">
+    <div class="p-component settings-row">
+      <span class="p-component">Dark Mode</span>
       <p-inputSwitch
         (click)="toggleDarkMode()"
         [(ngModel)]="checked"
       ></p-inputSwitch>
+    </div>
+    <p-divider></p-divider>
+    <div class="p-component settings-row flex-column">
+      <div class="settings-header">
+        <div>Theme</div>
+      </div>
+      <div class="settings-body">
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-palette"
+          class="p-button-rounded p-button-sm lara-teal"
+          (click)="changeTheme('teal')"
+          [disabled]="tealTheme"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-palette"
+          class="p-button-rounded p-button-sm lara-blue"
+          (click)="changeTheme('blue')"
+          [disabled]="blueTheme"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-palette"
+          class="p-button-rounded p-button-sm lara-purple"
+          (click)="changeTheme('purple')"
+          [disabled]="purpleTheme"
+        ></button>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-palette"
+          class="p-button-rounded p-button-sm lara-indigo"
+          (click)="changeTheme('indigo')"
+          [disabled]="indigoTheme"
+        ></button>
+      </div>
+    </div>
+    <p-divider></p-divider>
+    <div class="p-component settings-row flex-column">
+      <div class="settings-header">
+        <div>Background</div>
+      </div>
+      <div class="settings-body">
+        <p-button
+          (click)="setBackground('Background Mask')"
+          styleClass="px-3"
+          class="image-button"
+        >
+          <ng-template pTemplate="content">
+            <img
+              alt="logo"
+              src="../../assets/images/background_mask.png"
+              style="width: 3rem"
+            />
+          </ng-template>
+        </p-button>
+        <p-button
+          (click)="setBackground('Big Particles')"
+          styleClass="px-3"
+          class="image-button"
+        >
+          <ng-template pTemplate="content">
+            <img
+              alt="logo"
+              src="../../assets/images/big_particles.png"
+              style="width: 3rem"
+            />
+          </ng-template>
+        </p-button>
+        <p-button
+          (click)="setBackground('Multiple Images')"
+          styleClass="px-3"
+          class="image-button"
+        >
+          <ng-template pTemplate="content">
+            <img
+              alt="logo"
+              src="../../assets/images/multiple_images.png"
+              style="width: 3rem"
+            />
+          </ng-template>
+        </p-button>
+        <p-button
+          (click)="setBackground('Parallax')"
+          styleClass="px-3"
+          class="image-button"
+        >
+          <ng-template pTemplate="content">
+            <img
+              alt="logo"
+              src="../../assets/images/parallax.png"
+              style="width: 3rem"
+            />
+          </ng-template>
+        </p-button>
+      </div>
     </div>
   </p-panel>
 </div>

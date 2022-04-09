@@ -2,8 +2,12 @@ import { ThemeSwitcherService } from './services/theme-switcher.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PrimeIcons } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
-
-declare var particlesJS: any;
+import { ISourceOptions } from 'tsparticles';
+import ParticleOptions from './classes/particleoptions/particle-options';
+import BackgroundMaskOptions from './classes/particleoptions/background-mask-options';
+import BigParticlesOptions from './classes/particleoptions/big-particles-options';
+import MultipleImagesOptions from './classes/particleoptions/multiple-images-options';
+import ParallaxOptions from './classes/particleoptions/parallax-options';
 
 @Component({
   selector: 'app-root',
@@ -11,17 +15,17 @@ declare var particlesJS: any;
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  constructor(private themeSwitcher: ThemeSwitcherService) {}
+  constructor(private themeSwitcher: ThemeSwitcherService) {
+    this.particlePresets = new ParticleOptions();
+  }
 
   items: MenuItem[] = [];
   isDarkMode: boolean = false;
 
-  ngAfterViewInit(): void {
-    particlesJS.load(
-      'animated-background',
-      '../assets/json/particlesjs-config.json'
-    );
-  }
+  particlePresets: ParticleOptions;
+  particlesOptions: any;
+
+  ngAfterViewInit(): void {}
 
   ngOnInit() {
     this.items = [
@@ -50,5 +54,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.themeSwitcher.darkMode.subscribe((val) => {
       this.isDarkMode = val;
     });
+
+    this.themeSwitcher.particlesOptions.subscribe((options: string) => {
+      this.particlesOptions = options;
+    });
   }
+
+  particlesLoaded(evt: any): void {}
 }

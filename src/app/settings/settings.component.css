@@ -10,3 +10,38 @@
   justify-content: left;
   align-items: center;
 }
+
+.settings-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.settings-header {
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 15px;
+}
+.settings-body {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.lara-teal {
+  background-color: #14b8a6;
+}
+.lara-blue {
+  background-color: #3b82f6;
+}
+.lara-purple {
+  background-color: #8b5cf6;
+}
+.lara-indigo {
+  background-color: #6366f1;
+}

@@ -22,6 +22,9 @@ import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { DividerModule } from 'primeng/divider';
+
+import { NgParticlesModule } from 'ng-particles';
 
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { ErrorComponent } from './error/error.component';
@@ -60,6 +63,8 @@ import { SettingsComponent } from './settings/settings.component';
     CardModule,
     PanelModule,
     InputSwitchModule,
+    DividerModule,
+    NgParticlesModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],
