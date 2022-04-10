@@ -78,7 +78,7 @@
                 "inject": false
               }
             ],
-            "scripts": ["./node_modules/chart.js/dist/Chart.js"]
+            "scripts": ["node_modules/chart.js/dist/chart.min.js"]
           },
           "configurations": {
             "production": {

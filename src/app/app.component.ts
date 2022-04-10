@@ -1,13 +1,9 @@
+import { DOCUMENT } from '@angular/common';
 import { ThemeSwitcherService } from './services/theme-switcher.service';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { PrimeIcons } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
-import { ISourceOptions } from 'tsparticles';
 import ParticleOptions from './classes/particleoptions/particle-options';
-import BackgroundMaskOptions from './classes/particleoptions/background-mask-options';
-import BigParticlesOptions from './classes/particleoptions/big-particles-options';
-import MultipleImagesOptions from './classes/particleoptions/multiple-images-options';
-import ParallaxOptions from './classes/particleoptions/parallax-options';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +11,10 @@ import ParallaxOptions from './classes/particleoptions/parallax-options';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  constructor(private themeSwitcher: ThemeSwitcherService) {
+  constructor(
+    private themeSwitcher: ThemeSwitcherService,
+    @Inject(DOCUMENT) private document: Document
+  ) {
     this.particlePresets = new ParticleOptions();
   }
 
@@ -25,7 +24,11 @@ export class AppComponent implements OnInit, AfterViewInit {
   particlePresets: ParticleOptions;
   particlesOptions: any;
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    // let html = this.document.querySelector('html') as HTMLHtmlElement;
+    // html.setAttribute('style', 'font-size: 1vw !important');
+    //html.style.fontSize = '1vw !important';
+  }
 
   ngOnInit() {
     this.items = [
