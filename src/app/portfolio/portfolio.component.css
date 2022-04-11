@@ -38,14 +38,16 @@
   margin: 5px;
   padding: 15px;
   border-radius: 17px;
-  background-image: url("../../assets/images/under_construction.png");
+  background-image: url("../../assets/images/heart_blueprint3.png");
+  object-fit: cover;
   background-size: cover;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .app-label {
-  font-size: 12px;
-  /* color: white; */
+  font-size: 10px;
+  font-weight: 400;
 }
 
 @media (hover: hover) {

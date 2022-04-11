@@ -1,5 +1,9 @@
-.settings-container {
+.settings-viewport {
+  width: min-content;
+  display: flex;
+  justify-content: center;
   width: 100%;
+  align-items: flex-start;
   height: 100%;
 }
 
@@ -44,4 +48,8 @@
 }
 .lara-indigo {
   background-color: #6366f1;
+}
+
+.spacer {
+  width: 20px !important;
 }

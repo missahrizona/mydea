@@ -1,4 +1,4 @@
-<div class="settings-component">
+<div class="settings-viewport">
   <p-panel header="Display" [toggleable]="true">
     <div class="p-component settings-row">
       <span class="p-component">Dark Mode</span>
@@ -22,6 +22,7 @@
           (click)="changeTheme('teal')"
           [disabled]="tealTheme"
         ></button>
+        <div class="spacer"></div>
         <button
           pButton
           pRipple
@@ -31,6 +32,7 @@
           (click)="changeTheme('blue')"
           [disabled]="blueTheme"
         ></button>
+        <div class="spacer"></div>
         <button
           pButton
           pRipple
@@ -40,6 +42,7 @@
           (click)="changeTheme('purple')"
           [disabled]="purpleTheme"
         ></button>
+        <div class="spacer"></div>
         <button
           pButton
           pRipple
@@ -70,6 +73,7 @@
             />
           </ng-template>
         </p-button>
+        <div class="spacer"></div>
         <p-button
           (click)="setBackground('Big Particles')"
           styleClass="px-3"
@@ -83,6 +87,7 @@
             />
           </ng-template>
         </p-button>
+        <div class="spacer"></div>
         <p-button
           (click)="setBackground('Multiple Images')"
           styleClass="px-3"
@@ -96,6 +101,7 @@
             />
           </ng-template>
         </p-button>
+        <div class="spacer"></div>
         <p-button
           (click)="setBackground('Parallax')"
           styleClass="px-3"
