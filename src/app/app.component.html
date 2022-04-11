@@ -16,26 +16,28 @@
     class="animated-background-wrap"
   ></div>
 
-  <ng-particles
-    *ngIf="particlesOptions == 'Background Mask'"
-    [options]="particlePresets.BACKGROUND_MASK"
-    (particlesLoaded)="particlesLoaded($event)"
-  ></ng-particles>
-  <ng-particles
-    *ngIf="particlesOptions == 'Big Particles'"
-    [options]="particlePresets.BIG_PARTICLES"
-    (particlesLoaded)="particlesLoaded($event)"
-  ></ng-particles>
-  <ng-particles
-    *ngIf="particlesOptions == 'Multiple Images'"
-    [options]="particlePresets.MULTIPLE_IMAGES"
-    (particlesLoaded)="particlesLoaded($event)"
-  ></ng-particles>
-  <ng-particles
-    *ngIf="particlesOptions == 'Parallax'"
-    [options]="particlePresets.PARALLAX"
-    (particlesLoaded)="particlesLoaded($event)"
-  ></ng-particles>
+  <ng-container *ngIf="_reload">
+    <ng-particles
+      *ngIf="particlePresetName == 'Background Mask'"
+      [options]="particlePreset"
+      (particlesLoaded)="particlesLoaded($event)"
+    ></ng-particles>
+    <ng-particles
+      *ngIf="particlePresetName == 'Big Particles'"
+      [options]="particlePreset"
+      (particlesLoaded)="particlesLoaded($event)"
+    ></ng-particles>
+    <ng-particles
+      *ngIf="particlePresetName == 'Multiple Images'"
+      [options]="particlePreset"
+      (particlesLoaded)="particlesLoaded($event)"
+    ></ng-particles>
+    <ng-particles
+      *ngIf="particlePresetName == 'Parallax'"
+      [options]="particlePreset"
+      (particlesLoaded)="particlesLoaded($event)"
+    ></ng-particles>
+  </ng-container>
 
   <div class="content-viewport">
     <router-outlet></router-outlet>

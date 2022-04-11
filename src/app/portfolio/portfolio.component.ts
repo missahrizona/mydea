@@ -1,3 +1,4 @@
+import { ThemeSwitcherService } from './../services/theme-switcher.service';
 import { GlobalsService } from './../services/globals.service';
 import { HttpClient } from '@angular/common/http';
 import { MessageService, PrimeIcons } from 'primeng/api';
@@ -14,7 +15,12 @@ import { StartupApp } from './classes';
   animations: [],
 })
 export class PortfolioComponent implements OnInit {
-  constructor(private messenger: MessageService, private http: HttpClient, public globals: GlobalsService) {}
+  constructor(
+    private messenger: MessageService,
+    private http: HttpClient,
+    public globals: GlobalsService,
+    public themeService: ThemeSwitcherService
+  ) {}
 
   founders: string[] = ['Mark', 'Maria', 'Marcus', 'Robert'];
   isSidebarOpen: boolean = false;

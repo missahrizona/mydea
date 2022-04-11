@@ -1,9 +1,10 @@
 export default class MultipleImagesOptions {
-  constructor() {
+  constructor(darkMode: boolean) {
+      let bgColor = darkMode ? '#212121' : '#F5F5F5';
     return {
       background: {
         color: {
-          value: '#fff',
+          value: bgColor,
         },
         position: '50% 50%',
         repeat: 'no-repeat',

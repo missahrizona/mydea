@@ -1,9 +1,10 @@
 export default class ParallaxOptions {
-  constructor() {
+  constructor(darkMode: boolean) {
+    let bgColor = darkMode ? '#212121' : '#F5F5F5';
     return {
       background: {
         color: {
-          value: '#121212',
+          value: bgColor,
         },
         position: '50% 50%',
         repeat: 'no-repeat',

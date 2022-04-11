@@ -1,5 +1,8 @@
 export default class BackgroundMaskOptions {
-  constructor() {
+  constructor(darkMode: boolean) {
+    let bgColor = darkMode
+      ? { r: 33, g: 33, b: 33 }
+      : { r: 245, g: 245, b: 245 };
     return {
       background: {
         color: {
@@ -13,11 +16,7 @@ export default class BackgroundMaskOptions {
       backgroundMask: {
         cover: {
           color: {
-            value: {
-              r: 255,
-              g: 255,
-              b: 255,
-            },
+            value: bgColor,
           },
         },
         enable: true,
