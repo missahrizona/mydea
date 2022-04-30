@@ -26,7 +26,7 @@ export class GlobalsService {
       }
     })();
 
-    console.log(window.location);
+    console.log(this.webapi);
   }
 
   iframe: boolean;
@@ -36,5 +36,9 @@ export class GlobalsService {
     prod: 'https://girl-code-346204.uk.r.appspot.com',
   };
 
-  readonly webapi = this.envs.dev;
+  readonly env =
+    window.location.hostname.toLowerCase().indexOf('localhost') != -1
+      ? 'dev'
+      : 'prod';
+  readonly webapi = this.envs[this.env];
 }
