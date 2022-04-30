@@ -27,5 +27,10 @@ export class GlobalsService {
 
   iframe: boolean;
 
-  readonly webapi = 'https://girl-code-346204.uk.r.appspot.com';
+  envs: any = {
+    dev: 'http://localhost:8080',
+    prod: 'https://girl-code-346204.uk.r.appspot.com',
+  };
+
+  readonly webapi = this.envs.dev;
 }

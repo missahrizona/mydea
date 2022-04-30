@@ -100,3 +100,46 @@ p-listbox i.pi-trash {
   -webkit-animation: slit-in-vertical 0.3s ease-out forwards;
   animation: slit-in-vertical 0.3s ease-out forwards;
 }
+
+.p-speeddial-direction-up-left {
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+}
+
+.p-speeddial-direction-up-right {
+  left: 0;
+  bottom: 0;
+}
+
+.p-speeddial-direction-down-left {
+  right: 0;
+  top: 0;
+}
+
+.p-speeddial-direction-down-right {
+  left: 0;
+  top: 0;
+}
+
+.p-speeddial-direction-up {
+  /* left: calc(50% - 2rem); */
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+}
+
+.p-speeddial-direction-down {
+  left: calc(50% - 2rem);
+  top: 0;
+}
+
+.p-speeddial-direction-left {
+  right: 0;
+  top: calc(50% - 2rem);
+}
+
+.p-speeddial-direction-right {
+  left: 0;
+  top: calc(50% - 2rem);
+}

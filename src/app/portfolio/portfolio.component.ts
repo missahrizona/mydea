@@ -1,12 +1,12 @@
 import { ThemeSwitcherService } from './../services/theme-switcher.service';
 import { GlobalsService } from './../services/globals.service';
-import { HttpClient } from '@angular/common/http';
-import { MessageService, PrimeIcons } from 'primeng/api';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { MessageService, PrimeIcons, MenuItem } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 
 import * as _ from 'lodash';
 
-import { StartupApp } from './classes';
+import { App, Timeline } from './classes';
 
 @Component({
   selector: 'app-portfolio',
@@ -22,20 +22,55 @@ export class PortfolioComponent implements OnInit {
     public themeService: ThemeSwitcherService
   ) {}
 
-  founders: string[] = ['Mark', 'Maria', 'Marcus', 'Robert'];
+  collaborators: string[] = [];
   isSidebarOpen: boolean = false;
   isNewFeatureOpen: boolean = false;
-  selectedApp: StartupApp = new StartupApp();
+  selectedApp: App = new App();
   newFeatureText: string = '';
   isEditingFeatures: boolean = false;
-  apps: StartupApp[] = [];
+  apps: App[] = [];
   groupedApps: any = {};
+  actions: MenuItem[];
 
   ngOnInit(): void {
     // get all apps from monogdb
     this.http.get(`${this.globals.webapi}/apps`).subscribe((data) => {
-      this.groupedApps = _.groupBy(data, 'founder');
+      this.groupedApps = _.groupBy(data, 'originator');
+      this.collaborators = Object.keys(this.groupedApps);
     });
+
+    this.actions = [
+      {
+        icon: 'pi pi-plus',
+        command: () => {
+          this.messenger.add({
+            severity: 'info',
+            summary: 'Add',
+            detail: 'App Added',
+          });
+        },
+      },
+      {
+        icon: 'pi pi-refresh',
+        command: () => {
+          this.messenger.add({
+            severity: 'success',
+            summary: 'Update',
+            detail: 'Data Updated',
+          });
+        },
+      },
+      {
+        icon: 'pi pi-trash',
+        command: () => {
+          this.messenger.add({
+            severity: 'error',
+            summary: 'Delete',
+            detail: 'Data Deleted',
+          });
+        },
+      },
+    ];
   }
 
   appClicked(app: any): void {
@@ -82,10 +117,6 @@ export class PortfolioComponent implements OnInit {
     if (this.newFeatureText == '') {
       return;
     }
-    // check:  features property doesnt exist
-    else if (this.selectedApp.features == undefined) {
-      this.selectedApp.features = [this.newFeatureText];
-    }
     // check:  duplicates
     else if (this.selectedApp.features.indexOf(this.newFeatureText) != -1) {
       this.messenger.add({
@@ -95,9 +126,7 @@ export class PortfolioComponent implements OnInit {
       });
       return;
     } else {
-      this.selectedApp.features = this.selectedApp.features.concat(
-        this.newFeatureText
-      );
+      this.selectedApp.features.push(this.newFeatureText);
     }
 
     this.http
@@ -119,5 +148,41 @@ export class PortfolioComponent implements OnInit {
     this.newFeatureText = '';
   }
 
-  initiateStartupClicked(): void {}
+  initiateStartupClicked(): void {
+    this.http
+      .post(`${this.globals.webapi}/apps/initiate`, {
+        _id: this.selectedApp._id,
+      })
+      .subscribe(
+        (res: any) => {
+          if (res.acknowledged && res.modifiedCount == 1) {
+            this.messenger.add({
+              severity: 'success',
+              summary: 'App Initiated!',
+              detail: 'Good things are ahead :)',
+            });
+            this.selectedApp.initiated = true;
+          } else {
+            console.log('ERROR');
+            this.messenger.add({
+              severity: 'danger',
+              summary: 'Failed to initiate app.',
+              detail:
+                'There must be something wrong on our end.  Please retry shortly.',
+            });
+            this.selectedApp.initiated = false;
+          }
+        },
+        (error: HttpErrorResponse) => {
+          console.log('ERROR');
+          this.messenger.add({
+            severity: 'danger',
+            summary: 'Failed to initiate app.',
+            detail:
+              'There must be something wrong on our end.  Please retry shortly.',
+          });
+          this.selectedApp.initiated = false;
+        }
+      );
+  }
 }

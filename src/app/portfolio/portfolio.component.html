@@ -1,5 +1,5 @@
 <div class="portfolio-container">
-  <div *ngFor="let person of founders">
+  <div *ngFor="let person of collaborators">
     <span class="founder-label">{{ person }}</span>
     <!-- <hr class="app-divisor" /> -->
     <p-divider></p-divider>
@@ -73,36 +73,25 @@
         </div>
       </p-tabPanel>
       <p-tabPanel header="Timeline">
-        <ng-container
-          *ngIf="
-            selectedApp.timeline != undefined && selectedApp.timeline.length > 0
-          "
-          class="timeline-container"
-        >
+        <ng-container *ngIf="selectedApp.initiated" class="timeline-container">
           <p-timeline [value]="selectedApp.timeline" align="alternate">
             <ng-template pTemplate="marker" let-event>
-              <p-progressSpinner *ngIf="event.isProgress"></p-progressSpinner>
+              <p-progressSpinner *ngIf="event.inProgress"></p-progressSpinner>
               <i *ngIf="event.isDone" class="pi pi-heart-fill"></i>
               <i
-                *ngIf="!event.isDone && !event.isProgress"
+                *ngIf="!event.isDone && !event.inProgress"
                 class="pi pi-heart"
               ></i>
             </ng-template>
             <ng-template pTemplate="content" let-event>
-              <span
-                [style.color]="event.isProgress ? 'var(--green-300)' : ''"
-                >{{ event.status }}</span
-              >
+              <span [style.color]="event.iProgress ? 'var(--green-300)' : ''">{{
+                event.description
+              }}</span>
             </ng-template>
           </p-timeline>
         </ng-container>
 
-        <ng-container
-          *ngIf="
-            selectedApp.timeline == undefined ||
-            selectedApp.timeline.length == 0
-          "
-        >
+        <ng-container *ngIf="!selectedApp.initiated">
           <div class="timeline-container">
             <p-card header="Begin your journey!" subheader="Be fearless">
               <ng-template pTemplate="header">
@@ -147,4 +136,10 @@
   <p-toast
     [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
   ></p-toast>
+
+  <p-speedDial
+    [model]="actions"
+    direction="up"
+    buttonClassName="p-button-raised"
+  ></p-speedDial>
 </div>

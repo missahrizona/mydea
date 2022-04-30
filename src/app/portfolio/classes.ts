@@ -1,46 +1,42 @@
-class StartupApp {
-  _id ? : any;
-  name ? : string;
-  description ? : string;
-  founder ? : string;
-  features: string[];
-  timeline: AppTimeline[];
+class App {
+  constructor() {}
 
+  _id?: any;
+  name: string = '';
+  description: string = '';
+  originator: string = '';
+  collaborators: string[] = [];
+  features: string[] = [];
+  timeline: Timeline = new Timeline();
+  initiated: boolean = false;
+}
+
+class Timeline extends Array {
   constructor() {
-    this.features = [];
-    this.timeline = StartupApp.DefaultTimeline;
+    super();
+    return new Array(
+      {
+        description: 'MVP',
+        isDone: false,
+        inProgress: false,
+      },
+      {
+        description: 'Growth',
+        isDone: false,
+        inProgress: false,
+      },
+      {
+        description: 'Revenue',
+        isDone: false,
+        inProgress: false,
+      },
+      {
+        description: 'Profit',
+        isDone: false,
+        inProgress: false,
+      }
+    );
   }
-
-  static DefaultTimeline: AppTimeline[] = [{
-      status: 'Minimum Viable Product',
-      isProgress: true,
-      isDone: false
-    },
-    {
-      status: 'User Growth',
-      isProgress: false,
-      isDone: false
-    },
-    {
-      status: 'Revenue',
-      isProgress: false,
-      isDone: false
-    },
-    {
-      status: 'Profitability',
-      isProgress: false,
-      isDone: false
-    },
-  ];
 }
 
-class AppTimeline {
-  status ? : string;
-  isDone: boolean = false;
-  isProgress: boolean = false;
-}
-
-export {
-  StartupApp,
-  AppTimeline
-};
+export { App, Timeline };
