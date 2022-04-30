@@ -3,6 +3,8 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, OnInit } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
+declare const window: Window;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -23,6 +25,8 @@ export class GlobalsService {
         return true;
       }
     })();
+
+    console.log(window.location);
   }
 
   iframe: boolean;
