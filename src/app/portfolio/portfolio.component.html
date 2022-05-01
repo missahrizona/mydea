@@ -142,4 +142,16 @@
     direction="up"
     buttonClassName="p-button-raised"
   ></p-speedDial>
+
+  <p-dialog
+    header="App Details"
+    [(visible)]="showNewAppModal"
+    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+    [style]="{ width: '50vw' }"
+    position="bottom"
+    appendTo="body"
+    [modal]="true"
+  >
+    Content
+  </p-dialog>
 </div>

@@ -25,13 +25,11 @@ export class GlobalsService {
         return true;
       }
     })();
-
-    console.log(this.webapi);
   }
 
   iframe: boolean;
 
-  envs: any = {
+  readonly envs: any = {
     dev: 'http://localhost:8080',
     prod: 'https://girl-code-346204.uk.r.appspot.com',
   };

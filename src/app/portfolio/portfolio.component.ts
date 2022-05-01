@@ -31,6 +31,7 @@ export class PortfolioComponent implements OnInit {
   apps: App[] = [];
   groupedApps: any = {};
   actions: MenuItem[];
+  showNewAppModal: boolean = false;
 
   ngOnInit(): void {
     // get all apps from monogdb
@@ -42,13 +43,7 @@ export class PortfolioComponent implements OnInit {
     this.actions = [
       {
         icon: 'pi pi-plus',
-        command: () => {
-          this.messenger.add({
-            severity: 'info',
-            summary: 'Add',
-            detail: 'App Added',
-          });
-        },
+        command: this.addApp.bind(this),
       },
       {
         icon: 'pi pi-refresh',
@@ -184,5 +179,9 @@ export class PortfolioComponent implements OnInit {
           this.selectedApp.initiated = false;
         }
       );
+  }
+
+  addApp() {
+    this.showNewAppModal = true;
   }
 }
