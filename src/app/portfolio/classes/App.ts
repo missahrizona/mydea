@@ -1,5 +1,14 @@
 class App {
-  constructor() {}
+  constructor(
+    name: string = '',
+    originator: string = '',
+    features: string[] = []
+  ) {
+    this.name = name || '';
+    this.originator = originator || '';
+    this.features = features;
+    this._id = undefined;
+  }
 
   _id?: any;
   name: string = '';

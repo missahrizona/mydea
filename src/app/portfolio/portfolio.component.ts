@@ -1,12 +1,24 @@
 import { ThemeSwitcherService } from './../services/theme-switcher.service';
 import { GlobalsService } from './../services/globals.service';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { MessageService, PrimeIcons, MenuItem } from 'primeng/api';
-import { Component, OnInit } from '@angular/core';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpResponse,
+} from '@angular/common/http';
+import { MessageService, MenuItem } from 'primeng/api';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import * as _ from 'lodash';
 
-import { App, Timeline } from './classes';
+import { App } from './classes/App';
+import { Container } from 'tsparticles';
+import TextParticlesOptions from './classes/TextParticlesOptions';
+import {
+  DeleteFeature,
+  NewFeature,
+  InitiateStartup,
+  CreateApp,
+} from './accessory/http-handlers';
 
 @Component({
   selector: 'app-portfolio',
@@ -22,6 +34,10 @@ export class PortfolioComponent implements OnInit {
     public themeService: ThemeSwitcherService
   ) {}
 
+  @ViewChild('slide1', { read: ElementRef }) slide1: ElementRef;
+  @ViewChild('slide2', { read: ElementRef }) slide2: ElementRef;
+  @ViewChild('slide3', { read: ElementRef }) slide3: ElementRef;
+
   collaborators: string[] = [];
   isSidebarOpen: boolean = false;
   isNewFeatureOpen: boolean = false;
@@ -32,13 +48,15 @@ export class PortfolioComponent implements OnInit {
   groupedApps: any = {};
   actions: MenuItem[];
   showNewAppModal: boolean = false;
+  newappParticlesOptions: TextParticlesOptions = new TextParticlesOptions({});
+  newappName: string = '';
+  newappDesc: string = '';
+  newappFeature: string = '';
+  newappFeatures: string[] = [];
 
   ngOnInit(): void {
     // get all apps from monogdb
-    this.http.get(`${this.globals.webapi}/apps`).subscribe((data) => {
-      this.groupedApps = _.groupBy(data, 'originator');
-      this.collaborators = Object.keys(this.groupedApps);
-    });
+    this.refresh();
 
     this.actions = [
       {
@@ -48,6 +66,7 @@ export class PortfolioComponent implements OnInit {
       {
         icon: 'pi pi-refresh',
         command: () => {
+          this.refresh();
           this.messenger.add({
             severity: 'success',
             summary: 'Update',
@@ -61,11 +80,18 @@ export class PortfolioComponent implements OnInit {
           this.messenger.add({
             severity: 'error',
             summary: 'Delete',
-            detail: 'Data Deleted',
+            detail: 'Not Implemented yet.  Coming soon :)',
           });
         },
       },
     ];
+  }
+
+  refresh() {
+    this.http.get(`${this.globals.webapi}/apps`).subscribe((data) => {
+      this.groupedApps = _.groupBy(data, 'originator');
+      this.collaborators = Object.keys(this.groupedApps);
+    });
   }
 
   appClicked(app: any): void {
@@ -86,25 +112,16 @@ export class PortfolioComponent implements OnInit {
   }
 
   deleteFeatureClicked(feature: string): void {
-    let index = this.selectedApp.features.findIndex((e) => e == feature);
-    if (index != -1) {
-      this.selectedApp.features.splice(index, 1);
+    let idx = this.selectedApp.features.findIndex((e) => e == feature);
+    let body = {
+      _id: this.selectedApp._id,
+      feature: feature,
+    };
+    if (idx != -1) {
+      this.http
+        .post(`${this.globals.webapi}/features/delete`, body)
+        .subscribe(DeleteFeature.success(feature, idx).bind(this));
     }
-
-    this.http
-      .post(`${this.globals.webapi}/features/delete`, {
-        _id: this.selectedApp._id,
-        feature: feature,
-      })
-      .subscribe((res: any) => {
-        if (res.acknowledged && res.modifiedCount == 1) {
-          this.messenger.add({
-            severity: 'success',
-            summary: 'Deleted feature: ' + feature,
-            detail: 'Not feeling it?',
-          });
-        }
-      });
   }
 
   newFeatureSaved(): void {
@@ -120,8 +137,6 @@ export class PortfolioComponent implements OnInit {
         detail: "Don't give up :)",
       });
       return;
-    } else {
-      this.selectedApp.features.push(this.newFeatureText);
     }
 
     this.http
@@ -129,18 +144,7 @@ export class PortfolioComponent implements OnInit {
         _id: this.selectedApp._id,
         feature: this.newFeatureText,
       })
-      .subscribe((res: any) => {
-        if (res.acknowledged && res.modifiedCount == 1) {
-          this.messenger.add({
-            severity: 'success',
-            summary: 'New feature added!',
-            detail: 'Keep it up :)',
-          });
-        }
-      });
-
-    this.isNewFeatureOpen = false;
-    this.newFeatureText = '';
+      .subscribe(NewFeature.success.bind(this));
   }
 
   initiateStartupClicked(): void {
@@ -149,39 +153,82 @@ export class PortfolioComponent implements OnInit {
         _id: this.selectedApp._id,
       })
       .subscribe(
-        (res: any) => {
-          if (res.acknowledged && res.modifiedCount == 1) {
-            this.messenger.add({
-              severity: 'success',
-              summary: 'App Initiated!',
-              detail: 'Good things are ahead :)',
-            });
-            this.selectedApp.initiated = true;
-          } else {
-            console.log('ERROR');
-            this.messenger.add({
-              severity: 'danger',
-              summary: 'Failed to initiate app.',
-              detail:
-                'There must be something wrong on our end.  Please retry shortly.',
-            });
-            this.selectedApp.initiated = false;
-          }
-        },
-        (error: HttpErrorResponse) => {
-          console.log('ERROR');
-          this.messenger.add({
-            severity: 'danger',
-            summary: 'Failed to initiate app.',
-            detail:
-              'There must be something wrong on our end.  Please retry shortly.',
-          });
-          this.selectedApp.initiated = false;
-        }
+        InitiateStartup.success.bind(this),
+        InitiateStartup.error.bind(this)
       );
   }
 
   addApp() {
     this.showNewAppModal = true;
   }
+
+  newappAddFeature(evt: any) {
+    if (this.newappFeature == '') return;
+
+    if (this.newappFeatures.indexOf(this.newappFeature) != -1) {
+      this.messenger.add({
+        severity: 'warning',
+        summary: 'You already added this feature',
+        detail: this.newappFeature,
+      });
+    } else {
+      this.newappFeatures = this.newappFeatures.concat([this.newappFeature]);
+      this.newappFeature = '';
+    }
+  }
+
+  newappDeleteFeature(feature: string) {
+    this.newappFeatures = this.newappFeatures.filter((e) => e !== feature);
+  }
+
+  createApp(evt: any) {
+    let app = new App(this.newappName, 'Lily', this.newappFeatures);
+
+    this.http
+      .post(`${this.globals.webapi}/apps/add`, app)
+      .subscribe(CreateApp.success(this.newappName, 'Lily').bind(this));
+
+    this.newappName = '';
+    this.newappFeature = '';
+    this.newappFeatures = [];
+  }
+
+  navigateName(evt: any) {
+    if (this.newappName) {
+      // animate to next slide
+      this.slide1.nativeElement.style.transform = 'translateX(-200%)';
+      this.slide2.nativeElement.style.transform = 'translateX(0)';
+      this.slide2.nativeElement.style.width = 'unset';
+      this.slide2.nativeElement.style.alignItems = 'unset';
+    }
+  }
+  navigateFeatures(direction: string) {
+    if (direction == 'next' || direction == 'skip') {
+      // animate to next slide
+      this.slide2.nativeElement.style.transform = 'translateX(-200%)';
+      this.slide3.nativeElement.style.transform = 'translateX(0)';
+    } else if (direction == 'back') {
+      this.slide2.nativeElement.style.transform = 'translateX(100%)';
+      this.slide1.nativeElement.style.transform = 'translateX(0)';
+    }
+  }
+  navigateCreate(direction: string) {
+    if (direction == 'back') {
+      this.slide3.nativeElement.style.transform = 'translateX(100%)';
+      this.slide2.nativeElement.style.transform = 'translateX(0)';
+    }
+  }
+
+  transitionend(event: any) {
+    if (event == null) return;
+    switch (event.propertyName) {
+      case 'transform':
+        this.slide3.nativeElement.firstChild.style.fontSize = '7vw';
+        break;
+      default:
+        break;
+    }
+  }
+
+  particlesLoaded(event: Container) {}
 }

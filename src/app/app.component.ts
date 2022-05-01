@@ -72,7 +72,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   getParticlePreset(presetName: string): ISourceOptions {
-    console.log(presetName);
     switch (presetName) {
       case 'Background Mask':
         return new BackgroundMaskOptions(this.isDarkMode);

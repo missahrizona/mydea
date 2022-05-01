@@ -24,6 +24,7 @@ import { PanelModule } from 'primeng/panel';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { DividerModule } from 'primeng/divider';
 import { SpeedDialModule } from 'primeng/speeddial';
+import { InputTextModule } from 'primeng/inputtext';
 
 import { NgParticlesModule } from 'ng-particles';
 
@@ -67,6 +68,7 @@ import { SettingsComponent } from './settings/settings.component';
     DividerModule,
     NgParticlesModule,
     SpeedDialModule,
+    InputTextModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],

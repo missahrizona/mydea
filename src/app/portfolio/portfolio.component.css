@@ -89,3 +89,66 @@ animation: name duration timing-function delay iteration-count direction fill-mo
     display: none;
   }
 }
+
+.newapp-button-wrapper {
+}
+
+.form-slideshow {
+  width: 90vw;
+  height: 45vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide-onscreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide-offscreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+  transform: translateX(100%);
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.newapp-addfeature-textarea {
+  position: relative;
+}
+.newapp-addfeature-btn {
+  position: absolute;
+  right: 5px;
+  margin: auto;
+  bottom: 7px;
+  z-index: 3;
+  font-size: 5px !important;
+  width: fit-content;
+  height: fit-content !important;
+  opacity: 0.75;
+  padding: 5px !important;
+}
+
+.newfeature-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  overflow-x: hidden;
+}

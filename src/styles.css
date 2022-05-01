@@ -143,3 +143,49 @@ p-listbox i.pi-trash {
   left: 0;
   top: calc(50% - 2rem);
 }
+
+#newapp-bg > canvas {
+  z-index: -1 !important;
+  border-radius: 8px !important;
+  pointer-events: none !important;
+}
+#newapp-bg {
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+p-dialog[position="bottom"] .p-inputtextarea {
+  width: 100% !important;
+}
+
+.p-dialog-bottom > .p-dialog {
+  border: none !important;
+  border-radius: 15px !important;
+}
+
+p-dialog[position="bottom"] .p-dialog-header {
+  pointer-events: none;
+  background-color: transparent !important;
+}
+p-dialog[position="bottom"] .p-dialog-header-icons {
+  pointer-events: all !important;
+}
+
+p-dialog[position="bottom"] .p-dialog-title {
+  color: #cccccc !important;
+}
+
+p-dialog[position="bottom"] .p-dialog-content {
+  background-color: transparent !important;
+  color: #cccccc !important;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  align-items: center;
+  justify-self: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 25px !important;
+  width: 90vw;
+  height: 100%;
+}
