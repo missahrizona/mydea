@@ -4,6 +4,9 @@
   padding: 5px;
 }
 
+.apps-container {
+}
+
 .founder-label {
   font-size: 12px;
 }
@@ -43,7 +46,16 @@
   background-size: cover;
   background-repeat: no-repeat;
   cursor: pointer;
+  position: relative;
 }
+.app-delete-icon {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+}
+/* .app-tile::before {
+  content: "X";
+} */
 
 .app-label {
   font-size: 10px;
@@ -151,4 +163,17 @@ animation: name duration timing-function delay iteration-count direction fill-mo
   align-items: center;
   flex-direction: row;
   overflow-x: hidden;
+}
+
+.progress-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
+}
+
+.progress-spinner {
+  width: 150px !important;
+  height: 150px !important;
 }

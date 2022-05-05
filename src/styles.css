@@ -17,11 +17,6 @@ body {
   border: 0px !important;
 }
 
-app-portfolio .p-progress-spinner {
-  height: 25px !important;
-  width: 25px !important;
-}
-
 app-portfolio .p-listbox-footer {
   display: flex;
   flex-direction: row;

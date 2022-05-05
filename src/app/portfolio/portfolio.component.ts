@@ -5,7 +5,12 @@ import {
   HttpErrorResponse,
   HttpResponse,
 } from '@angular/common/http';
-import { MessageService, MenuItem } from 'primeng/api';
+import {
+  MessageService,
+  MenuItem,
+  ConfirmationService,
+  ConfirmEventType,
+} from 'primeng/api';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import * as _ from 'lodash';
@@ -18,6 +23,8 @@ import {
   NewFeature,
   InitiateStartup,
   CreateApp,
+  DeleteApp,
+  RefreshApps,
 } from './accessory/http-handlers';
 
 @Component({
@@ -31,7 +38,8 @@ export class PortfolioComponent implements OnInit {
     private messenger: MessageService,
     private http: HttpClient,
     public globals: GlobalsService,
-    public themeService: ThemeSwitcherService
+    public themeService: ThemeSwitcherService,
+    private dialog: ConfirmationService
   ) {}
 
   @ViewChild('slide1', { read: ElementRef }) slide1: ElementRef;
@@ -53,6 +61,8 @@ export class PortfolioComponent implements OnInit {
   newappDesc: string = '';
   newappFeature: string = '';
   newappFeatures: string[] = [];
+  loading: boolean = true;
+  deleting: boolean = false;
 
   ngOnInit(): void {
     // get all apps from monogdb
@@ -76,21 +86,46 @@ export class PortfolioComponent implements OnInit {
       },
       {
         icon: 'pi pi-trash',
-        command: () => {
-          this.messenger.add({
-            severity: 'error',
-            summary: 'Delete',
-            detail: 'Not Implemented yet.  Coming soon :)',
-          });
+        command: (event) => {
+          event.originalEvent.stopPropagation();
+          this.deleting = !this.deleting;
         },
       },
     ];
   }
 
   refresh() {
-    this.http.get(`${this.globals.webapi}/apps`).subscribe((data) => {
-      this.groupedApps = _.groupBy(data, 'originator');
-      this.collaborators = Object.keys(this.groupedApps);
+    this.loading = true;
+    this.http
+      .get(`${this.globals.webapi}/apps`)
+      .subscribe(RefreshApps.success().bind(this));
+  }
+
+  setApps(apps: App[]) {
+    this.groupedApps = _.groupBy(apps, 'originator');
+    this.collaborators = Object.keys(this.groupedApps);
+    this.loading = false;
+  }
+
+  deleteApp(event: any, app: App): void {
+    event.stopPropagation();
+    this.dialog.confirm({
+      message: `${app.name}`,
+      header: 'Delete App',
+
+      accept: (event: any) => {
+        this.http
+          .delete(`${this.globals.webapi}/apps/delete`, { body: app })
+          .subscribe(DeleteApp.success(app).bind(this));
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            break;
+          case ConfirmEventType.CANCEL:
+            break;
+        }
+      },
     });
   }
 

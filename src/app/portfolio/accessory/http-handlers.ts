@@ -1,4 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import * as _ from 'lodash';
+import { App } from '../classes/App';
 
 export class DeleteFeature {
   constructor() {}
@@ -102,6 +104,34 @@ export class CreateApp {
           detail: "We'll assume this is our fault",
         });
       }
+    };
+  };
+}
+
+export class DeleteApp {
+  static success: Function = function (this: any, app: App) {
+    return function (this: any, res: any) {
+      if (res.deletedCount == 1) {
+        this.messenger.add({
+          severity: 'success',
+          summary: `${app.name} deleted.`,
+        });
+        this.setApps(res.apps);
+      } else {
+        this.messenger.add({
+          severity: 'error',
+          summary: 'Hmmm, something went wrong.',
+          detail: "We'll assume this is our fault",
+        });
+      }
+    };
+  };
+}
+
+export class RefreshApps {
+  static success: Function = function (this: any, res: any) {
+    return function (this: any, res: any) {
+      this.setApps(res);
     };
   };
 }

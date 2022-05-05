@@ -25,6 +25,10 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { DividerModule } from 'primeng/divider';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { InputTextModule } from 'primeng/inputtext';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
+import { MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 
 import { NgParticlesModule } from 'ng-particles';
 
@@ -32,7 +36,6 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
 import { ErrorComponent } from './error/error.component';
 import { OrgComponent } from './org/org.component';
 import { MetricsComponent } from './metrics/metrics.component';
-import { MessageService } from 'primeng/api';
 import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
@@ -69,8 +72,10 @@ import { SettingsComponent } from './settings/settings.component';
     NgParticlesModule,
     SpeedDialModule,
     InputTextModule,
+    ProgressSpinnerModule,
+    ConfirmDialogModule,
   ],
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

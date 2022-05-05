@@ -86,8 +86,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
   reload() {
-    setTimeout(() => (this._reload = false));
-    setTimeout(() => (this._reload = true));
+    setTimeout(() => (this._reload = false), 10);
+    setTimeout(() => (this._reload = true), 20);
   }
 
   particlesLoaded(evt: any): void {}
