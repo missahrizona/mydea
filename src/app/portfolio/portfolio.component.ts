@@ -65,6 +65,7 @@ export class PortfolioComponent implements OnInit {
   newappFeatures: string[] = [];
   loading: boolean = true;
   deleting: boolean = false;
+  fabOpen: boolean = false;
 
   ngOnInit(): void {
     // get all apps from monogdb
@@ -83,12 +84,13 @@ export class PortfolioComponent implements OnInit {
       },
       {
         icon: 'pi pi-trash',
-        command: (event) => {
-          event.originalEvent.stopPropagation();
-          this.deleting = !this.deleting;
-        },
       },
     ];
+  }
+
+  deleteApps(event: any) {
+    event.stopPropagation();
+    this.deleting = !this.deleting;
   }
 
   refresh() {

@@ -1,4 +1,3 @@
-<!-- <div #pc (click)="deleting = false" class="portfolio-container"></div> -->
 <ion-header translucent="true">
   <ion-toolbar>
     <ion-title>
@@ -11,61 +10,77 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content (click)="deleting = false">
+<ion-content fullscreen class="ion-padding" (click)="deleting = false">
   <ion-refresher #refresher slot="fixed" (ionRefresh)="refresh()">
     <ion-refresher-content> </ion-refresher-content>
   </ion-refresher>
 
-  <ion-content>
-    <div class="tab-content">
-      <ng-container *ngIf="!loading">
-        <div class="puff-in-center" *ngFor="let person of collaborators">
-          <span class="founder-label">{{ person }}</span>
-          <!-- <hr class="app-divisor" /> -->
-          <p-divider></p-divider>
-          <div class="app-tile-flex">
+  <div class="tab-content">
+    <ng-container *ngIf="!loading">
+      <div class="puff-in-center" *ngFor="let person of collaborators">
+        <span class="founder-label">{{ person }}</span>
+        <!-- <hr class="app-divisor" /> -->
+        <p-divider></p-divider>
+        <div class="app-tile-flex">
+          <div
+            *ngFor="let app of groupedApps[person]"
+            class="app-tile-wrap p-component"
+          >
             <div
-              *ngFor="let app of groupedApps[person]"
-              class="app-tile-wrap p-component"
+              (click)="appClicked(app)"
+              class="app-tile"
+              [class.vibrate-3]="deleting"
             >
               <div
-                (click)="appClicked(app)"
-                class="app-tile"
-                [class.vibrate-3]="deleting"
+                (click)="deleteApp($event, app)"
+                *ngIf="deleting"
+                class="app-delete-icon"
               >
-                <div
-                  (click)="deleteApp($event, app)"
-                  *ngIf="deleting"
-                  class="app-delete-icon"
-                >
-                  <i
-                    style="
-                      background: var(--bluegray-300);
-                      color: #121212;
-                      border-radius: 50%;
-                    "
-                    class="pi pi-minus-circle"
-                  ></i>
-                </div>
+                <i
+                  style="
+                    background: var(--bluegray-300);
+                    color: #121212;
+                    border-radius: 50%;
+                  "
+                  class="pi pi-minus-circle"
+                ></i>
               </div>
-              <div class="app-label">
-                {{ app.name }}
-              </div>
+            </div>
+            <div class="app-label">
+              {{ app.name }}
             </div>
           </div>
         </div>
-      </ng-container>
-
-      <div *ngIf="loading" class="progress-container">
-        <ion-spinner
-          color="primary"
-          style="width: 100px; height: 100px"
-          name="crescent"
-        ></ion-spinner>
       </div>
+    </ng-container>
+
+    <div *ngIf="loading" class="progress-container">
+      <ion-spinner
+        color="primary"
+        style="width: 100px; height: 100px"
+        name="crescent"
+      ></ion-spinner>
     </div>
-  </ion-content>
+  </div>
 </ion-content>
+
+<ion-fab [activated]="fabOpen" vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="fabOpen = !fabOpen">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+
+  <ion-fab-list side="top">
+    <ion-fab-button (click)="addApp()" color="light">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button (click)="refresh()" color="light">
+      <ion-icon name="refresh"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button (click)="deleteApps($event)" color="light">
+      <ion-icon name="trash"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
 
 <p-confirmDialog
   #dialog
