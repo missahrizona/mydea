@@ -1,7 +1,9 @@
 .portfolio-container {
   height: 100%;
   overflow-y: auto;
-  padding: 5px;
+  overflow-x: hidden;
+  padding: 20px;
+  position: relative;
 }
 
 .apps-container {

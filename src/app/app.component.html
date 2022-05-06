@@ -2,13 +2,13 @@
   class="root-container p-component"
   [style.color]="this.isDarkMode ? 'white' : 'black'"
 >
-  <div class="menubar-wrap">
+  <!-- <div class="menubar-wrap">
     <p-menubar class="custom-menubar" [model]="items">
       <ng-template pTemplate="end">
         <img src="../assets/images/girlcode.png" height="40" class="mr-2" />
       </ng-template>
     </p-menubar>
-  </div>
+  </div> -->
 
   <ng-container *ngIf="_reload">
     <ng-particles
@@ -33,7 +33,30 @@
     ></ng-particles>
   </ng-container>
 
-  <div class="content-viewport">
-    <router-outlet></router-outlet>
-  </div>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="home">
+        <ion-icon name="home"></ion-icon>
+        <ion-label>Home</ion-label>
+        <!-- <ion-badge>6</ion-badge> -->
+      </ion-tab-button>
+
+      <ion-tab-button tab="org">
+        <ion-icon name="person-circle"></ion-icon>
+        <ion-label>Org</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="settings">
+        <ion-icon name="settings"></ion-icon>
+        <ion-label>Settings</ion-label>
+      </ion-tab-button>
+
+      <!-- <ion-tab-button tab="about">
+        <ion-icon name="information-circle"></ion-icon>
+        <ion-label>About</ion-label>
+      </ion-tab-button> -->
+    </ion-tab-bar>
+  </ion-tabs>
+
+  <!-- <router-outlet></router-outlet> -->
 </div>

@@ -1,4 +1,4 @@
-.orgchart-wrap {
+.orgchart-viewport {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
@@ -6,4 +6,5 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }

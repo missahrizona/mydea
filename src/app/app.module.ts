@@ -37,6 +37,7 @@ import { ErrorComponent } from './error/error.component';
 import { OrgComponent } from './org/org.component';
 import { MetricsComponent } from './metrics/metrics.component';
 import { SettingsComponent } from './settings/settings.component';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { SettingsComponent } from './settings/settings.component';
     InputTextModule,
     ProgressSpinnerModule,
     ConfirmDialogModule,
+    IonicModule.forRoot(),
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent],
