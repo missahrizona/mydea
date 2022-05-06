@@ -6,7 +6,8 @@
   position: relative;
 }
 
-.apps-container {
+.tab-content {
+  padding: 20px !important;
 }
 
 .founder-label {

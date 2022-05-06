@@ -194,3 +194,7 @@ p-dialog[position="bottom"] .p-dialog-content {
 .p-dialog-mask {
   z-index: 1200 !important;
 }
+
+ion-content::part(background) {
+  background: transparent !important;
+}

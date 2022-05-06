@@ -26,6 +26,7 @@ import {
   DeleteApp,
   RefreshApps,
 } from './accessory/http-handlers';
+import { RefresherCustomEvent } from '@ionic/angular';
 
 @Component({
   selector: 'app-portfolio',
@@ -45,6 +46,7 @@ export class PortfolioComponent implements OnInit {
   @ViewChild('slide1', { read: ElementRef }) slide1: ElementRef;
   @ViewChild('slide2', { read: ElementRef }) slide2: ElementRef;
   @ViewChild('slide3', { read: ElementRef }) slide3: ElementRef;
+  @ViewChild('refresher', { read: ElementRef }) refresher: ElementRef;
 
   collaborators: string[] = [];
   isSidebarOpen: boolean = false;
@@ -77,11 +79,6 @@ export class PortfolioComponent implements OnInit {
         icon: 'pi pi-refresh',
         command: () => {
           this.refresh();
-          this.messenger.add({
-            severity: 'success',
-            summary: 'Update',
-            detail: 'Data Updated',
-          });
         },
       },
       {
@@ -102,6 +99,7 @@ export class PortfolioComponent implements OnInit {
   }
 
   setApps(apps: App[]) {
+    this.refresher.nativeElement.complete();
     this.groupedApps = _.groupBy(apps, 'originator');
     this.collaborators = Object.keys(this.groupedApps);
     this.loading = false;
