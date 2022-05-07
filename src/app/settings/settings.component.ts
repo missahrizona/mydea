@@ -1,18 +1,23 @@
+import { SaveDarkMode } from './accessory/http-handlers';
 import { GlobalsService } from './../services/globals.service';
 import { HttpClient } from '@angular/common/http';
 import { ThemeSwitcherService } from './../services/theme-switcher.service';
 import { Component, Input, OnInit } from '@angular/core';
 
+import { ToastController } from '@ionic/angular';
+import { Toast } from 'primeng/toast';
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css'],
+  styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit {
   constructor(
     private themeSwitcher: ThemeSwitcherService,
     private http: HttpClient,
-    private globals: GlobalsService
+    private globals: GlobalsService,
+    private toast: ToastController
   ) {}
 
   ngOnInit(): void {
@@ -28,6 +33,11 @@ export class SettingsComponent implements OnInit {
 
   toggleDarkMode() {
     this.themeSwitcher.darkMode.next(this.checked);
+
+    let body: any = { darkMode: this.checked };
+    this.http
+      .post(`${this.globals.webapi}/settings/save`, body)
+      .subscribe(SaveDarkMode.succeed.bind(this));
   }
 
   changeTheme(color: string): void {

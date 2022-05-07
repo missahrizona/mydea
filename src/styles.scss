@@ -198,3 +198,7 @@ p-dialog[position="bottom"] .p-dialog-content {
 ion-content::part(background) {
   background: transparent !important;
 }
+
+app-component ion-item-divider {
+  height: 2px !important;
+}

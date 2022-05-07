@@ -18,38 +18,44 @@
   <div class="tab-content">
     <ng-container *ngIf="!loading">
       <div class="puff-in-center" *ngFor="let person of collaborators">
-        <span class="founder-label">{{ person }}</span>
+        <span
+          (click)="
+            appContainer.style.maxHeight =
+              appContainer.style.maxHeight == '1000px' ? '0px' : '1000px'
+          "
+          class="originator-label"
+          >{{ person }}</span
+        >
         <!-- <hr class="app-divisor" /> -->
-        <p-divider></p-divider>
-        <div class="app-tile-flex">
-          <div
-            *ngFor="let app of groupedApps[person]"
-            class="app-tile-wrap p-component"
-          >
-            <div
-              (click)="appClicked(app)"
-              class="app-tile"
-              [class.vibrate-3]="deleting"
-            >
+        <!-- <p-divider></p-divider> -->
+        <div #appContainer class="app-tile-flex">
+          <ng-container *ngFor="let app of groupedApps[person]">
+            <div class="app-tile-wrap p-component">
               <div
-                (click)="deleteApp($event, app)"
-                *ngIf="deleting"
-                class="app-delete-icon"
+                (click)="appClicked(app)"
+                class="app-tile"
+                [class.vibrate-3]="deleting"
               >
-                <i
-                  style="
-                    background: var(--bluegray-300);
-                    color: #121212;
-                    border-radius: 50%;
-                  "
-                  class="pi pi-minus-circle"
-                ></i>
+                <div
+                  (click)="deleteApp($event, app)"
+                  *ngIf="deleting"
+                  class="app-delete-icon"
+                >
+                  <ion-icon
+                    style="
+                      background: #ababab;
+                      border: none;
+                      border-radius: 50%;
+                    "
+                    name="remove"
+                  ></ion-icon>
+                </div>
+              </div>
+              <div class="app-label">
+                {{ app.name }}
               </div>
             </div>
-            <div class="app-label">
-              {{ app.name }}
-            </div>
-          </div>
+          </ng-container>
         </div>
       </div>
     </ng-container>
