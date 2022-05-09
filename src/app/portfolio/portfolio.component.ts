@@ -6,22 +6,12 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import * as _ from 'lodash';
 
-import { App } from './classes/App';
+import { App } from './child-classes/App';
 import { Container } from 'tsparticles';
-import TextParticlesOptions from './classes/TextParticlesOptions';
+import TextParticlesOptions from './child-classes/TextParticlesOptions';
 
 import { ToastController } from '@ionic/angular';
-import { AppAssistant } from './classes/AppAssistant';
-
-import SwiperCore, {
-  Autoplay,
-  Keyboard,
-  Pagination,
-  Scrollbar,
-  Zoom,
-} from 'swiper';
-
-SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom]);
+import { AppAssistant } from './child-classes/AppAssistant';
 
 @Component({
   selector: 'app-portfolio',
@@ -55,10 +45,6 @@ export class PortfolioComponent implements OnInit {
   newappFeature: string = '';
   newappFeatures: string[] = [];
   fabOpen: boolean;
-  slideOpts = {
-    initialSlide: 1,
-    speed: 400,
-  };
 
   appDeleteCandidate: App = new App();
 
@@ -70,10 +56,10 @@ export class PortfolioComponent implements OnInit {
   unread() {}
 
   screenClicked(event: any) {
-    event.stopPropagation();
-    this.apps.deleting = false;
-    this.fabOpen = false;
-    this.fab.nativeElement.close();
+    // event.stopPropagation();
+    // this.apps.deleting = false;
+    // this.fabOpen = false;
+    // this.fab.nativeElement.close();
   }
 
   addFeaturesClicked(): void {

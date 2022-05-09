@@ -1,13 +1,13 @@
 @import url(./assets/styles/animista.css);
 @import url(./assets/styles/cssanimation.io.scss);
 @import url(./assets/styles/animatopy.scss);
-@import '~swiper/scss';
-@import '~swiper/scss/autoplay';
-@import '~swiper/scss/keyboard';
-@import '~swiper/scss/pagination';
-@import '~swiper/scss/scrollbar';
-@import '~swiper/scss/zoom';
-@import '~@ionic/angular/css/ionic-swiper';
+@import "~swiper/scss";
+@import "~swiper/scss/autoplay";
+@import "~swiper/scss/keyboard";
+@import "~swiper/scss/pagination";
+@import "~swiper/scss/scrollbar";
+@import "~swiper/scss/zoom";
+@import "~@ionic/angular/css/ionic-swiper";
 
 body {
   margin: 0;
@@ -211,11 +211,9 @@ app-component ion-item-divider {
 }
 
 ion-card ion-item {
-
-    font-size: 12px !important;
+  font-size: 12px !important;
 }
 
 ion-card ion-label {
-    white-space: normal !important;
+  white-space: normal !important;
 }
-

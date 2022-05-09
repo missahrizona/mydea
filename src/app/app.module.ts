@@ -1,3 +1,4 @@
+import { ToggleLink } from './portfolio/child-classes/togglelink';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -40,7 +41,11 @@ import { OrgComponent } from './org/org.component';
 import { MetricsComponent } from './metrics/metrics.component';
 import { SettingsComponent } from './settings/settings.component';
 import { IonicModule } from '@ionic/angular';
-import { AppAssistant } from './portfolio/classes/AppAssistant';
+import { AppAssistant } from './portfolio/child-classes/AppAssistant';
+import { AppDetailModalComponent } from './portfolio/child-classes/app-detail-modal/app-detail-modal.component';
+import { DeleteModalComponent } from './portfolio/child-classes/delete-modal/delete-modal.component';
+import { FeaturelistComponent } from './portfolio/child-classes/featurelist/featurelist.component';
+import { TimelineComponent } from './portfolio/child-classes/timeline/timeline.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +55,11 @@ import { AppAssistant } from './portfolio/classes/AppAssistant';
     OrgComponent,
     MetricsComponent,
     SettingsComponent,
+    AppDetailModalComponent,
+    DeleteModalComponent,
+    ToggleLink,
+    FeaturelistComponent,
+    TimelineComponent,
   ],
   imports: [
     BrowserModule,

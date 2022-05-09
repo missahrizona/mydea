@@ -1,0 +1,36 @@
+<ion-content>
+  <div class="app-detail-modal-content">
+    <swiper
+      [autoplay]="false"
+      [keyboard]="true"
+      [pagination]="true"
+      [scrollbar]="false"
+      [zoom]="true"
+    >
+      <ng-template swiperSlide>
+        <div class="slide-content">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle>{{ apps.selectedApp.name }}</ion-card-subtitle>
+              <ion-card-title>Features</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content
+              ><app-featurelist></app-featurelist
+            ></ion-card-content>
+            <toggle-link [verb]="'edit'"></toggle-link>
+
+            <toggle-link [verb]="'add'"></toggle-link>
+          </ion-card>
+        </div>
+      </ng-template>
+      <ng-template swiperSlide><app-timeline></app-timeline> </ng-template>
+      <ng-template swiperSlide>
+        <div class="asset-container">
+          <h3>Assets</h3>
+          <h6>coming soon</h6>
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
+</ion-content>

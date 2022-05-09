@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import * as _ from 'lodash';
-import { App } from '../classes/App';
+import { App } from './App';
 
 export class DeleteFeature {
   constructor() {}

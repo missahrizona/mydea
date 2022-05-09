@@ -10,7 +10,7 @@ import {
   InitiateStartup,
   NewFeature,
   RefreshApps,
-} from '../accessory/http-handlers';
+} from './http-handlers';
 import { App } from './App';
 
 @Injectable({ providedIn: 'any' })
@@ -27,6 +27,7 @@ export class AppAssistant {
   selectedApp: App = new App();
   newFeatureText: string = '';
   editingFeatures: boolean = false;
+  addingFeatures: boolean = false;
   apps: App[] = [];
   groupedApps: any = {};
   showNewAppModal: boolean = false;
@@ -38,6 +39,7 @@ export class AppAssistant {
   deleting: boolean = false;
   fabOpen: boolean = false;
   isModalOpen: boolean = false;
+  isAppDetailOpen: boolean = false;
   appDeleteCandidate: App = new App();
 
   async refresh() {
@@ -84,7 +86,7 @@ export class AppAssistant {
   }
 
   selected(app: any): void {
-    this.isSidebarOpen = true;
+    this.isAppDetailOpen = true;
     this.selectedApp = app;
   }
 

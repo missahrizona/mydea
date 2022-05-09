@@ -1,0 +1,23 @@
+<ion-content>
+  <div class="delete-app-modal-content">
+    <ion-button
+      expand="block"
+      color="danger"
+      class="ion-activatable ripple-parent"
+      (click)="apps.delete()"
+    >
+      <ion-icon slot="start" name="trash"></ion-icon>
+      Delete App
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-button>
+
+    <ion-button
+      expand="block"
+      class="ion-activatable ripple-parent"
+      (click)="apps.cancelDelete()"
+    >
+      Cancel
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-button>
+  </div>
+</ion-content>

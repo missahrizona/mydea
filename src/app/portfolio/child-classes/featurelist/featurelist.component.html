@@ -1,0 +1,21 @@
+<ion-list lines="full">
+  <ng-container *ngFor="let feature of apps.selectedApp.features">
+    <ion-item>
+      <ion-label>{{ feature }}</ion-label>
+      <ion-icon
+        *ngIf="!apps.editingFeatures"
+        slot="start"
+        color="success"
+        name="checkmark-sharp"
+      ></ion-icon>
+      <ion-icon
+        *ngIf="apps.editingFeatures"
+        slot="start"
+        color="danger"
+        name="trash-sharp"
+        class="animated pulse"
+        (click)="apps.deleteFeatureClicked(feature)"
+      ></ion-icon>
+    </ion-item>
+  </ng-container>
+</ion-list>
