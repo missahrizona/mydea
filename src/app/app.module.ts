@@ -27,6 +27,8 @@ import { SpeedDialModule } from 'primeng/speeddial';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
+import { SwiperModule } from 'swiper/angular';
+
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 
@@ -38,6 +40,7 @@ import { OrgComponent } from './org/org.component';
 import { MetricsComponent } from './metrics/metrics.component';
 import { SettingsComponent } from './settings/settings.component';
 import { IonicModule } from '@ionic/angular';
+import { AppAssistant } from './portfolio/classes/AppAssistant';
 
 @NgModule({
   declarations: [
@@ -75,9 +78,10 @@ import { IonicModule } from '@ionic/angular';
     InputTextModule,
     ProgressSpinnerModule,
     ConfirmDialogModule,
+    SwiperModule,
     IonicModule.forRoot(),
   ],
-  providers: [MessageService, ConfirmationService],
+  providers: [MessageService, ConfirmationService, AppAssistant],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

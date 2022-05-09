@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 class App {
   constructor(
     name: string = '',
@@ -18,6 +20,7 @@ class App {
   features: string[] = [];
   timeline: Timeline = new Timeline();
   initiated: boolean = false;
+  deleting: boolean = false;
 }
 
 class Timeline extends Array {

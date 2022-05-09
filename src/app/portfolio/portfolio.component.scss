@@ -40,6 +40,7 @@
   justify-content: left;
   margin-bottom: 1rem;
   background-color: #4e949d14;
+  background-color: #c8e6ff6c;
   border: 1px solid #e3e3e3;
   border-radius: 10px;
   -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%);
@@ -70,15 +71,17 @@
   background-repeat: no-repeat;
   cursor: pointer;
   position: relative;
+  box-shadow: 0.3px 0.3px 0.6px rgba(0, 0, 0, 0.02),
+    0.7px 0.7px 1.3px rgba(0, 0, 0, 0.028),
+    1.3px 1.3px 2.5px rgba(0, 0, 0, 0.035),
+    2.2px 2.2px 4.5px rgba(0, 0, 0, 0.042),
+    4.2px 4.2px 8.4px rgba(0, 0, 0, 0.05), 10px 10px 20px rgba(0, 0, 0, 0.07);
 }
 .app-delete-icon {
   position: absolute;
   top: -5px;
   left: -5px;
 }
-/* .app-tile::before {
-  content: "X";
-} */
 
 .app-label {
   font-size: 10px;
@@ -199,4 +202,86 @@ animation: name duration timing-function delay iteration-count direction fill-mo
 .progress-spinner {
   width: 150px !important;
   height: 150px !important;
+}
+
+.delete-app-modal-content {
+  padding: 20px;
+  height: 100%;
+  width: 100%;
+}
+
+.ionic-delete-app-icon {
+  background: #ababab;
+  border: none;
+  border-radius: 50%;
+}
+
+
+.edit-features-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-top: 10px;
+    padding-right: 10px;
+    font-size: 20px;
+    color: lightblue;
+
+}
+
+.timeline-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0 50px 0;
+    font-size: 12px !important;
+}
+
+.t-event {
+    width: 100%;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+.t-line {
+    width: 2px;
+    background-color: #bebebe;
+}
+.t-dot {
+position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 5px;
+    bottom: -10px;
+    z-index: 1100;
+    background-color: white;
+    width: fit-content;
+    height: fit-content;
+    max-width: 20px;
+    max-height: 20px;
+    
+}
+
+.t-half {
+    width: 50%;
+    height: 80px;
+    position: absolute;
+    top: 0;
+    display: flex;
+}
+.left {
+    left: 0;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-right: 20px;
+}
+.right {
+    right: 0;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-left: 20px;
 }

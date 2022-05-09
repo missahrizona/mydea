@@ -1,0 +1,4 @@
+.heartbeatSlow { animation-name: heartbeatSlow; animation-iteration-count: infinite; animation-duration: .5s }
+@keyframes heartbeatSlow {
+    35%, 65% { transform: scale(1.2) }
+}

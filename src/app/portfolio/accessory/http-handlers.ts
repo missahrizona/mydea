@@ -110,12 +110,15 @@ export class CreateApp {
 
 export class DeleteApp {
   static success: Function = function (this: any, app: App) {
-    return function (this: any, res: any) {
+    return async function (this: any, res: any) {
+      this.appDeleteCandidate = new App();
       if (res.deletedCount == 1) {
-        this.messenger.add({
-          severity: 'success',
-          summary: `${app.name} deleted.`,
-        });
+        (
+          await this.toast.create({
+            message: `${app.name} Deleted.`,
+            duration: 2000,
+          })
+        ).present();
         this.setApps(res.apps);
       } else {
         this.messenger.add({
@@ -131,7 +134,9 @@ export class DeleteApp {
 export class RefreshApps {
   static success: Function = function (this: any, res: any) {
     return function (this: any, res: any) {
-      this.setApps(res);
+      console.log(res);
+      console.log(this);
+      this.set(res);
     };
   };
 }

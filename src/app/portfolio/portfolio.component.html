@@ -10,14 +10,15 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content fullscreen class="ion-padding" (click)="deleting = false">
-  <ion-refresher #refresher slot="fixed" (ionRefresh)="refresh()">
+
+<ion-content fullscreen class="ion-padding" (click)="screenClicked($event)">
+  <ion-refresher #refresher slot="fixed" (ionRefresh)="apps.refresh()">
     <ion-refresher-content> </ion-refresher-content>
   </ion-refresher>
 
   <div class="tab-content">
-    <ng-container *ngIf="!loading">
-      <div class="puff-in-center" *ngFor="let person of collaborators">
+    <ng-container *ngIf="!apps.loading">
+      <div class="puff-in-center" *ngFor="let person of apps.collaborators">
         <span
           (click)="
             appContainer.style.maxHeight =
@@ -26,27 +27,22 @@
           class="originator-label"
           >{{ person }}</span
         >
-        <!-- <hr class="app-divisor" /> -->
-        <!-- <p-divider></p-divider> -->
+
         <div #appContainer class="app-tile-flex">
-          <ng-container *ngFor="let app of groupedApps[person]">
+          <ng-container *ngFor="let app of apps.groupedApps[person]">
             <div class="app-tile-wrap p-component">
               <div
-                (click)="appClicked(app)"
+                (click)="apps.selected(app)"
                 class="app-tile"
-                [class.vibrate-3]="deleting"
+                [class.vibrate-3]="apps.deleting"
               >
                 <div
-                  (click)="deleteApp($event, app)"
-                  *ngIf="deleting"
+                  (click)="apps.confirmDelete($event, app)"
+                  *ngIf="apps.deleting"
                   class="app-delete-icon"
                 >
                   <ion-icon
-                    style="
-                      background: #ababab;
-                      border: none;
-                      border-radius: 50%;
-                    "
+                    class="ionic-delete-app-icon"
                     name="remove"
                   ></ion-icon>
                 </div>
@@ -60,7 +56,7 @@
       </div>
     </ng-container>
 
-    <div *ngIf="loading" class="progress-container">
+    <div *ngIf="apps.loading" class="progress-container">
       <ion-spinner
         color="primary"
         style="width: 100px; height: 100px"
@@ -70,62 +66,204 @@
   </div>
 </ion-content>
 
-<ion-fab [activated]="fabOpen" vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="fabOpen = !fabOpen">
+<ion-fab
+  #fab
+  (click)="fabOpen = !fabOpen"
+  [activated]="fabOpen"
+  vertical="bottom"
+  horizontal="end"
+  slot="fixed"
+>
+  <ion-fab-button [translucent]="true" size="small">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 
   <ion-fab-list side="top">
-    <ion-fab-button (click)="addApp()" color="light">
+    <ion-fab-button (click)="apps.add()" color="light">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-    <ion-fab-button (click)="refresh()" color="light">
+    <ion-fab-button (click)="apps.refresh()" color="light">
       <ion-icon name="refresh"></ion-icon>
     </ion-fab-button>
-    <ion-fab-button (click)="deleteApps($event)" color="light">
+    <ion-fab-button (click)="apps.isDeleting($event)" color="light">
       <ion-icon name="trash"></ion-icon>
     </ion-fab-button>
   </ion-fab-list>
 </ion-fab>
 
-<p-confirmDialog
-  #dialog
-  [style]="{ width: '50vw' }"
-  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-  [baseZIndex]="10000"
-  rejectButtonStyleClass="p-button-text"
+<ion-modal
+  [isOpen]="apps.isModalOpen"
+  [breakpoints]="[0.1, 0.25, 0.5, 1]"
+  [initialBreakpoint]="0.25"
 >
-  <ng-template pTemplate="header">
-    <h3>Deleting App</h3>
+  <ng-template>
+    <ion-content>
+      <div class="delete-app-modal-content">
+        <ion-button
+          expand="block"
+          color="danger"
+          class="ion-activatable ripple-parent"
+          (click)="apps.delete()"
+        >
+          <ion-icon slot="start" name="trash"></ion-icon>
+          Delete App
+          <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+        </ion-button>
+
+        <ion-button
+          expand="block"
+          class="ion-activatable ripple-parent"
+          (click)="apps.cancelDelete()"
+        >
+          Cancel
+          <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+        </ion-button>
+      </div>
+    </ion-content>
   </ng-template>
-  <ng-template pTemplate="footer">
-    <button
-      type="button"
-      pButton
-      icon="pi pi-times"
-      label="No"
-      (click)="$event.stopPropagation(); dialog.reject()"
-    ></button>
-    <button
-      type="button"
-      pButton
-      icon="pi pi-check"
-      label="Yes"
-      (click)="$event.stopPropagation(); dialog.accept()"
-    ></button>
-  </ng-template>
-</p-confirmDialog>
+</ion-modal>
 
 <p-sidebar
   styleClass="p-sidebar-lg"
-  [(visible)]="isSidebarOpen"
+  [(visible)]="apps.isSidebarOpen"
   position="bottom"
   [appendTo]="'body'"
 >
-  <p-tabView>
+  <swiper
+    [autoplay]="false"
+    [keyboard]="true"
+    [pagination]="true"
+    [scrollbar]="true"
+    [zoom]="true"
+  >
+    <ng-template swiperSlide>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>{{ apps.selectedApp.name }}</ion-card-subtitle>
+          <ion-card-title>Features</ion-card-title>
+          <div class="edit-features-btn">
+            <ion-button
+              (click)="apps.editingFeatures = !apps.editingFeatures"
+              fill="clear"
+            >
+              <ion-icon
+                *ngIf="!apps.editingFeatures"
+                name="pencil-sharp"
+              ></ion-icon>
+              <ion-icon
+                *ngIf="apps.editingFeatures"
+                name="checkmark-done-sharp"
+              ></ion-icon>
+            </ion-button>
+          </div>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-list lines="full">
+            <ng-container *ngFor="let feature of apps.selectedApp.features">
+              <ion-item>
+                <ion-label>{{ feature }}</ion-label>
+                <ion-icon
+                  *ngIf="!apps.editingFeatures"
+                  slot="start"
+                  color="success"
+                  name="checkmark-sharp"
+                ></ion-icon>
+                <ion-icon
+                  *ngIf="apps.editingFeatures"
+                  slot="start"
+                  color="danger"
+                  name="trash-sharp"
+                  class="animated pulse"
+                ></ion-icon>
+              </ion-item>
+            </ng-container>
+          </ion-list>
+        </ion-card-content> </ion-card
+    ></ng-template>
+    <ng-template swiperSlide>
+      <div class="timeline-content">
+        <h3>Product Timeline</h3>
+        <div class="t-event t1">
+          <div class="t-half left"><div>mvp</div></div>
+          <div class="t-line"></div>
+          <div class="t-dot">
+            <ion-spinner
+              style="width: 20px; height: 20px"
+              name="crescent"
+            ></ion-spinner>
+          </div>
+        </div>
+        <div class="t-event t2">
+          <div class="t-half right"><div>user growth</div></div>
+          <div class="t-line"></div>
+          <div class="t-dot">
+            <ion-icon
+              style="width: 20px; height: 20px"
+              name="ellipse-outline"
+            ></ion-icon>
+          </div>
+        </div>
+        <div class="t-event t3">
+          <div class="t-half left"><div>revenue</div></div>
+          <div class="t-line"></div>
+          <div class="t-dot">
+            <ion-icon
+              style="width: 20px; height: 20px"
+              name="ellipse-outline"
+            ></ion-icon>
+          </div>
+        </div>
+        <div class="t-event t4">
+          <div class="t-half right"><div>profitability</div></div>
+          <div class="t-line"></div>
+          <div class="t-dot">
+            <ion-icon
+              style="width: 20px; height: 20px"
+              name="ellipse-outline"
+            ></ion-icon>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template swiperSlide>
+      <div class="asset-container">
+        <h3>Assets</h3>
+        <h6>coming soon</h6>
+      </div>
+    </ng-template>
+  </swiper>
+
+  <!-- <ion-slides
+    style="height: 100%; width: 100%"
+    pager="true"
+    [options]="slideOpts"
+  >
+    <ion-slide>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+          <ion-card-title>Card Title</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          Keep close to Nature's heart... and break clear away, once in awhile,
+          and climb a mountain or spend a week in the woods. Wash your spirit
+          clean.
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <h1>Slide 2</h1>
+    </ion-slide>
+    <ion-slide>
+      <h1>Slide 3</h1>
+    </ion-slide>
+  </ion-slides> -->
+  <!-- <p-tabView>
     <p-tabPanel header="Features">
       <div class="tab-panel">
-        <p-listbox [options]="selectedApp.features">
+        <p-listbox [options]="apps.selectedApp.features">
           <ng-template let-feature pTemplate="item">
             <div>
               <i
@@ -138,7 +276,7 @@
                 *ngIf="isEditingFeatures"
                 [ngStyle]="{ color: 'var(--red-400)' }"
                 class="pi pi-trash"
-                (click)="deleteFeatureClicked(feature)"
+                (click)="apps.deleteFeatureClicked(feature)"
               ></i>
 
               &nbsp;&nbsp;{{ feature }}
@@ -174,8 +312,11 @@
       </div>
     </p-tabPanel>
     <p-tabPanel header="Timeline">
-      <ng-container *ngIf="selectedApp.initiated" class="timeline-container">
-        <p-timeline [value]="selectedApp.timeline" align="alternate">
+      <ng-container
+        *ngIf="apps.selectedApp.initiated"
+        class="timeline-container"
+      >
+        <p-timeline [value]="apps.selectedApp.timeline" align="alternate">
           <ng-template pTemplate="marker" let-event>
             <p-progressSpinner *ngIf="event.inProgress"></p-progressSpinner>
             <i *ngIf="event.isDone" class="pi pi-heart-fill"></i>
@@ -192,7 +333,7 @@
         </p-timeline>
       </ng-container>
 
-      <ng-container *ngIf="!selectedApp.initiated">
+      <ng-container *ngIf="!apps.selectedApp.initiated">
         <div class="timeline-container">
           <p-card header="Begin your journey!" subheader="Be fearless">
             <ng-template pTemplate="header">
@@ -202,7 +343,7 @@
               <p-button
                 styleClass="p-button-success"
                 label="Initiate"
-                (click)="initiateStartupClicked()"
+                (click)="apps.initiateStartupClicked()"
               ></p-button>
             </ng-template>
           </p-card>
@@ -210,7 +351,7 @@
       </ng-container>
     </p-tabPanel>
     <p-tabPanel header="Resources"> Coming soon </p-tabPanel>
-  </p-tabView>
+  </p-tabView> -->
 </p-sidebar>
 
 <p-dialog
@@ -244,7 +385,7 @@
       type="button"
       class="p-button-text"
       label="Save"
-      (click)="newFeatureSaved()"
+      (click)="apps.newFeatureSaved()"
     ></button>
   </ng-template>
 </p-dialog>
@@ -252,12 +393,6 @@
 <p-toast
   [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
 ></p-toast>
-
-<p-speedDial
-  [model]="actions"
-  direction="up"
-  buttonClassName="p-button-raised"
-></p-speedDial>
 
 <p-dialog
   [(visible)]="showNewAppModal"
@@ -371,7 +506,7 @@
           type="button"
           label="Create!"
           class="p-button-text"
-          (click)="createApp($event)"
+          (click)="apps.create($event)"
         ></button>
         <button
           pButton
