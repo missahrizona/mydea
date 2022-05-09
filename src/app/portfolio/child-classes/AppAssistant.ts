@@ -1,3 +1,4 @@
+import { ToastController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
@@ -18,7 +19,7 @@ export class AppAssistant {
   constructor(
     private http: HttpClient,
     private globals: GlobalsService,
-    private messenger: MessageService
+    private toast: ToastController
   ) {}
 
   collaborators: string[] = [];
@@ -115,18 +116,18 @@ export class AppAssistant {
     }
   }
 
-  newFeatureSaved(): void {
+  async newFeatureSaved() {
     // check:  empty input
     if (this.newFeatureText == '') {
       return;
     }
     // check:  duplicates
     else if (this.selectedApp.features.indexOf(this.newFeatureText) != -1) {
-      this.messenger.add({
-        severity: 'warning',
-        summary: 'No need for duplicates!',
-        detail: "Don't give up :)",
+      let toastr = await this.toast.create({
+        message: "This already exists.  Don't give up! :)",
+        duration: 2000,
       });
+      toastr.present();
       return;
     }
 

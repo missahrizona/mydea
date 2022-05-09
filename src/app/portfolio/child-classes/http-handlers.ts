@@ -10,13 +10,14 @@ export class DeleteFeature {
     feature: string,
     idx: number
   ) {
-    return function (this: any, res: any) {
-      if (res.acknowledged && res.modifiedCount == 1) {
-        this.messenger.add({
-          severity: 'success',
-          summary: 'Deleted feature: ' + feature,
-          detail: 'Not feeling it?',
+    return async function (this: any, res: any) {
+      if (res.modifiedCount == 1) {
+        let toastr = await this.toast.create({
+          message: "Feature deleted. Wasn't feeling it?",
+          duration: 2000,
         });
+        toastr.present();
+
         this.selectedApp.features.splice(idx, 1);
         this.selectedApp.features = [...this.selectedApp.features];
       }
