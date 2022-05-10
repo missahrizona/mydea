@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as _ from 'lodash';
 import { App } from './App';
@@ -8,38 +9,48 @@ export class DeleteFeature {
   static success: Function = function (
     this: any,
     feature: string,
-    idx: number
+    idx: number,
+    listener: BehaviorSubject<boolean>
   ) {
-    return async function (this: any, res: any) {
+    return function (this: any, res: any) {
       if (res.modifiedCount == 1) {
-        let toastr = await this.toast.create({
-          message: "Feature deleted. Wasn't feeling it?",
-          duration: 2000,
-        });
-        toastr.present();
+        (async () => {
+          let toastr = await this.toast.create({
+            message: "Feature deleted. Wasn't feeling it?",
+            duration: 2000,
+          });
+          toastr.present();
+        })();
 
         this.selectedApp.features.splice(idx, 1);
         this.selectedApp.features = [...this.selectedApp.features];
       }
+      listener.next(true);
     };
   };
 }
 
 export class NewFeature {
-  static success: Function = function (this: any) {
+  static success: Function = function (
+    this: any,
+    listener: BehaviorSubject<boolean>
+  ) {
     return function (this: any, res: any) {
-      if (res.acknowledged && res.modifiedCount == 1) {
-        this.messenger.add({
-          severity: 'success',
-          summary: 'New feature added!',
-          detail: 'Keep it up :)',
-        });
+      if (res.modifiedCount == 1) {
+        (async () => {
+          let toastr = await this.toast.create({
+            message: 'Feature added.  Keep it up :)',
+            duration: 2000,
+          });
+          toastr.present();
+        })();
         this.selectedApp.features = this.selectedApp.features.concat(
           this.newFeatureText
         );
         this.isNewFeatureOpen = false;
         this.newFeatureText = '';
       }
+      listener.next(true);
     };
   };
 }
@@ -111,15 +122,16 @@ export class CreateApp {
 
 export class DeleteApp {
   static success: Function = function (this: any, app: App) {
-    return async function (this: any, res: any) {
+    return function (this: any, res: any) {
       this.appDeleteCandidate = new App();
       if (res.deletedCount == 1) {
-        (
-          await this.toast.create({
+        (async () => {
+          let toastr = await this.toast.create({
             message: `${app.name} Deleted.`,
             duration: 2000,
-          })
-        ).present();
+          });
+          toastr.present();
+        })();
         this.setApps(res.apps);
       } else {
         this.messenger.add({
@@ -135,8 +147,6 @@ export class DeleteApp {
 export class RefreshApps {
   static success: Function = function (this: any, res: any) {
     return function (this: any, res: any) {
-      console.log(res);
-      console.log(this);
       this.set(res);
     };
   };

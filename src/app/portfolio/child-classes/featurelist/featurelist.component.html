@@ -1,4 +1,29 @@
-<ion-list lines="full">
+<ion-list #featurelist lines="full">
+  <ion-item class="animate-in" *ngIf="apps.addingFeatures">
+    <ion-button *ngIf="!apps.saveLoading" (click)="addFeature()" fill="clear">
+      <ion-icon
+        style="font-size: 1.6em"
+        slot="start"
+        color="primary"
+        name="add-sharp"
+      ></ion-icon>
+    </ion-button>
+
+    <ion-spinner
+      *ngIf="apps.saveLoading"
+      #spinner
+      slot="start"
+      style="width: 1.6em"
+      name="crescent"
+    ></ion-spinner>
+
+    <ion-input
+      [(ngModel)]="apps.newFeatureText"
+      [disabled]="apps.saveLoading"
+      clear-input="true"
+      placeholder="inspire us..."
+    ></ion-input>
+  </ion-item>
   <ng-container *ngFor="let feature of apps.selectedApp.features">
     <ion-item>
       <ion-label>{{ feature }}</ion-label>
@@ -9,13 +34,41 @@
         name="checkmark-sharp"
       ></ion-icon>
       <ion-icon
-        *ngIf="apps.editingFeatures"
+        *ngIf="apps.editingFeatures && !deleteLoading[feature]"
         slot="start"
         color="danger"
-        name="trash-sharp"
+        name="remove-circle-sharp"
         class="animated pulse"
-        (click)="apps.deleteFeatureClicked(feature)"
-      ></ion-icon>
+        #delete
+        (click)="deleteFeature(feature)"
+      >
+      </ion-icon>
+      <ion-spinner
+        *ngIf="deleteLoading[feature]"
+        #spinner
+        slot="start"
+        style="width: 1.6em"
+        name="crescent"
+      ></ion-spinner>
     </ion-item>
   </ng-container>
+  <ion-item-sliding>
+    <ion-item-options side="start">
+      <ion-item-option (click)="favorite()">Favorite</ion-item-option>
+      <ion-item-option color="danger" (click)="share()">Share</ion-item-option>
+    </ion-item-options>
+
+    <ion-item>
+      <ion-label>Item Options</ion-label>
+    </ion-item>
+
+    <ion-item-options side="end">
+      <ion-item-option (click)="unread()">Unread</ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+  <ion-text
+    *ngIf="apps.selectedApp.features.length == 0 && !apps.addingFeatures"
+    style="font-weight: 200"
+    >no features, add some!</ion-text
+  >
 </ion-list>

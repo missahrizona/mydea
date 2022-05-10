@@ -1,8 +1,8 @@
+import { BehaviorSubject } from 'rxjs';
 import { ToastController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { MessageService } from 'primeng/api';
 import { GlobalsService } from 'src/app/services/globals.service';
 import {
   CreateApp,
@@ -13,6 +13,7 @@ import {
   RefreshApps,
 } from './http-handlers';
 import { App } from './App';
+import { AppStatus } from './AppStatus';
 
 @Injectable({ providedIn: 'any' })
 export class AppAssistant {
@@ -29,6 +30,7 @@ export class AppAssistant {
   newFeatureText: string = '';
   editingFeatures: boolean = false;
   addingFeatures: boolean = false;
+  saveLoading: boolean = false;
   apps: App[] = [];
   groupedApps: any = {};
   showNewAppModal: boolean = false;
@@ -42,6 +44,7 @@ export class AppAssistant {
   isModalOpen: boolean = false;
   isAppDetailOpen: boolean = false;
   appDeleteCandidate: App = new App();
+  status: AppStatus;
 
   async refresh() {
     this.loading = true;
@@ -103,7 +106,10 @@ export class AppAssistant {
     this.newappFeatures = [];
   }
 
-  deleteFeatureClicked(feature: string): void {
+  deleteFeatureClicked(
+    feature: string,
+    listener: BehaviorSubject<boolean>
+  ): void {
     let idx = this.selectedApp.features.findIndex((e) => e == feature);
     let body = {
       _id: this.selectedApp._id,
@@ -112,31 +118,33 @@ export class AppAssistant {
     if (idx != -1) {
       this.http
         .post(`${this.globals.webapi}/features/delete`, body)
-        .subscribe(DeleteFeature.success(feature, idx).bind(this));
+        .subscribe(DeleteFeature.success(feature, idx, listener).bind(this));
     }
   }
 
-  async newFeatureSaved() {
+  newFeatureSaved(listener: BehaviorSubject<boolean>) {
     // check:  empty input
     if (this.newFeatureText == '') {
       return;
     }
     // check:  duplicates
     else if (this.selectedApp.features.indexOf(this.newFeatureText) != -1) {
-      let toastr = await this.toast.create({
-        message: "This already exists.  Don't give up! :)",
-        duration: 2000,
-      });
-      toastr.present();
+      listener.next(true);
+      (async () => {
+        let toastr = await this.toast.create({
+          message: "This already exists.  Don't give up! :)",
+          duration: 2000,
+        });
+        toastr.present();
+      })();
       return;
     }
-
     this.http
       .post(`${this.globals.webapi}/features/save`, {
         _id: this.selectedApp._id,
         feature: this.newFeatureText,
       })
-      .subscribe(NewFeature.success.bind(this));
+      .subscribe(NewFeature.success(listener).bind(this));
   }
 
   initiateStartupClicked(): void {

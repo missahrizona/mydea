@@ -1,0 +1,13 @@
+.animate-in {
+  animation: animate-in 0.5s linear forwards !important;
+}
+
+@keyframes animate-in {
+  from {
+    max-height: 0px;
+  }
+
+  to {
+    max-height: 1000px;
+  }
+}

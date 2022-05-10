@@ -4,7 +4,16 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'toggle-link',
   template: `<div [style]="this.styles[verb]">
-    <ion-button (click)="clicked()" fill="clear" size="small">
+    <ion-button
+      [disabled]="
+        verb == 'edit'
+          ? apps.addingFeatures
+          : apps.saveLoading || apps.editingFeatures
+      "
+      (click)="clicked()"
+      fill="clear"
+      size="small"
+    >
       <span>{{
         verb == 'add'
           ? apps.addingFeatures
