@@ -1,12 +1,3 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({ providedIn: 'any' })
-export class AppStatus {
-  constructor() {}
-
-  features: FeatureStatus;
-}
-
 export class FeatureStatus {
   constructor() {}
 
@@ -14,4 +5,15 @@ export class FeatureStatus {
   saving: boolean = false;
   editing: boolean = false;
   adding: boolean = false;
+}
+
+export class ViewStatus {
+  constructor() {}
+
+  fab: boolean = false;
+  deleteapp: boolean = false;
+  appdetail: boolean = false;
+  newapp: boolean = false;
+  isSidebarOpen: boolean = false;
+  newfeature: boolean = false;
 }

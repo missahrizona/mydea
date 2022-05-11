@@ -22,8 +22,8 @@ export class DeleteFeature {
           toastr.present();
         })();
 
-        this.selectedApp.features.splice(idx, 1);
-        this.selectedApp.features = [...this.selectedApp.features];
+        this.selected.features.splice(idx, 1);
+        this.selected.features = [...this.selected.features];
       }
       listener.next(true);
     };
@@ -44,11 +44,10 @@ export class NewFeature {
           });
           toastr.present();
         })();
-        this.selectedApp.features = this.selectedApp.features.concat(
-          this.newFeatureText
+        this.selected.features = this.selected.features.concat(
+          this.stagingFeature
         );
-        this.isNewFeatureOpen = false;
-        this.newFeatureText = '';
+        this.stagingFeature = '';
       }
       listener.next(true);
     };
@@ -58,13 +57,13 @@ export class NewFeature {
 export class InitiateStartup {
   static success: Function = function (this: any) {
     return function (this: any, res: any) {
-      if (res.acknowledged && res.modifiedCount == 1) {
+      if (res.modifiedCount == 1) {
         this.messenger.add({
           severity: 'success',
           summary: 'App Initiated!',
           detail: 'Good things are ahead :)',
         });
-        this.selectedApp.initiated = true;
+        this.selected.initiated = true;
       } else {
         console.log('ERROR');
         this.messenger.add({
@@ -73,7 +72,7 @@ export class InitiateStartup {
           detail:
             'There must be something wrong on our end.  Please retry shortly.',
         });
-        this.selectedApp.initiated = false;
+        this.selected.initiated = false;
       }
     };
   };
@@ -86,7 +85,7 @@ export class InitiateStartup {
         detail:
           'There must be something wrong on our end.  Please retry shortly.',
       });
-      this.selectedApp.initiated = false;
+      this.selected.initiated = false;
     };
   };
 }
@@ -98,7 +97,7 @@ export class CreateApp {
     collaborator: string
   ) {
     return function (this: any, res: any) {
-      if (res.acknowledged && res.insertedId && res.insertedId.length) {
+      if (res.insertedId && res.insertedId.length) {
         this.messenger.add({
           severity: 'success',
           summary: `Congrats ${collaborator}!`,
@@ -108,7 +107,7 @@ export class CreateApp {
         this.slide1.nativeElement.style.transform = 'translateX(0)';
         this.slide2.nativeElement.style.transform = 'translateX(100%)';
         this.slide3.nativeElement.style.transform = 'translateX(100%)';
-        this.showNewAppModal = false;
+        this.views.newapp = false;
       } else {
         this.messenger.add({
           severity: 'error',
@@ -123,7 +122,7 @@ export class CreateApp {
 export class DeleteApp {
   static success: Function = function (this: any, app: App) {
     return function (this: any, res: any) {
-      this.appDeleteCandidate = new App();
+      this.stagingApp = new App();
       if (res.deletedCount == 1) {
         (async () => {
           let toastr = await this.toast.create({

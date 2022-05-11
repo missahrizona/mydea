@@ -21,18 +21,16 @@
   background-color: #bebebe;
 }
 .t-dot {
+  background: transparent;
   position: absolute;
   left: 0;
   right: 0;
   margin: auto;
   border-radius: 5px;
-  bottom: -10px;
+  bottom: -15px;
   z-index: 1100;
-  background-color: white;
   width: fit-content;
   height: fit-content;
-  max-width: 20px;
-  max-height: 20px;
 }
 
 .t-half {
@@ -53,4 +51,29 @@
   justify-content: flex-start;
   align-items: flex-end;
   padding-left: 20px;
+}
+
+.t-half.left > .event-btn {
+  left: -25%;
+  bottom: -10%;
+  position: absolute;
+}
+
+.t-half.right > .event-btn {
+  right: -25%;
+  bottom: -10%;
+  position: absolute;
+}
+
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+}
+
+.link-btn {
+  margin: 0;
+  height: fit-content;
+}
+ion-button::part(native) {
+  padding: 2px 5px 1px 5px !important;
 }

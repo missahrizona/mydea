@@ -15,12 +15,12 @@ export class FeaturelistComponent implements OnInit {
   deleteLoading: any = {};
 
   addFeature(): any {
-    this.apps.saveLoading = true;
+    this.apps.features.saving = true;
     let listener = new BehaviorSubject(false);
     this.apps.newFeatureSaved(listener);
     listener.subscribe((update) => {
       if (update) {
-        this.apps.saveLoading = false;
+        this.apps.features.saving = false;
       }
     });
   }
@@ -37,8 +37,4 @@ export class FeaturelistComponent implements OnInit {
       }
     });
   }
-
-  favorite() {}
-  share() {}
-  unread() {}
 }

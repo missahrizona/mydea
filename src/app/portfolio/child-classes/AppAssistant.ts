@@ -13,7 +13,7 @@ import {
   RefreshApps,
 } from './http-handlers';
 import { App } from './App';
-import { AppStatus } from './AppStatus';
+import { ViewStatus, FeatureStatus } from './AppStatus';
 
 @Injectable({ providedIn: 'any' })
 export class AppAssistant {
@@ -23,28 +23,22 @@ export class AppAssistant {
     private toast: ToastController
   ) {}
 
-  collaborators: string[] = [];
-  isSidebarOpen: boolean = false;
-  isNewFeatureOpen: boolean = false;
-  selectedApp: App = new App();
-  newFeatureText: string = '';
-  editingFeatures: boolean = false;
-  addingFeatures: boolean = false;
-  saveLoading: boolean = false;
   apps: App[] = [];
   groupedApps: any = {};
-  showNewAppModal: boolean = false;
-  newappName: string = '';
-  newappDesc: string = '';
-  newappFeature: string = '';
-  newappFeatures: string[] = [];
+
+  selected: App = new App();
+  selectedForDelete: App = new App();
+
+  collaborators: string[] = [];
+
+  stagingFeature: string = '';
+  stagingApp: App = new App();
+
   loading: boolean = true;
   deleting: boolean = false;
-  fabOpen: boolean = false;
-  isModalOpen: boolean = false;
-  isAppDetailOpen: boolean = false;
-  appDeleteCandidate: App = new App();
-  status: AppStatus;
+
+  views: ViewStatus = new ViewStatus();
+  features: FeatureStatus = new FeatureStatus();
 
   async refresh() {
     this.loading = true;
@@ -54,7 +48,7 @@ export class AppAssistant {
   }
 
   add() {
-    this.showNewAppModal = true;
+    this.views.newapp = true;
   }
 
   set(apps: App[]) {
@@ -64,8 +58,8 @@ export class AppAssistant {
   }
 
   confirmDelete(event: any, app: App): void {
-    this.appDeleteCandidate = app;
-    this.isModalOpen = true;
+    this.selectedForDelete = app;
+    this.views.deleteapp = true;
     event.stopPropagation();
   }
 
@@ -75,44 +69,40 @@ export class AppAssistant {
   }
 
   delete() {
-    this.appDeleteCandidate.deleting = true;
+    this.selectedForDelete.deleting = true;
     this.http
       .delete(`${this.globals.webapi}/apps/delete`, {
-        body: this.appDeleteCandidate,
+        body: this.selectedForDelete,
       })
-      .subscribe(DeleteApp.success({ ...this.appDeleteCandidate }).bind(this));
-    this.isModalOpen = false;
+      .subscribe(DeleteApp.success({ ...this.selectedForDelete }).bind(this));
+    this.views.deleteapp = false;
   }
 
   cancelDelete() {
-    this.isModalOpen = false;
-    this.appDeleteCandidate = new App();
+    this.views.deleteapp = false;
+    this.selectedForDelete = new App();
   }
 
-  selected(app: any): void {
-    this.isAppDetailOpen = true;
-    this.selectedApp = app;
+  appSelected(app: any): void {
+    this.views.appdetail = true;
+    this.selected = app;
   }
 
   create(evt: any) {
-    let app = new App(this.newappName, 'Lily', this.newappFeatures);
-
     this.http
-      .post(`${this.globals.webapi}/apps/add`, app)
-      .subscribe(CreateApp.success(this.newappName, 'Lily').bind(this));
+      .post(`${this.globals.webapi}/apps/add`, this.stagingApp)
+      .subscribe(CreateApp.success(this.stagingApp.name, 'Lily').bind(this));
 
-    this.newappName = '';
-    this.newappFeature = '';
-    this.newappFeatures = [];
+    this.stagingApp = new App();
   }
 
   deleteFeatureClicked(
     feature: string,
     listener: BehaviorSubject<boolean>
   ): void {
-    let idx = this.selectedApp.features.findIndex((e) => e == feature);
+    let idx = this.selected.features.findIndex((e) => e == feature);
     let body = {
-      _id: this.selectedApp._id,
+      _id: this.selected._id,
       feature: feature,
     };
     if (idx != -1) {
@@ -124,11 +114,11 @@ export class AppAssistant {
 
   newFeatureSaved(listener: BehaviorSubject<boolean>) {
     // check:  empty input
-    if (this.newFeatureText == '') {
+    if (this.stagingFeature == '') {
       return;
     }
     // check:  duplicates
-    else if (this.selectedApp.features.indexOf(this.newFeatureText) != -1) {
+    else if (this.selected.features.indexOf(this.stagingFeature) != -1) {
       listener.next(true);
       (async () => {
         let toastr = await this.toast.create({
@@ -141,8 +131,8 @@ export class AppAssistant {
     }
     this.http
       .post(`${this.globals.webapi}/features/save`, {
-        _id: this.selectedApp._id,
-        feature: this.newFeatureText,
+        _id: this.selected._id,
+        feature: this.stagingFeature,
       })
       .subscribe(NewFeature.success(listener).bind(this));
   }
@@ -150,11 +140,14 @@ export class AppAssistant {
   initiateStartupClicked(): void {
     this.http
       .post(`${this.globals.webapi}/apps/initiate`, {
-        _id: this.selectedApp._id,
+        _id: this.selected._id,
       })
       .subscribe(
         InitiateStartup.success.bind(this),
         InitiateStartup.error.bind(this)
       );
   }
+
+  setInProgress(event: any, idx: number) {}
+  setIsDone(event: any, idx: number) {}
 }

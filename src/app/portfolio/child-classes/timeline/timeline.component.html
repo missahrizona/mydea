@@ -1,43 +1,55 @@
 <div class="timeline-content">
   <h3>Product Timeline</h3>
-  <div class="t-event t1">
-    <div class="t-half left"><div>mvp</div></div>
-    <div class="t-line"></div>
-    <div class="t-dot">
-      <ion-spinner
-        style="width: 20px; height: 20px"
-        name="crescent"
-      ></ion-spinner>
+  <div
+    *ngFor="let event of apps.selected.timeline; index as i"
+    class="t-event t1"
+  >
+    <div
+      [style.flexDirection]="reverse(event, i) ? 'row-reverse' : 'row'"
+      [ngClass]="{ left: i % 2 == 0, right: i % 2 != 0 }"
+      class="t-half"
+    >
+      <ion-button
+        size="small"
+        fill="solid"
+        *ngIf="untouched(event, i)"
+        class="link-btn"
+        (click)="apps.setInProgress(event, i)"
+      >
+        Start
+      </ion-button>
+      <ion-button
+        size="small"
+        fill="solid"
+        *ngIf="event.inProgress"
+        class="link-btn"
+        (click)="apps.setIsDone(event, i)"
+      >
+        Done
+      </ion-button>
+      <div style="min-width: 10px"></div>
+      <span>{{ event.description }}</span>
     </div>
-  </div>
-  <div class="t-event t2">
-    <div class="t-half right"><div>user growth</div></div>
     <div class="t-line"></div>
-    <div class="t-dot">
-      <ion-icon
-        style="width: 20px; height: 20px"
-        name="ellipse-outline"
-      ></ion-icon>
-    </div>
-  </div>
-  <div class="t-event t3">
-    <div class="t-half left"><div>revenue</div></div>
-    <div class="t-line"></div>
-    <div class="t-dot">
-      <ion-icon
-        style="width: 20px; height: 20px"
-        name="ellipse-outline"
-      ></ion-icon>
-    </div>
-  </div>
-  <div class="t-event t4">
-    <div class="t-half right"><div>profit</div></div>
-    <div class="t-line"></div>
-    <div class="t-dot">
-      <ion-icon
-        style="width: 20px; height: 20px"
-        name="ellipse-outline"
-      ></ion-icon>
+    <div style="color: #ed576b" class="t-dot">
+      <ion-button size="small" fill="clear">
+        <ion-icon
+          style="background: white; color: #ed576b"
+          *ngIf="!event.inProgress && !event.isDone"
+          name="heart-outline"
+        ></ion-icon>
+        <ion-spinner
+          style="background: white"
+          *ngIf="event.inProgress"
+          style="width: 20px; height: 20px"
+          name="crescent"
+        ></ion-spinner>
+        <ion-icon
+          style="background: white"
+          *ngIf="event.isDone"
+          name="heart-filled"
+        ></ion-icon>
+      </ion-button>
     </div>
   </div>
 </div>

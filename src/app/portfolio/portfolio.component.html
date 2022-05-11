@@ -32,7 +32,7 @@
           <ng-container *ngFor="let app of apps.groupedApps[person]">
             <div class="app-tile-wrap p-component">
               <div
-                (click)="apps.selected(app)"
+                (click)="apps.appSelected(app)"
                 class="app-tile"
                 [class.vibrate-3]="apps.deleting"
               >
@@ -92,7 +92,7 @@
 </ion-fab>
 
 <ion-modal
-  [isOpen]="apps.isModalOpen"
+  [isOpen]="apps.views.deleteapp"
   [breakpoints]="[0.1, 0.25, 0.5, 1]"
   [initialBreakpoint]="0.25"
 >
@@ -102,51 +102,13 @@
 </ion-modal>
 
 <ion-modal
-  [isOpen]="apps.isAppDetailOpen"
+  [isOpen]="apps.views.appdetail"
   [breakpoints]="[0.1, 0.25, 0.6, 1]"
   [initialBreakpoint]="0.6"
-  (didDismiss)="apps.isAppDetailOpen = false"
+  (didDismiss)="apps.views.appdetail = false"
 >
   <ng-template><app-app-detail-modal></app-app-detail-modal></ng-template>
 </ion-modal>
-
-<p-dialog
-  [(visible)]="isNewFeatureOpen"
-  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-  [style]="{ width: '50vw' }"
-  [appendTo]="'body'"
->
-  <ng-template pTemplate="header"> Describe your feature </ng-template>
-  <ng-template pTemplate="content">
-    <div
-      style="
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-      "
-    >
-      <textarea
-        rows="3"
-        cols="30"
-        pInputTextarea
-        [(ngModel)]="newFeatureText"
-      ></textarea>
-    </div>
-  </ng-template>
-  <ng-template pTemplate="footer">
-    <!--
-    <button
-      pButton
-      type="button"
-      class="p-button-text"
-      label="Save"
-      (click)="apps.newFeatureSaved()"
-    ></button>
-      -->
-  </ng-template>
-</p-dialog>
 
 <p-toast
   [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"

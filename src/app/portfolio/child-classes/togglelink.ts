@@ -7,8 +7,8 @@ import { Component, Input } from '@angular/core';
     <ion-button
       [disabled]="
         verb == 'edit'
-          ? apps.addingFeatures
-          : apps.saveLoading || apps.editingFeatures
+          ? apps.features.adding
+          : apps.features.saving || apps.features.editing
       "
       (click)="clicked()"
       fill="clear"
@@ -16,10 +16,10 @@ import { Component, Input } from '@angular/core';
     >
       <span>{{
         verb == 'add'
-          ? apps.addingFeatures
+          ? apps.features.adding
             ? 'Done'
             : 'Add'
-          : apps.editingFeatures
+          : apps.features.editing
           ? 'Done'
           : 'Edit'
       }}</span>
@@ -47,9 +47,9 @@ export class ToggleLink {
 
   clicked() {
     if (this.verb == 'add') {
-      this.apps.addingFeatures = !this.apps.addingFeatures;
+      this.apps.features.adding = !this.apps.features.adding;
     } else {
-      this.apps.editingFeatures = !this.apps.editingFeatures;
+      this.apps.features.editing = !this.apps.features.editing;
     }
   }
 }
