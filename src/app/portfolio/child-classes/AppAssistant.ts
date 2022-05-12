@@ -148,6 +148,32 @@ export class AppAssistant {
       );
   }
 
-  setInProgress(event: any, idx: number) {}
-  setIsDone(event: any, idx: number) {}
+  setInProgress(event: any, idx: number) {
+    this.http
+      .post(`${this.globals.webapi}/timeline/inprogress`, {
+        app: this.selected,
+        eventindex: idx,
+        event: event,
+      })
+      .subscribe((res: any) => {
+        if ((res.modifiedCount = 1)) {
+          event.inProgress = true;
+        }
+        console.log(res);
+      });
+  }
+  setIsDone(event: any, idx: number) {
+    this.http
+      .post(`${this.globals.webapi}/timeline/isdone`, {
+        app: this.selected,
+        eventindex: idx,
+        event: event,
+      })
+      .subscribe((res: any) => {
+        if ((res.modifiedCount = 1)) {
+          event.inProgress = false;
+          event.isDone = true;
+        }
+      });
+  }
 }

@@ -20,6 +20,6 @@ export class TimelineComponent implements OnInit {
   }
 
   reverse(event: any, i: number): boolean {
-    return i % 2 != 0 && this.untouched(event, i);
+    return i % 2 != 0 && (this.untouched(event, i) || event.inProgress);
   }
 }

@@ -6,6 +6,7 @@
   >
     <div
       [style.flexDirection]="reverse(event, i) ? 'row-reverse' : 'row'"
+      [style.right]="reverse(event, i) ? '-20px !important' : ''"
       [ngClass]="{ left: i % 2 == 0, right: i % 2 != 0 }"
       class="t-half"
     >
@@ -47,7 +48,7 @@
         <ion-icon
           style="background: white"
           *ngIf="event.isDone"
-          name="heart-filled"
+          name="heart"
         ></ion-icon>
       </ion-button>
     </div>
