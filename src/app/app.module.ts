@@ -46,6 +46,8 @@ import { AppDetailModalComponent } from './portfolio/child-classes/app-detail-mo
 import { DeleteModalComponent } from './portfolio/child-classes/delete-modal/delete-modal.component';
 import { FeaturelistComponent } from './portfolio/child-classes/featurelist/featurelist.component';
 import { TimelineComponent } from './portfolio/child-classes/timeline/timeline.component';
+import { FabContentsComponent } from './portfolio/child-classes/fab-contents/fab-contents.component';
+import { CreateappModalComponent } from './portfolio/child-classes/createapp-modal/createapp-modal.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { TimelineComponent } from './portfolio/child-classes/timeline/timeline.c
     ToggleLink,
     FeaturelistComponent,
     TimelineComponent,
+    FabContentsComponent,
+    CreateappModalComponent,
   ],
   imports: [
     BrowserModule,

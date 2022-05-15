@@ -94,26 +94,29 @@ export class CreateApp {
   static success: Function = function (
     this: any,
     appname: string,
-    collaborator: string
+    originator: string
   ) {
     return function (this: any, res: any) {
+      this.stagingApp = new App();
+
       if (res.insertedId && res.insertedId.length) {
-        this.messenger.add({
-          severity: 'success',
-          summary: `Congrats ${collaborator}!`,
-          detail: `This is the beginning of ${appname} :)`,
-        });
+        (async () => {
+          let toastr = await this.toast.create({
+            message: `Congratz ${originator}, this is the beginning of ${appname}!`,
+            duration: 2000,
+          });
+          toastr.present();
+        })();
         this.refresh();
-        this.slide1.nativeElement.style.transform = 'translateX(0)';
-        this.slide2.nativeElement.style.transform = 'translateX(100%)';
-        this.slide3.nativeElement.style.transform = 'translateX(100%)';
         this.views.newapp = false;
       } else {
-        this.messenger.add({
-          severity: 'error',
-          summary: 'Hmmm, something went wrong.',
-          detail: "We'll assume this is our fault",
-        });
+        (async () => {
+          let toastr = await this.toast.create({
+            message: "Something went wrong. We'll take theblame",
+            duration: 2000,
+          });
+          toastr.present();
+        })();
       }
     };
   };
@@ -131,13 +134,15 @@ export class DeleteApp {
           });
           toastr.present();
         })();
-        this.setApps(res.apps);
+        this.set(res.apps);
       } else {
-        this.messenger.add({
-          severity: 'error',
-          summary: 'Hmmm, something went wrong.',
-          detail: "We'll assume this is our fault",
-        });
+        (async () => {
+          let toastr = await this.toast.create({
+            message: "Something went wrong. We'll take the blame",
+            duration: 2000,
+          });
+          toastr.present();
+        })();
       }
     };
   };

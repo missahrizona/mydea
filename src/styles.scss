@@ -210,10 +210,40 @@ app-component ion-item-divider {
   height: 2px !important;
 }
 
-ion-card ion-item {
-  font-size: 12px !important;
-}
-
 ion-card ion-label {
   white-space: normal !important;
+}
+
+:root {
+  --ion-color-pretty-princess-pink: #ffb1cf;
+  --ion-color-pretty-princess-pink-rgb: 255, 177, 207;
+  --ion-color-pretty-princess-pink-contrast: #000000;
+  --ion-color-pretty-princess-pink-contrast-rgb: 0, 0, 0;
+  --ion-color-pretty-princess-pink-shade: #e09cb6;
+  --ion-color-pretty-princess-pink-tint: #ffb9d4;
+}
+
+.ion-color-pretty-princess-pink {
+  --ion-color-base: var(--ion-color-pretty-princess-pink);
+  --ion-color-base-rgb: var(--ion-color-pretty-princess-pink-rgb);
+  --ion-color-contrast: var(--ion-color-pretty-princess-pink-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-pretty-princess-pink-contrast-rgb);
+  --ion-color-shade: var(--ion-color-pretty-princess-pink-shade);
+  --ion-color-tint: var(--ion-color-pretty-princess-pink-tint);
+}
+
+.newappinput > input {
+  width: auto !important;
+}
+
+.timeline-content > h3 {
+  font-size: 22px !important;
+}
+
+div.swiper-slide[data-swiper-slide-index="2"] > div.slide-content {
+  justify-content: center !important;
+}
+
+div.swiper-slide[data-swiper-slide-index="0"] ion-item {
+  font-size: 14px !important;
 }

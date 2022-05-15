@@ -4,47 +4,42 @@
       <span>Idea</span>
       <ion-icon
         style="padding: 0 10px 0 10px; color: rgb(247, 202, 0)"
-        name="flash-sharp"
-      ></ion-icon>
+        name="flash-sharp"></ion-icon>
       <span>Collab</span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen class="ion-padding">
+<ion-content (click)="screenClicked($event)" class="ion-padding">
   <ion-refresher #refresher slot="fixed" (ionRefresh)="apps.refresh()">
-    <ion-refresher-content> </ion-refresher-content>
+    <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <div class="tab-content">
     <ng-container *ngIf="!apps.loading">
       <div class="puff-in-center" *ngFor="let person of apps.collaborators">
-        <span
-          (click)="
-            appContainer.style.maxHeight =
-              appContainer.style.maxHeight == '1000px' ? '0px' : '1000px'
-          "
-          class="originator-label"
-          >{{ person }}</span
-        >
+        <ion-button
+          color="pretty-princess-pink"
+          size="small"
+          (click)="getSize(appTileFlex)"
+          class="originator-label">
+          {{ person }}
+        </ion-button>
 
-        <div #appContainer class="app-tile-flex">
+        <div #appTileFlex class="app-tile-flex">
           <ng-container *ngFor="let app of apps.groupedApps[person]">
             <div class="app-tile-wrap p-component">
               <div
                 (click)="apps.appSelected(app)"
                 class="app-tile"
-                [class.vibrate-3]="apps.deleting"
-              >
+                [class.vibrate-3]="apps.deleting">
                 <div
                   (click)="apps.confirmDelete($event, app)"
                   *ngIf="apps.deleting"
-                  class="app-delete-icon"
-                >
+                  class="app-delete-icon">
                   <ion-icon
                     class="ionic-delete-app-icon"
-                    name="remove"
-                  ></ion-icon>
+                    name="remove"></ion-icon>
                 </div>
               </div>
               <div class="app-label">
@@ -60,42 +55,18 @@
       <ion-spinner
         color="primary"
         style="width: 100px; height: 100px"
-        name="crescent"
-      ></ion-spinner>
+        name="crescent">
+      </ion-spinner>
     </div>
   </div>
 </ion-content>
 
-<ion-fab
-  #fab
-  (click)="fabOpen = !fabOpen"
-  [activated]="fabOpen"
-  vertical="bottom"
-  horizontal="end"
-  slot="fixed"
->
-  <ion-fab-button [translucent]="true" size="small">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-
-  <ion-fab-list side="top">
-    <ion-fab-button (click)="apps.add()" color="light">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-button (click)="apps.refresh()" color="light">
-      <ion-icon name="refresh"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-button (click)="apps.isDeleting($event)" color="light">
-      <ion-icon name="trash"></ion-icon>
-    </ion-fab-button>
-  </ion-fab-list>
-</ion-fab>
+<app-fab-contents></app-fab-contents>
 
 <ion-modal
   [isOpen]="apps.views.deleteapp"
   [breakpoints]="[0.1, 0.25, 0.5, 1]"
-  [initialBreakpoint]="0.25"
->
+  [initialBreakpoint]="0.25">
   <ng-template>
     <app-delete-modal></app-delete-modal>
   </ng-template>
@@ -105,143 +76,10 @@
   [isOpen]="apps.views.appdetail"
   [breakpoints]="[0.1, 0.25, 0.6, 1]"
   [initialBreakpoint]="0.6"
-  (didDismiss)="apps.views.appdetail = false"
->
-  <ng-template><app-app-detail-modal></app-app-detail-modal></ng-template>
+  (didDismiss)="apps.views.appdetail = false">
+  <ng-template>
+    <app-app-detail-modal></app-app-detail-modal>
+  </ng-template>
 </ion-modal>
 
-<p-toast
-  [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
-></p-toast>
-
-<p-dialog
-  [(visible)]="showNewAppModal"
-  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-  [style]="{ width: '50vw' }"
-  position="bottom"
-  [modal]="true"
-  [resizable]="false"
-  [showHeader]="true"
-  header="Tell us about your app!"
-  [dismissableMask]="true"
->
-  <ng-template pTemplate="content">
-    <div class="form-slideshow">
-      <div #slide1 class="slide-onscreen">
-        <h4>App Name</h4>
-        <span class="p-input-icon-left p-input-filled">
-          <i class="pi pi-bolt"></i>
-          <input
-            id="app-name"
-            type="text"
-            pInputText
-            [(ngModel)]="newappName"
-            class="p-inputtext-sm"
-          />
-        </span>
-        <button
-          pButton
-          type="button"
-          (click)="navigateName($event)"
-          label="Next"
-          class="p-button-link"
-        ></button>
-      </div>
-      <div #slide2 class="slide-offscreen">
-        <h4>Features</h4>
-        <div class="newapp-addfeature-textarea">
-          <textarea
-            [(ngModel)]="newappFeature"
-            class="p-inputtext-sm p-input-filled"
-            rows="2"
-            cols="25"
-            pInputTextarea
-          >
-          </textarea>
-
-          <button
-            pButton
-            pRipple
-            type="button"
-            icon="pi pi-plus"
-            class="p-button-rounded newapp-addfeature-btn shadow-2"
-            (click)="newappAddFeature($event)"
-          ></button>
-        </div>
-
-        <h4><small>Collection</small></h4>
-
-        <p-listbox
-          [listStyle]="{ 'max-height': '150px' }"
-          [options]="newappFeatures"
-        >
-          <ng-template let-feature pTemplate="item">
-            <div class="newfeature-item">
-              <i
-                style="color: rgb(113, 40, 40); padding: 3px 5px 0 0"
-                class="pi pi-times"
-                (click)="newappDeleteFeature(feature)"
-              ></i>
-              <div>{{ feature }}</div>
-            </div>
-          </ng-template>
-        </p-listbox>
-
-        <div class="btn-container">
-          <button
-            pButton
-            pRipple
-            type="button"
-            (click)="navigateFeatures('back')"
-            icon="pi pi-chevron-left"
-            class="p-button-rounded p-button-text"
-          ></button>
-
-          <button
-            pButton
-            type="button"
-            (click)="navigateFeatures('next')"
-            label="Next"
-            class="p-button-link"
-          ></button>
-
-          <button
-            pButton
-            pRipple
-            type="button"
-            (click)="navigateFeatures('skip')"
-            icon="pi pi-chevron-right"
-            class="p-button-rounded p-button-text"
-          ></button>
-        </div>
-      </div>
-      <div
-        #slide3
-        class="slide-offscreen"
-        (transitionend)="transitionend($event)"
-      >
-        <button
-          pButton
-          pRipple
-          type="button"
-          label="Create!"
-          class="p-button-text"
-          (click)="apps.create($event)"
-        ></button>
-        <button
-          pButton
-          type="button"
-          (click)="navigateCreate('back')"
-          label="Back"
-          class="p-button-link"
-        ></button>
-      </div>
-    </div>
-
-    <ng-particles
-      id="newapp-bg"
-      [options]="newappParticlesOptions"
-      (particlesLoaded)="particlesLoaded($event)"
-    ></ng-particles>
-  </ng-template>
-</p-dialog>
+<app-createapp-modal></app-createapp-modal>

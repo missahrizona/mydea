@@ -1,31 +1,33 @@
 <div class="timeline-content">
+  <div
+    *ngIf="static"
+    class="timeline-overlay"
+    [style.animation]="
+      animate ? 'step-down 6s linear 0.5s forwards' : ''
+    "></div>
   <h3>Product Timeline</h3>
   <div
-    *ngFor="let event of apps.selected.timeline; index as i"
-    class="t-event t1"
-  >
+    *ngFor="let event of app.timeline; index as i"
+    class="t-event t-event-{{ i }}">
     <div
       [style.flexDirection]="reverse(event, i) ? 'row-reverse' : 'row'"
       [style.right]="reverse(event, i) ? '-20px !important' : ''"
       [ngClass]="{ left: i % 2 == 0, right: i % 2 != 0 }"
-      class="t-half"
-    >
+      class="t-half">
       <ion-button
         size="small"
         fill="solid"
-        *ngIf="untouched(event, i)"
+        *ngIf="!static && untouched(event, i)"
         class="link-btn"
-        (click)="apps.setInProgress(event, i)"
-      >
+        (click)="apps.setInProgress(event, i)">
         Start
       </ion-button>
       <ion-button
         size="small"
         fill="solid"
-        *ngIf="event.inProgress"
+        *ngIf="!static && event.inProgress"
         class="link-btn"
-        (click)="apps.setIsDone(event, i)"
-      >
+        (click)="apps.setIsDone(event, i)">
         Done
       </ion-button>
       <div style="min-width: 10px"></div>
@@ -35,21 +37,20 @@
     <div style="color: #ed576b" class="t-dot">
       <ion-button size="small" fill="clear">
         <ion-icon
-          style="background: white; color: #ed576b"
+          style="color: #ed576b"
+          [style.backgroundColor]="static ? 'transparent' : 'white'"
           *ngIf="!event.inProgress && !event.isDone"
-          name="heart-outline"
-        ></ion-icon>
+          [style.animation]="getAnimation(i)"
+          [name]="static ? 'heart' : 'heart-outline'"></ion-icon>
         <ion-spinner
           style="background: white"
           *ngIf="event.inProgress"
           style="width: 20px; height: 20px"
-          name="crescent"
-        ></ion-spinner>
+          name="crescent"></ion-spinner>
         <ion-icon
           style="background: white"
           *ngIf="event.isDone"
-          name="heart"
-        ></ion-icon>
+          name="heart"></ion-icon>
       </ion-button>
     </div>
   </div>

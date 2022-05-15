@@ -3,14 +3,12 @@
     <ion-button
       *ngIf="!apps.features.saving"
       (click)="addFeature()"
-      fill="clear"
-    >
+      fill="clear">
       <ion-icon
         style="font-size: 1.6em"
         slot="start"
         color="primary"
-        name="add-sharp"
-      ></ion-icon>
+        name="add-sharp"></ion-icon>
     </ion-button>
 
     <ion-spinner
@@ -18,15 +16,13 @@
       #spinner
       slot="start"
       style="width: 1.6em"
-      name="crescent"
-    ></ion-spinner>
+      name="crescent"></ion-spinner>
 
     <ion-input
       [(ngModel)]="apps.stagingFeature"
       [disabled]="apps.features.saving"
       clear-input="true"
-      placeholder="inspire us..."
-    ></ion-input>
+      placeholder="inspire us..."></ion-input>
   </ion-item>
   <ng-container *ngFor="let feature of apps.selected.features">
     <ion-item>
@@ -35,8 +31,7 @@
         *ngIf="!apps.features.editing"
         slot="start"
         color="success"
-        name="checkmark-sharp"
-      ></ion-icon>
+        name="checkmark-sharp"></ion-icon>
       <ion-icon
         *ngIf="apps.features.editing && !deleteLoading[feature]"
         slot="start"
@@ -44,20 +39,22 @@
         name="remove-circle-sharp"
         class="animated pulse"
         #delete
-        (click)="deleteFeature(feature)"
-      >
+        (click)="deleteFeature(feature)">
       </ion-icon>
       <ion-spinner
         *ngIf="deleteLoading[feature]"
         #spinner
         slot="start"
         style="width: 1.6em"
-        name="crescent"
-      ></ion-spinner>
+        name="crescent"></ion-spinner>
     </ion-item>
   </ng-container>
   <ion-text
-    *ngIf="apps.selected.features.length == 0 && !apps.features.editing"
+    *ngIf="
+      (!apps.selected.features || apps.selected.features.length == 0) &&
+      !apps.features.editing &&
+      !apps.features.adding
+    "
     style="font-weight: 200"
     >no features, add some!</ion-text
   >

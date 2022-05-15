@@ -1,0 +1,72 @@
+<ion-modal [isOpen]="apps.views.newapp">
+  <ng-template>
+    <ion-header translucent>
+      <ion-toolbar>
+        <ion-title #title>App Name</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="close()">Close</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <swiper
+        #swiper
+        [autoplay]="false"
+        [keyboard]="true"
+        [pagination]="true"
+        [scrollbar]="false"
+        [zoom]="true"
+        (slideChange)="slideChanged($event)"
+        [style.backgroundImage]="bgImage"
+        class="fullscreen picture-bg">
+        <ng-template swiperSlide>
+          <div fullscreen class="fullscreen slide-content">
+            <div class="device-frame">
+              <ion-header translucent="true">
+                <ion-toolbar>
+                  <ion-title>
+                    <ion-input
+                      [(ngModel)]="apps.stagingApp.name"
+                      autofocus="true"
+                      clearInput="true"
+                      class="newappinput"
+                      placeholder="awesome app"></ion-input>
+                  </ion-title>
+                </ion-toolbar>
+              </ion-header>
+            </div>
+            <ion-button (click)="slideNext()">Next</ion-button>
+          </div>
+        </ng-template>
+        <ng-template swiperSlide>
+          <div class="fullscreen slide-content">
+            <ion-card>
+              <ion-card-content
+                ><app-timeline
+                  [animate]="animate"
+                  [static]="true"></app-timeline
+              ></ion-card-content>
+            </ion-card>
+            <ion-button (click)="slideNext()">Next</ion-button>
+          </div>
+        </ng-template>
+        <ng-template swiperSlide>
+          <div class="fullscreen slide-content">
+            <ion-card>
+              <ion-card-header>
+                <ion-title>Assets</ion-title>
+              </ion-card-header>
+              <ion-card-content> Coming soon </ion-card-content>
+            </ion-card>
+            <ion-button
+              (click)="apps.create()"
+              [disabled]="!apps.stagingApp.name">
+              <span *ngIf="!apps.creating">Create</span>
+              <ion-spinner *ngIf="apps.creating"></ion-spinner>
+            </ion-button>
+          </div>
+        </ng-template>
+      </swiper>
+    </ion-content>
+  </ng-template>
+</ion-modal>

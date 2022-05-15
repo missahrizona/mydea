@@ -36,6 +36,7 @@ export class AppAssistant {
 
   loading: boolean = true;
   deleting: boolean = false;
+  creating: boolean = false;
 
   views: ViewStatus = new ViewStatus();
   features: FeatureStatus = new FeatureStatus();
@@ -52,7 +53,13 @@ export class AppAssistant {
   }
 
   set(apps: App[]) {
-    this.groupedApps = _.groupBy(apps, 'originator');
+    this.groupedApps = _.groupBy(
+      _.forEach(
+        apps,
+        (e) => (e.originator = !e.originator ? 'Lily' : e.originator)
+      ),
+      'originator'
+    );
     this.collaborators = Object.keys(this.groupedApps);
     this.loading = false;
   }
@@ -88,10 +95,17 @@ export class AppAssistant {
     this.selected = app;
   }
 
-  create(evt: any) {
+  create() {
+    this.creating = true;
+    this.stagingApp.originator = 'Lily';
     this.http
-      .post(`${this.globals.webapi}/apps/add`, this.stagingApp)
-      .subscribe(CreateApp.success(this.stagingApp.name, 'Lily').bind(this));
+      .post(`${this.globals.webapi}/apps/add`, { ...this.stagingApp })
+      .subscribe(
+        CreateApp.success(
+          this.stagingApp.name,
+          this.stagingApp.originator
+        ).bind(this)
+      );
 
     this.stagingApp = new App();
   }
