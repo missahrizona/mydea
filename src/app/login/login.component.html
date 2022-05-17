@@ -1,0 +1,78 @@
+<div class="login-content">
+  <ion-card>
+    <ion-card-header translucent="true">
+      <ion-card-title>Login</ion-card-title>
+    </ion-card-header>
+    <ion-card-content style="text-align: center">
+      <ng-container *ngIf="auth.loginstep == 0">
+        <ion-item>
+          <ion-label position="floating">Phone Number</ion-label>
+          <ion-input
+            autocomplete="tel"
+            inputmode="tel"
+            type="tel"
+            [placeholder]="telformats[telformaxidx]"
+            clearInput
+            [(ngModel)]="auth.tel"
+            required="true"></ion-input>
+        </ion-item>
+        <ion-button
+          [disabled]="!auth.tel"
+          fill="clear"
+          size="small"
+          (click)="auth.requestcode()"
+          >Next
+        </ion-button>
+      </ng-container>
+
+      <ng-container *ngIf="auth.loginstep == 1">
+        <ion-item>
+          <ion-label position="floating">Code</ion-label>
+          <ion-input
+            [disabled]="auth.verifyingcode"
+            type="number"
+            clearInput
+            [(ngModel)]="auth.code"
+            [debounce]="3000"
+            placeholder="xxx-xxx"
+            (ionChange)="auth.codechanged($event)"
+            required="true"></ion-input>
+        </ion-item>
+
+        <ion-label
+          style="padding-top: 1em; display: block"
+          *ngIf="auth.verifyingcode">
+          <ion-spinner></ion-spinner>
+        </ion-label>
+      </ng-container>
+
+      <ng-container *ngIf="auth.loginstep == 2">
+        <ion-item>
+          <ion-label position="floating">Display Name</ion-label>
+          <ion-input
+            [disabled]="auth.creatinginprogress"
+            required="true"
+            clearInput></ion-input>
+        </ion-item>
+        <ion-button fill="clear" size="small" (click)="auth.createaccount()"
+          ><span *ngIf="!auth.creatinginprogress">Create</span>
+          <ion-spinner *ngIf="auth.creatinginprogress"></ion-spinner>
+        </ion-button>
+      </ng-container>
+
+      <ng-container *ngIf="auth.loginstep == 3">
+        <ion-item lines="none">
+          <ion-label>
+            <ion-button
+              expand="block"
+              (click)="auth.getstarted()"
+              size="small"
+              fill="clear">
+              Get Started
+            </ion-button>
+          </ion-label>
+        </ion-item>
+      </ng-container>
+    </ion-card-content>
+  </ion-card>
+</div>

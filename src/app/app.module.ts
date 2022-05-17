@@ -1,5 +1,6 @@
+import { HttpInterceptorService } from './services/http-interceptor.service';
 import { ToggleLink } from './portfolio/child-classes/togglelink';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -48,6 +49,7 @@ import { FeaturelistComponent } from './portfolio/child-classes/featurelist/feat
 import { TimelineComponent } from './portfolio/child-classes/timeline/timeline.component';
 import { FabContentsComponent } from './portfolio/child-classes/fab-contents/fab-contents.component';
 import { CreateappModalComponent } from './portfolio/child-classes/createapp-modal/createapp-modal.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,7 @@ import { CreateappModalComponent } from './portfolio/child-classes/createapp-mod
     TimelineComponent,
     FabContentsComponent,
     CreateappModalComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,7 +98,16 @@ import { CreateappModalComponent } from './portfolio/child-classes/createapp-mod
     SwiperModule,
     IonicModule.forRoot(),
   ],
-  providers: [MessageService, ConfirmationService, AppAssistant],
+  providers: [
+    MessageService,
+    ConfirmationService,
+    AppAssistant,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

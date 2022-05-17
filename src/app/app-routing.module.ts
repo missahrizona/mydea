@@ -1,3 +1,4 @@
+import { LoginComponent } from './login/login.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MetricsComponent } from './metrics/metrics.component';
 import { OrgComponent } from './org/org.component';
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: '',
