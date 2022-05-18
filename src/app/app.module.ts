@@ -50,6 +50,11 @@ import { TimelineComponent } from './portfolio/child-classes/timeline/timeline.c
 import { FabContentsComponent } from './portfolio/child-classes/fab-contents/fab-contents.component';
 import { CreateappModalComponent } from './portfolio/child-classes/createapp-modal/createapp-modal.component';
 import { LoginComponent } from './login/login.component';
+import { TelCardComponent } from './login/child-classes/tel-card/tel-card.component';
+import { DisplaynameCardComponent } from './login/child-classes/displayname-card/displayname-card.component';
+import { SmscodeCardComponent } from './login/child-classes/smscode-card/smscode-card.component';
+import { GreetingCardComponent } from './login/child-classes/greeting-card/greeting-card.component';
+import { LogoComponent } from './logo/logo.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +72,11 @@ import { LoginComponent } from './login/login.component';
     FabContentsComponent,
     CreateappModalComponent,
     LoginComponent,
+    TelCardComponent,
+    DisplaynameCardComponent,
+    SmscodeCardComponent,
+    GreetingCardComponent,
+    LogoComponent,
   ],
   imports: [
     BrowserModule,

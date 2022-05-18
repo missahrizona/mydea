@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { DOCUMENT } from '@angular/common';
 import { ThemeSwitcherService } from './services/theme-switcher.service';
 import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
@@ -18,7 +19,8 @@ import ParallaxOptions from './classes/particleoptions/parallax-options';
 export class AppComponent implements OnInit, AfterViewInit {
   constructor(
     private themeSwitcher: ThemeSwitcherService,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    private auth: AuthService
   ) {
     this.particlePresets = new ParticleOptions();
     this.particlePreset = this.particlePresets.backgroundMask(this.isDarkMode);

@@ -1,0 +1,20 @@
+<ion-card>
+    <ion-card-header translucent="true">
+        <ion-card-title>Display Name</ion-card-title>
+    </ion-card-header>
+    <ion-card-content style="text-align: center">
+        <ion-item>
+            <ion-input type="text" clearInput [(ngModel)]="auth.user.displayname" required="true"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none">
+            <ion-button slot="start" fill="clear" size="small" (click)="back()">
+                Back
+            </ion-button>
+
+            <ion-button *ngIf="!auth.creatinginprogress" slot="end" fill="clear" size="small" (click)="auth.createaccount()">Create
+            </ion-button>
+            <ion-spinner slot="end" *ngIf="auth.creatinginprogress"></ion-spinner>
+        </ion-item>
+    </ion-card-content>
+</ion-card>

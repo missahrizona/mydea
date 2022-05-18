@@ -1,85 +1,61 @@
 <ion-header translucent="true">
-  <ion-toolbar>
-    <ion-title>
-      <span>Idea</span>
-      <ion-icon
-        style="padding: 0 10px 0 10px; color: rgb(247, 202, 0)"
-        name="flash-sharp"></ion-icon>
-      <span>Collab</span>
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>
+            <ion-label>
+                <app-logo></app-logo>
+            </ion-label>
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content (click)="screenClicked($event)" class="ion-padding">
-  <ion-refresher #refresher slot="fixed" (ionRefresh)="apps.refresh()">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+    <ion-refresher #refresher slot="fixed" (ionRefresh)="apps.refresh()">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
 
-  <div class="tab-content">
-    <ng-container *ngIf="!apps.loading">
-      <div class="puff-in-center" *ngFor="let person of apps.collaborators">
-        <ion-button
-          color="pretty-princess-pink"
-          size="small"
-          (click)="getSize(appTileFlex)"
-          class="originator-label">
-          {{ person }}
-        </ion-button>
+    <div class="tab-content">
+        <ng-container *ngIf="!apps.loading">
+            <div class="puff-in-center" *ngFor="let person of apps.collaborators">
+                <ion-button color="pretty-princess-pink" size="small" (click)="getSize(appTileFlex)" class="originator-label">
+                    {{ person }}
+                </ion-button>
 
-        <div #appTileFlex class="app-tile-flex">
-          <ng-container *ngFor="let app of apps.groupedApps[person]">
-            <div class="app-tile-wrap p-component">
-              <div
-                (click)="apps.appSelected(app)"
-                class="app-tile"
-                [class.vibrate-3]="apps.deleting">
-                <div
-                  (click)="apps.confirmDelete($event, app)"
-                  *ngIf="apps.deleting"
-                  class="app-delete-icon">
-                  <ion-icon
-                    class="ionic-delete-app-icon"
-                    name="remove"></ion-icon>
+                <div #appTileFlex class="app-tile-flex">
+                    <ng-container *ngFor="let app of apps.groupedApps[person]">
+                        <div class="app-tile-wrap p-component">
+                            <div (click)="apps.appSelected(app)" class="app-tile" [class.vibrate-3]="apps.deleting">
+                                <div (click)="apps.confirmDelete($event, app)" *ngIf="apps.deleting" class="app-delete-icon">
+                                    <ion-icon class="ionic-delete-app-icon" name="remove"></ion-icon>
+                                </div>
+                            </div>
+                            <div class="app-label">
+                                {{ app.name }}
+                            </div>
+                        </div>
+                    </ng-container>
                 </div>
-              </div>
-              <div class="app-label">
-                {{ app.name }}
-              </div>
             </div>
-          </ng-container>
-        </div>
-      </div>
-    </ng-container>
+        </ng-container>
 
-    <div *ngIf="apps.loading" class="progress-container">
-      <ion-spinner
-        color="primary"
-        style="width: 100px; height: 100px"
-        name="crescent">
-      </ion-spinner>
+        <div *ngIf="apps.loading" class="progress-container">
+            <ion-spinner color="primary" style="width: 100px; height: 100px" name="crescent">
+            </ion-spinner>
+        </div>
     </div>
-  </div>
 </ion-content>
 
 <app-fab-contents></app-fab-contents>
 
-<ion-modal
-  [isOpen]="apps.views.deleteapp"
-  [breakpoints]="[0.1, 0.25, 0.5, 1]"
-  [initialBreakpoint]="0.25">
-  <ng-template>
-    <app-delete-modal></app-delete-modal>
-  </ng-template>
+<ion-modal [isOpen]="apps.views.deleteapp" [breakpoints]="[0.1, 0.25, 0.5, 1]" [initialBreakpoint]="0.25">
+    <ng-template>
+        <app-delete-modal></app-delete-modal>
+    </ng-template>
 </ion-modal>
 
-<ion-modal
-  [isOpen]="apps.views.appdetail"
-  [breakpoints]="[0.1, 0.25, 0.6, 1]"
-  [initialBreakpoint]="0.6"
-  (didDismiss)="apps.views.appdetail = false">
-  <ng-template>
-    <app-app-detail-modal></app-app-detail-modal>
-  </ng-template>
+<ion-modal [isOpen]="apps.views.appdetail" [breakpoints]="[0.1, 0.25, 0.6, 1]" [initialBreakpoint]="0.6" (didDismiss)="apps.views.appdetail = false">
+    <ng-template>
+        <app-app-detail-modal></app-app-detail-modal>
+    </ng-template>
 </ion-modal>
 
 <app-createapp-modal></app-createapp-modal>

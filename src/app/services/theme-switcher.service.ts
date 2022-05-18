@@ -7,9 +7,9 @@ import { Inject, Injectable } from '@angular/core';
 })
 export class ThemeSwitcherService {
   constructor(@Inject(DOCUMENT) private document: Document) {
-    this.darkMode.subscribe((e) => {
-      this.toggleDarkMode(e);
-    });
+    // this.darkMode.subscribe((e) => {
+    //   this.toggleDarkMode(e);
+    // });
   }
 
   darkMode = new BehaviorSubject<boolean>(false);

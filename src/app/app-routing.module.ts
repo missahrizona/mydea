@@ -30,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: PortfolioComponent,
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {

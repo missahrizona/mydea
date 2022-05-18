@@ -1,0 +1,24 @@
+<ion-card>
+  <ion-card-header translucent="true">
+    <ion-card-title>Verify Code</ion-card-title>
+  </ion-card-header>
+  <ion-card-content style="text-align: center">
+    <ion-item>
+      <ion-label position="floating">Code</ion-label>
+      <ion-input
+        type="number"
+        clearInput
+        [(ngModel)]="auth.code"
+        [debounce]="3000"
+        placeholder="xxx-xxx"
+        (ionChange)="auth.codechanged($event)"
+        required="true"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-button slot="start" fill="clear" size="small" (click)="back()"
+        >Back
+      </ion-button>
+    </ion-item>
+  </ion-card-content>
+</ion-card>

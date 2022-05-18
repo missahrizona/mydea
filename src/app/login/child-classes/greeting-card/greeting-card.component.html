@@ -1,0 +1,12 @@
+<ion-card>
+    <ion-card-header>
+        <ion-card-title>Hey {{ auth.user.displayname }}!</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-item class="ion-text-center" lines="none">
+            <ion-label>
+                <ion-button fill="clear" (click)="auth.getstarted()">Get Started</ion-button>
+            </ion-label>
+        </ion-item>
+    </ion-card-content>
+</ion-card>
