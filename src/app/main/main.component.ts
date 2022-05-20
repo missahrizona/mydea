@@ -1,6 +1,7 @@
 import { SwiperComponent } from 'swiper/angular';
 import { AuthService } from 'src/app/services/auth.service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonTabs } from '@ionic/angular';
 
 @Component({
   selector: 'app-main',
@@ -10,7 +11,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 export class MainComponent implements OnInit {
   constructor(public auth: AuthService) {}
 
-  @ViewChild('ionTabs') ionTabs: HTMLIonTabsElement;
+  @ViewChild('ionTabs') ionTabs: IonTabs;
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
 
   tabsactive: boolean[] = [true, false, false];
@@ -22,11 +23,16 @@ export class MainComponent implements OnInit {
     console.log(this.swiper);
   }
 
-  tabclicked(event: any, tabidx: number) {
+  tabclicked(event: any, tabidx?: number) {
     console.log(event);
     this.tabsactive = this.tabsactive.map((e, i) => {
       return tabidx == i ? true : false;
     });
-    this.swiper?.swiperRef.slideTo(tabidx, 100);
+    this.swiper?.swiperRef.slideTo(tabidx || 0, 100);
+  }
+
+  tabsWillChange(event: any) {
+    this.ionTabs.outlet;
+    console.log(event);
   }
 }

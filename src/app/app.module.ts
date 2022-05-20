@@ -30,6 +30,8 @@ import { GreetingCardComponent } from './login/child-classes/greeting-card/greet
 import { LogoComponent } from './logo/logo.component';
 import { MainComponent } from './main/main.component';
 import { ToggleLink } from './portfolio/child-classes/togglelink';
+import { SwipeHostComponent } from './swipe-host/swipe-host.component';
+import { TabHostComponent } from './tab-host/tab-host.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import { ToggleLink } from './portfolio/child-classes/togglelink';
     GreetingCardComponent,
     LogoComponent,
     MainComponent,
+    SwipeHostComponent,
+    TabHostComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,19 @@
+<ion-content [scrollY]="false">
+    <swiper (slideChange)="slideChanged($event)" [initialSlide]="0" #swiper [autoplay]="false" [keyboard]="true" [pagination]="false" [scrollbar]="false" [zoom]="true">
+        <ng-template swiperSlide>
+            <div class="slide-content">
+                <app-portfolio></app-portfolio>
+            </div>
+        </ng-template>
+        <ng-template swiperSlide>
+            <div class="slide-content">
+                <app-org></app-org>
+            </div>
+        </ng-template>
+        <ng-template swiperSlide>
+            <div class="slide-content">
+                <app-settings></app-settings>
+            </div>
+        </ng-template>
+    </swiper>
+</ion-content>

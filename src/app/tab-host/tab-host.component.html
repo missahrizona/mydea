@@ -1,4 +1,4 @@
-<ion-tabs (ionTabsWillChange)="tabsWillChange($event)" #ionTabs>
+<ion-tabs #ionTabs>
     <ion-header translucent="true">
         <ion-toolbar>
             <ion-title>
@@ -8,8 +8,8 @@
             </ion-title>
         </ion-toolbar>
     </ion-header>
-    <ion-tab-bar slot="bottom">
-        <ion-tab-button [selected]="tabsactive[0]" (click)="tabclicked($event, 0)" tab="home">
+    <ion-tab-bar [translucent]="true" slot="bottom">
+        <ion-tab-button [selected]="tabsactive[0]" (click)="tabclicked($event, 0)">
             <ion-icon name="home"></ion-icon>
             <ion-label>Home</ion-label>
         </ion-tab-button>
