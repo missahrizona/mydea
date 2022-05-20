@@ -1,4 +1,5 @@
 import { AuthService } from 'src/app/services/auth.service';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 import {
   Component,
@@ -17,7 +18,8 @@ import { Animation, AnimationController } from '@ionic/angular';
 })
 export class SettingsComponent implements OnInit, AfterViewInit {
   constructor(public auth: AuthService, private anime: AnimationController) {}
-
+  @ViewChild('editImgBtn') editImgBtn: ElementRef;
+  @ViewChild('profileImg') profileImg: ElementRef;
   aniEditImgBtn: Animation;
 
   ngOnInit(): void {}
@@ -36,7 +38,24 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  @ViewChild('editImgBtn') editImgBtn: ElementRef;
+  async editimage(event: any) {
+    await this.takePicture();
+  }
 
-  editimage(event: any) {}
+  takePicture = async () => {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri,
+    });
+
+    // image.webPath will contain a path that can be set as an image src.
+    // You can access the original file using image.path, which can be
+    // passed to the Filesystem API to read the raw data of the image,
+    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+    var imageUrl = image.webPath;
+
+    // Can be set to the src of an image now
+    this.profileImg.nativeElement.src = imageUrl;
+  };
 }
