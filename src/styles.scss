@@ -94,3 +94,17 @@ app-logo {
         height: 40px !important;
     }
 }
+
+ion-app {
+    background-image: url(./assets/images/bg-31.jpg);
+    background-position: center;
+    background-size: cover;
+}
+
+app-login ion-card ion-card-content {
+    min-height: 8em;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}

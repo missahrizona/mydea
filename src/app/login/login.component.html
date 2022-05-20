@@ -1,11 +1,21 @@
-<div class="login-content">
-  <uwu-tel-card @slide *ngIf="auth.loginstep == 0"></uwu-tel-card>
+<ion-header translucent="true" class="ion-no-border">
+    <ion-toolbar>
+        <ion-title>
+            <ion-label>
+                <app-logo></app-logo>
+            </ion-label>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
 
-  <uwu-smscode-card @slide *ngIf="auth.loginstep == 1"></uwu-smscode-card>
+<ion-content [scrollY]="false" [scrollX]="false">
+    <div class="login-content">
+        <uwu-tel-card @slide *ngIf="auth.loginstep == 0"></uwu-tel-card>
 
-  <uwu-displayname-card
-    @slide
-    *ngIf="auth.loginstep == 2"></uwu-displayname-card>
+        <uwu-smscode-card @slide *ngIf="auth.loginstep == 1"></uwu-smscode-card>
 
-  <xoxo-greeting-card @slide *ngIf="auth.loginstep == 3"></xoxo-greeting-card>
-</div>
+        <uwu-displayname-card @slide *ngIf="auth.loginstep == 2"></uwu-displayname-card>
+
+        <xoxo-greeting-card @slide *ngIf="auth.loginstep == 3"></xoxo-greeting-card>
+    </div>
+</ion-content>

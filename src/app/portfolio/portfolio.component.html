@@ -1,13 +1,3 @@
-<ion-header translucent="true">
-    <ion-toolbar>
-        <ion-title>
-            <ion-label>
-                <app-logo></app-logo>
-            </ion-label>
-        </ion-title>
-    </ion-toolbar>
-</ion-header>
-
 <ion-content (click)="screenClicked($event)" class="ion-padding">
     <ion-refresher #refresher slot="fixed" (ionRefresh)="apps.refresh()">
         <ion-refresher-content></ion-refresher-content>

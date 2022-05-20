@@ -3,13 +3,12 @@
         <ion-card-title>Mobile Number</ion-card-title>
     </ion-card-header>
     <ion-card-content style="text-align: center">
-        <ion-item>
+        <ion-item lines="inset">
             <ion-label position="floating">Phone Number</ion-label>
-            <ion-input autocomplete="tel" inputmode="tel" type="tel" [placeholder]="telformats[telformaxidx]" clearInput [(ngModel)]="auth.user.tel" required="true"></ion-input>
+            <ion-input autofocus="true" autocomplete="tel" inputmode="tel" type="tel" [placeholder]="telformats[telformaxidx]" clearInput [(ngModel)]="auth.user.tel" required="true"></ion-input>
         </ion-item>
-
         <ion-item lines="none">
-            <ion-button [disabled]="!auth.user.tel" slot="end" fill="clear" size="small" (click)="auth.requestcode()">Next
+            <ion-button [disabled]="!auth.user.tel" slot="end" fill="clear" size="small" (click)="auth.accountexists()">Next
             </ion-button>
         </ion-item>
     </ion-card-content>

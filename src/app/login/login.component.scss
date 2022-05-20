@@ -6,9 +6,16 @@
     height: 100%;
 }
 
-div.login-content>* {
+.login-content>* {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
+    padding-bottom: 8em;
+    opacity: 0.95;
+}
+
+ion-content {
+    height: 100vh;
+    width: 100vw;
 }

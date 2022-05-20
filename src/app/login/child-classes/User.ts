@@ -10,4 +10,5 @@ export class User {
   public tel: string = '';
   public _id: string = '';
   public validatedon: Moment | undefined;
+  public authenticated: boolean | undefined;
 }

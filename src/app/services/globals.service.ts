@@ -1,7 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, OnInit } from '@angular/core';
-import { DeviceDetectorService } from 'ngx-device-detector';
+import { Platform } from '@ionic/angular';
 
 declare const window: Window;
 
@@ -11,7 +11,7 @@ declare const window: Window;
 export class GlobalsService {
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private deviceDetector: DeviceDetectorService
+    public platform: Platform
   ) {
     this.iframe = (() => {
       try {

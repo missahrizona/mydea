@@ -55,6 +55,7 @@ import { DisplaynameCardComponent } from './login/child-classes/displayname-card
 import { SmscodeCardComponent } from './login/child-classes/smscode-card/smscode-card.component';
 import { GreetingCardComponent } from './login/child-classes/greeting-card/greeting-card.component';
 import { LogoComponent } from './logo/logo.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { LogoComponent } from './logo/logo.component';
     SmscodeCardComponent,
     GreetingCardComponent,
     LogoComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,
@@ -106,7 +108,9 @@ import { LogoComponent } from './logo/logo.component';
     ProgressSpinnerModule,
     ConfirmDialogModule,
     SwiperModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({
+      rippleEffect: true,
+    }),
   ],
   providers: [
     MessageService,

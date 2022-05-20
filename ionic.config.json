@@ -1,0 +1,12 @@
+{
+  "name": "ideacollab_ui",
+  "integrations": {},
+  "type": "angular",
+  "projects": {
+    "ideacollab.ui": {
+      "name": "ideacollab.ui",
+      "integrations": {},
+      "type": "angular"
+    }
+  }
+}
