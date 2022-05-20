@@ -1,4 +1,4 @@
-<ion-tabs>
+<!-- <ion-tabs #ionTabs>
     <ion-header translucent="true">
         <ion-toolbar>
             <ion-title>
@@ -9,19 +9,61 @@
         </ion-toolbar>
     </ion-header>
     <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="home">
+        <ion-tab-button>
             <ion-icon name="home"></ion-icon>
             <ion-label>Home</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="org">
+        <ion-tab-button>
             <ion-icon name="diamond-sharp"></ion-icon>
             <ion-label>New</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="profile">
+        <ion-tab-button>
             <ion-icon name="person-circle"></ion-icon>
-            <ion-label>Profile</ion-label>
+            <ion-label>{{ auth.user.displayname }}</ion-label>
         </ion-tab-button>
     </ion-tab-bar>
-</ion-tabs>
+</ion-tabs> -->
+<div class="main-content">
+    <ion-header translucent="true">
+        <ion-toolbar>
+            <ion-title>
+                <ion-label>
+                    <app-logo></app-logo>
+                </ion-label>
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content [scrollY]="false">
+        <swiper #swiper [autoplay]="false" [keyboard]="true" [scrollbar]="false" [zoom]="true">
+            <ng-template swiperSlide>
+                <div class="slide-content">
+                    <app-portfolio></app-portfolio>
+                </div>
+            </ng-template>
+            <ng-template swiperSlide>
+                <app-org></app-org>
+            </ng-template>
+            <ng-template swiperSlide>
+                <app-settings></app-settings>
+            </ng-template>
+        </swiper>
+    </ion-content>
+    <ion-tab-bar slot="bottom">
+        <ion-tab-button [selected]="tabsactive[0]" (click)="tabclicked($event, 0)">
+            <ion-icon name="home"></ion-icon>
+            <ion-label>Home</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button [selected]="tabsactive[1]" (click)="tabclicked($event, 1)">
+            <ion-icon name="diamond-sharp"></ion-icon>
+            <ion-label>New</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button [selected]="tabsactive[2]" (click)="tabclicked($event, 2)">
+            <ion-icon name="person-circle"></ion-icon>
+            <ion-label>{{ auth.user.displayname }}</ion-label>
+        </ion-tab-button>
+    </ion-tab-bar>
+</div>

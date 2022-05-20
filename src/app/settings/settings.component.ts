@@ -1,19 +1,12 @@
 import { AuthService } from 'src/app/services/auth.service';
-import { SaveDarkMode } from './accessory/http-handlers';
-import { GlobalsService } from './../services/globals.service';
-import { HttpClient } from '@angular/common/http';
-import { ThemeSwitcherService } from './../services/theme-switcher.service';
+
 import {
   Component,
   ElementRef,
-  Input,
   OnInit,
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-
-import { ToastController } from '@ionic/angular';
-import { Toast } from 'primeng/toast';
 
 import { Animation, AnimationController } from '@ionic/angular';
 
@@ -23,14 +16,7 @@ import { Animation, AnimationController } from '@ionic/angular';
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit, AfterViewInit {
-  constructor(
-    private themeSwitcher: ThemeSwitcherService,
-    private http: HttpClient,
-    private globals: GlobalsService,
-    private toast: ToastController,
-    public auth: AuthService,
-    private anime: AnimationController
-  ) {}
+  constructor(public auth: AuthService, private anime: AnimationController) {}
 
   aniEditImgBtn: Animation;
 

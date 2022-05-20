@@ -1,6 +1,6 @@
 import { AuthService } from './../services/auth.service';
 import { ToastController } from '@ionic/angular';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { slide } from './child-classes/angular-animations';
 
 @Component({

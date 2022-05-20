@@ -1,4 +1,4 @@
-<ion-content (click)="screenClicked($event)" class="ion-padding">
+<div class="portfolio-content ion-padding" (click)="screenClicked($event)">
     <ion-refresher #refresher slot="fixed" (ionRefresh)="apps.refresh()">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -32,7 +32,7 @@
             </ion-spinner>
         </div>
     </div>
-</ion-content>
+</div>
 
 <app-fab-contents></app-fab-contents>
 

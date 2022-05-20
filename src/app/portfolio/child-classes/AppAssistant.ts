@@ -1,8 +1,8 @@
+import { LibService } from './../../services/lib.service';
+import { ApiService } from './../../services/api.service';
 import { BehaviorSubject } from 'rxjs';
 import { ToastController } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as _ from 'lodash';
 import { GlobalsService } from 'src/app/services/globals.service';
 import {
   CreateApp,
@@ -18,7 +18,8 @@ import { ViewStatus, FeatureStatus } from './AppStatus';
 @Injectable({ providedIn: 'any' })
 export class AppAssistant {
   constructor(
-    private http: HttpClient,
+    private api: ApiService,
+    public lib: LibService,
     private globals: GlobalsService,
     private toast: ToastController
   ) {}
@@ -43,9 +44,7 @@ export class AppAssistant {
 
   async refresh() {
     this.loading = true;
-    this.http
-      .get(`${this.globals.webapi}/apps`)
-      .subscribe(RefreshApps.success().bind(this));
+    this.api.get('apps').subscribe(RefreshApps.success().bind(this));
   }
 
   add() {
@@ -53,10 +52,10 @@ export class AppAssistant {
   }
 
   set(apps: App[]) {
-    this.groupedApps = _.groupBy(
-      _.forEach(
+    this.groupedApps = this.lib._.groupBy(
+      this.lib._.forEach(
         apps,
-        (e) => (e.originator = !e.originator ? 'Lily' : e.originator)
+        (e: App) => (e.originator = !e.originator ? 'Lily' : e.originator)
       ),
       'originator'
     );
@@ -77,8 +76,8 @@ export class AppAssistant {
 
   delete() {
     this.selectedForDelete.deleting = true;
-    this.http
-      .delete(`${this.globals.webapi}/apps/delete`, {
+    this.api
+      .delete('apps/delete', {
         body: this.selectedForDelete,
       })
       .subscribe(DeleteApp.success({ ...this.selectedForDelete }).bind(this));
@@ -98,8 +97,8 @@ export class AppAssistant {
   create() {
     this.creating = true;
     this.stagingApp.originator = 'Lily';
-    this.http
-      .post(`${this.globals.webapi}/apps/add`, { ...this.stagingApp })
+    this.api
+      .post('apps/add', { ...this.stagingApp })
       .subscribe(
         CreateApp.success(
           this.stagingApp.name,
@@ -120,8 +119,8 @@ export class AppAssistant {
       feature: feature,
     };
     if (idx != -1) {
-      this.http
-        .post(`${this.globals.webapi}/features/delete`, body)
+      this.api
+        .post('features/delete', body)
         .subscribe(DeleteFeature.success(feature, idx, listener).bind(this));
     }
   }
@@ -143,8 +142,8 @@ export class AppAssistant {
       })();
       return;
     }
-    this.http
-      .post(`${this.globals.webapi}/features/save`, {
+    this.api
+      .post('features/save', {
         _id: this.selected._id,
         feature: this.stagingFeature,
       })
@@ -152,8 +151,8 @@ export class AppAssistant {
   }
 
   initiateStartupClicked(): void {
-    this.http
-      .post(`${this.globals.webapi}/apps/initiate`, {
+    this.api
+      .post('apps/initiate', {
         _id: this.selected._id,
       })
       .subscribe(
@@ -163,8 +162,8 @@ export class AppAssistant {
   }
 
   setInProgress(event: any, idx: number) {
-    this.http
-      .post(`${this.globals.webapi}/timeline/inprogress`, {
+    this.api
+      .post('timeline/inprogress', {
         app: this.selected,
         eventindex: idx,
         event: event,
@@ -177,8 +176,8 @@ export class AppAssistant {
       });
   }
   setIsDone(event: any, idx: number) {
-    this.http
-      .post(`${this.globals.webapi}/timeline/isdone`, {
+    this.api
+      .post('timeline/isdone', {
         app: this.selected,
         eventindex: idx,
         event: event,

@@ -1,7 +1,5 @@
 import { ThemeSwitcherService } from './../services/theme-switcher.service';
 import { GlobalsService } from './../services/globals.service';
-import { HttpClient } from '@angular/common/http';
-import { MessageService } from 'primeng/api';
 import {
   Component,
   OnInit,
@@ -11,12 +9,7 @@ import {
 } from '@angular/core';
 
 import * as _ from 'lodash';
-
-import { App } from './child-classes/App';
-import { Container } from 'tsparticles';
-import TextParticlesOptions from './child-classes/TextParticlesOptions';
-
-import { IonFab, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { AppAssistant } from './child-classes/AppAssistant';
 
 @Component({
@@ -27,8 +20,6 @@ import { AppAssistant } from './child-classes/AppAssistant';
 })
 export class PortfolioComponent implements OnInit, AfterViewInit {
   constructor(
-    private messenger: MessageService,
-    private http: HttpClient,
     public globals: GlobalsService,
     public themeService: ThemeSwitcherService,
     public toast: ToastController,

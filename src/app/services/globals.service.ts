@@ -1,6 +1,5 @@
-import { BehaviorSubject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable, OnInit } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
 declare const window: Window;

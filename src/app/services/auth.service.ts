@@ -1,10 +1,10 @@
+import { ApiService } from './api.service';
 import { Router } from '@angular/router';
+import { LibService } from './lib.service';
 import { ToastController } from '@ionic/angular';
 import { GlobalsService } from './globals.service';
-import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { User } from '../login/child-classes/User';
-import * as moment from 'moment';
 import { Steps } from '../login/child-classes/LoginSteps';
 import { Coder } from '../login/child-classes/Coder';
 
@@ -13,10 +13,11 @@ import { Coder } from '../login/child-classes/Coder';
 })
 export class AuthService implements OnInit {
   constructor(
-    private http: HttpClient,
     public globals: GlobalsService,
     public toast: ToastController,
-    private router: Router
+    public lib: LibService,
+    private router: Router,
+    private api: ApiService
   ) {
     let usr = localStorage.getItem('user');
     if (usr != null) {
@@ -44,20 +45,20 @@ export class AuthService implements OnInit {
   ngOnInit(): void {}
 
   setUser(u: User) {
-    this.user = new User(u.tel, u.displayname, moment(u.validatedon));
-    let then = moment().subtract(7, 'days'),
-      now = moment();
+    this.user = new User(u.tel, u.displayname, this.lib.moment(u.validatedon));
+    let then = this.lib.moment().subtract(7, 'days'),
+      now = this.lib.moment();
     this.user.authenticated = this.user.validatedon?.isBetween(then, now);
     localStorage.setItem('user', JSON.stringify(this.user));
   }
 
   requestcode(): void {
     this.loginstep = Steps.VERIFY_CODE;
-    this.http
-      .post(`${this.globals.webapi}/auth/requestcode`, {
+    this.api
+      .post('auth/requestcode', {
         tel: this.user.tel,
       })
-      .subscribe((res) => {
+      .subscribe((res: any) => {
         this.msg = res;
       });
     // request code
@@ -99,8 +100,8 @@ export class AuthService implements OnInit {
   }
 
   accountexists(): void {
-    this.http
-      .post(`${this.globals.webapi}/auth/exists`, {
+    this.api
+      .post('auth/exists', {
         tel: this.user.tel,
       })
       .subscribe(async (res: any) => {
@@ -120,14 +121,12 @@ export class AuthService implements OnInit {
 
   createaccount(): void {
     this.creatinginprogress = true;
-    let usr = new User(this.user.tel, this.user.displayname, moment());
-    this.http
-      .post(`${this.globals.webapi}/auth/createaccount`, usr)
-      .subscribe((res) => {
-        this.setUser(usr);
-        this.loginstep = Steps.GREETING;
-        this.creatinginprogress = false;
-      });
+    let usr = new User(this.user.tel, this.user.displayname, this.lib.moment());
+    this.api.post('auth/createaccount', usr).subscribe((res) => {
+      this.setUser(usr);
+      this.loginstep = Steps.GREETING;
+      this.creatinginprogress = false;
+    });
   }
 
   getstarted() {

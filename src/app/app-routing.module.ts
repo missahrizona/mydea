@@ -1,7 +1,6 @@
 import { MainComponent } from './main/main.component';
 import { LoginComponent } from './login/login.component';
 import { SettingsComponent } from './settings/settings.component';
-import { MetricsComponent } from './metrics/metrics.component';
 import { OrgComponent } from './org/org.component';
 import { ErrorComponent } from './error/error.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
@@ -24,10 +23,6 @@ const routes: Routes = [
       {
         path: 'org',
         component: OrgComponent,
-      },
-      {
-        path: 'metrics',
-        component: MetricsComponent,
       },
       {
         path: 'profile',

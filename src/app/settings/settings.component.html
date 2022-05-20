@@ -1,20 +1,18 @@
-<ion-content>
-    <ion-card>
-        <ion-card-header>
-            <ion-card-subtitle> </ion-card-subtitle>
-            <ion-card-title>
-                <ion-avatar style="width: 10rem; height: 10rem" slot="">
-                    <img src="../../assets/svg/avatar.svg" />
-                    <div #editImgBtn (click)="editimage($event)" class="tap-to-edit-btn">
-                        <div class="tap-to-edit-inner">Edit</div>
-                    </div>
-                </ion-avatar>
-                <ion-text class="ion-padding-top">{{ auth.user.displayname }}</ion-text>
-            </ion-card-title>
-        </ion-card-header>
+<ion-card>
+    <ion-card-header>
+        <ion-card-subtitle> </ion-card-subtitle>
+        <ion-card-title>
+            <ion-avatar style="width: 10rem; height: 10rem" slot="">
+                <img src="../../assets/svg/avatar.svg" />
+                <div #editImgBtn (click)="editimage($event)" class="tap-to-edit-btn">
+                    <div class="tap-to-edit-inner">Edit</div>
+                </div>
+            </ion-avatar>
+            <ion-text class="ion-padding-top">{{ auth.user.displayname }}</ion-text>
+        </ion-card-title>
+    </ion-card-header>
 
-        <ion-card-content>
-            Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods. Wash your spirit clean.
-        </ion-card-content>
-    </ion-card>
-</ion-content>
+    <ion-card-content>
+        Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods. Wash your spirit clean.
+    </ion-card-content>
+</ion-card>
