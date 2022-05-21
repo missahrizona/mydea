@@ -33,12 +33,12 @@ export class PortfolioComponent implements OnInit, AfterViewInit {
 
   fab: HTMLIonFabElement;
 
-  ngOnInit(): void {
-    // get all apps from monogdb
-    this.apps.refresh();
-  }
+  ngOnInit(): void {}
   ngAfterViewInit(): void {
     this.fab = document.getElementById('fab') as HTMLIonFabElement;
+    this.apps.setRefresherViewChild(this.refresher);
+    // get all apps from monogdb
+    this.apps.refresh(false);
   }
 
   getSize(element: any) {

@@ -54,6 +54,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     // passed to the Filesystem API to read the raw data of the image,
     // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
     var imageUrl = image.webPath;
+    console.log(image);
 
     // Can be set to the src of an image now
     this.profileImg.nativeElement.src = imageUrl;

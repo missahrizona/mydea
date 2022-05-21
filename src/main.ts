@@ -6,8 +6,6 @@ import { environment } from './environments/environment';
 
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
-console.log('main.ts running');
-
 if (environment.production) {
   enableProdMode();
 }

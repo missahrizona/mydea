@@ -32,7 +32,8 @@ export class TabHostComponent implements OnInit {
   setTabStates(tabidx: number) {
     let nodes = document.getElementsByTagName('ion-tab-button');
     for (let i = 0; i < nodes.length; i++) {
-      if (i == tabidx) nodes[i].classList.toggle('tab-selected');
+      if (i == tabidx) nodes[i].classList.add('tab-selected');
+      else nodes[i].classList.remove('tab-selected');
     }
     this.tabsactive = this.tabsactive.map((e, i) => {
       return tabidx == i ? true : false;

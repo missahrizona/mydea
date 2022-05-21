@@ -149,8 +149,11 @@ export class DeleteApp {
 }
 
 export class RefreshApps {
-  static success: Function = function (this: any, res: any) {
+  static success: Function = function (this: any, refresher: boolean) {
     return function (this: any, res: any) {
+      if (refresher) {
+        this.refresher.nativeElement.complete();
+      }
       this.set(res);
     };
   };

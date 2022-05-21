@@ -2,7 +2,7 @@ import { LibService } from './../../services/lib.service';
 import { ApiService } from './../../services/api.service';
 import { BehaviorSubject } from 'rxjs';
 import { ToastController } from '@ionic/angular';
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable } from '@angular/core';
 import { GlobalsService } from 'src/app/services/globals.service';
 import {
   CreateApp,
@@ -42,13 +42,19 @@ export class AppAssistant {
   views: ViewStatus = new ViewStatus();
   features: FeatureStatus = new FeatureStatus();
 
-  async refresh() {
+  refresher: ElementRef;
+
+  async refresh(refresher: boolean = false) {
     this.loading = true;
-    this.api.get('apps').subscribe(RefreshApps.success().bind(this));
+    this.api.get('apps').subscribe(RefreshApps.success(refresher).bind(this));
   }
 
   add() {
     this.views.newapp = true;
+  }
+
+  setRefresherViewChild(refresher: ElementRef) {
+    this.refresher = refresher;
   }
 
   set(apps: App[]) {
