@@ -1,36 +1,34 @@
-<ion-content [scrollY]="false" class="ion-padding" (click)="screenClicked($event)">
+<ion-content class="ion-padding" (click)="screenClicked($event)">
     <ion-refresher #refresher slot="fixed" (ionRefresh)="apps.refresh(true)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <div class="tab-content">
-        <ng-container *ngIf="!apps.loading">
-            <div class="puff-in-center" *ngFor="let person of apps.collaborators">
-                <ion-button color="pretty-princess-pink" size="small" (click)="getSize(appTileFlex)" class="originator-label">
-                    {{ person }}
-                </ion-button>
+    <ng-container *ngIf="!apps.loading">
+        <div class="puff-in-center" *ngFor="let person of apps.collaborators">
+            <ion-button color="pretty-princess-pink" size="small" (click)="getSize(appTileFlex)" class="originator-label">
+                {{ person }}
+            </ion-button>
 
-                <div #appTileFlex class="app-tile-flex">
-                    <ng-container *ngFor="let app of apps.groupedApps[person]">
-                        <div class="app-tile-wrap p-component">
-                            <div (click)="apps.appSelected(app)" class="app-tile" [class.vibrate-3]="apps.deleting">
-                                <div (click)="apps.confirmDelete($event, app)" *ngIf="apps.deleting" class="app-delete-icon">
-                                    <ion-icon class="ionic-delete-app-icon" name="remove"></ion-icon>
-                                </div>
+            <div #appTileFlex class="app-tile-flex">
+                <ng-container *ngFor="let app of apps.groupedApps[person]">
+                    <div class="app-tile-wrap p-component">
+                        <ion-button fill="clear" (click)="apps.appSelected(app)" class="app-tile" [class.vibrate-3]="apps.deleting">
+                            <div (click)="apps.confirmDelete($event, app)" *ngIf="apps.deleting" class="app-delete-icon">
+                                <ion-icon class="ion-delete-app-icon" name="remove"></ion-icon>
                             </div>
-                            <div class="app-label">
-                                {{ app.name }}
-                            </div>
+                        </ion-button>
+                        <div class="app-label">
+                            {{ app.name }}
                         </div>
-                    </ng-container>
-                </div>
+                    </div>
+                </ng-container>
             </div>
-        </ng-container>
-
-        <div *ngIf="apps.loading" class="progress-container">
-            <ion-spinner color="primary" style="width: 100px; height: 100px" name="crescent">
-            </ion-spinner>
         </div>
+    </ng-container>
+
+    <div *ngIf="apps.loading" class="progress-container">
+        <ion-spinner color="primary" style="width: 100px; height: 100px" name="crescent">
+        </ion-spinner>
     </div>
 </ion-content>
 

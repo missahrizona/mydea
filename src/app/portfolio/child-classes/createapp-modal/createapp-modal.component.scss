@@ -1,64 +1,65 @@
 .fullscreen {
-  height: -webkit-fill-available;
-  width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
 }
 
 .slide-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .picture-bg {
-  transition: background-image 1s linear;
+    transition: background-image 1s linear;
 }
 
 .device-frame {
-  width: 60vw;
-  aspect-ratio: 1 / 2;
-  max-width: 500px;
-  max-height: 1000px;
-  border-top: 6px;
-  border-left: 3px;
-  border-right: 3px;
-  border-bottom: 6px;
-  border-style: solid;
-  border-color: black;
-  border-radius: 5px;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  background-image: url(../../../../assets/svg/svgator-girl.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+    width: 60vw;
+    aspect-ratio: 1 / 2;
+    max-width: 500px;
+    max-height: 1000px;
+    border-top: 6px;
+    border-left: 3px;
+    border-right: 3px;
+    border-bottom: 6px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 5px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-image: url(../../../../assets/svg/svgator-girl.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
-ion-toolbar > ion-title {
-  display: flex;
-  padding: 0;
-  justify-content: center;
+ion-toolbar>ion-title {
+    display: flex;
+    padding: 0;
+    justify-content: center;
 }
+
 ion-input {
-  text-align: center;
+    text-align: center;
 }
 
 ion-item::part(native) {
-  padding: 0;
+    padding: 0;
 }
 
 input.native-input {
-  width: fit-content !important;
+    width: fit-content !important;
 }
 
 ion-card {
-  width: 70vw;
-  opacity: 0.9;
+    width: 70vw;
+    opacity: 0.9;
 }
 
-div.swiper-slide[data-swiper-slide-index="2"] > div.slide-content {
-  justify-content: center !important;
+div.swiper-slide[data-swiper-slide-index="2"]>div.slide-content {
+    justify-content: center !important;
 }

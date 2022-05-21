@@ -1,17 +1,16 @@
 .animate-in {
-  animation: animate-in 0.5s linear forwards !important;
+    animation: animate-in 0.5s linear forwards !important;
 }
 
 @keyframes animate-in {
-  from {
-    max-height: 0px;
-  }
-
-  to {
-    max-height: 1000px;
-  }
+    from {
+        max-height: 0px;
+    }
+    to {
+        max-height: 1000px;
+    }
 }
 
 ion-card ion-item {
-  font-size: 12px !important;
+    font-size: 12px !important;
 }
