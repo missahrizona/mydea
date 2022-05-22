@@ -9,8 +9,8 @@
 ###
 
 ## Install
-    $ git clone https://github.com/missahrizona/ideacollab.ui-primeng
-    $ cd ideacollab.ui-primeng
+    $ git clone https://github.com/missahrizona/idear.ui
+    $ cd idear.ui
     $ npm i
 
 ## Running the project
