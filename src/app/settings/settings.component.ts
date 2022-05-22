@@ -18,31 +18,16 @@ import { GlobalsService } from '../services/globals.service';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
 })
-export class SettingsComponent implements AfterViewInit {
+export class SettingsComponent {
   constructor(
     public auth: AuthService,
     private anime: AnimationController,
     public globals: GlobalsService
   ) {}
-  @ViewChild('editImgBtn') editImgBtn: ElementRef;
   @ViewChild('profileImg') profileImg: ElementRef;
   aniEditImgBtn: Animation;
 
   bgs: any[][] = _.chunk(Array.from(new Array(35).keys()), 6);
-
-  ngAfterViewInit() {
-    // this.aniEditImgBtn = this.anime
-    //   .create()
-    //   .addElement(this.editImgBtn.nativeElement)
-    //   .duration(100)
-    //   .keyframes([
-    //     { offset: 0.5, opacity: 0.75 },
-    //     { offset: 1, opacity: 0.5 },
-    //   ]);
-    // this.editImgBtn.nativeElement.addEventListener('click', () => {
-    //   this.aniEditImgBtn.play();
-    // });
-  }
 
   async editimage(event: any) {
     await this.takePicture();
