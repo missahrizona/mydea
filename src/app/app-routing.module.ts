@@ -1,11 +1,7 @@
 import { TabHostComponent } from './tab-host/tab-host.component';
 import { SwipeHostComponent } from './swipe-host/swipe-host.component';
-import { MainComponent } from './main/main.component';
 import { LoginComponent } from './login/login.component';
-import { SettingsComponent } from './settings/settings.component';
-import { OrgComponent } from './org/org.component';
 import { ErrorComponent } from './error/error.component';
-import { PortfolioComponent } from './portfolio/portfolio.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

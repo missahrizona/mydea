@@ -28,7 +28,6 @@ import { DisplaynameCardComponent } from './login/child-classes/displayname-card
 import { SmscodeCardComponent } from './login/child-classes/smscode-card/smscode-card.component';
 import { GreetingCardComponent } from './login/child-classes/greeting-card/greeting-card.component';
 import { LogoComponent } from './logo/logo.component';
-import { MainComponent } from './main/main.component';
 import { ToggleLink } from './portfolio/child-classes/togglelink';
 import { SwipeHostComponent } from './swipe-host/swipe-host.component';
 import { TabHostComponent } from './tab-host/tab-host.component';
@@ -53,7 +52,6 @@ import { TabHostComponent } from './tab-host/tab-host.component';
     SmscodeCardComponent,
     GreetingCardComponent,
     LogoComponent,
-    MainComponent,
     SwipeHostComponent,
     TabHostComponent,
   ],

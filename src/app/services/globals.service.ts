@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
@@ -25,6 +26,10 @@ export class GlobalsService {
       }
     })();
   }
+
+  backgroundImage$: BehaviorSubject<string> = new BehaviorSubject(
+    'url(../assets/images/bg-1.jpg)'
+  );
 
   iframe: boolean;
 

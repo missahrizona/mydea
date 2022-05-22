@@ -7,11 +7,11 @@ import { GlobalsService } from 'src/app/services/globals.service';
 import {
   CreateApp,
   DeleteApp,
+  NewFeature,
   DeleteFeature,
   InitiateStartup,
-  NewFeature,
   RefreshApps,
-} from './http-handlers';
+} from './subcribe-callbacks';
 import { App } from './App';
 import { ViewStatus, FeatureStatus } from './AppStatus';
 
@@ -21,7 +21,7 @@ export class AppAssistant {
     private api: ApiService,
     public lib: LibService,
     private globals: GlobalsService,
-    private toast: ToastController
+    public toast: ToastController
   ) {}
 
   apps: App[] = [];
@@ -46,7 +46,7 @@ export class AppAssistant {
 
   async refresh(refresher: boolean = false) {
     this.loading = true;
-    this.api.get('apps').subscribe(RefreshApps.success(refresher).bind(this));
+    this.api.get('apps').subscribe(RefreshApps.success.bind(this, refresher));
   }
 
   add() {
@@ -86,7 +86,7 @@ export class AppAssistant {
       .delete('apps/delete', {
         body: this.selectedForDelete,
       })
-      .subscribe(DeleteApp.success({ ...this.selectedForDelete }).bind(this));
+      .subscribe(DeleteApp.success.bind(this, { ...this.selectedForDelete }));
     this.views.deleteapp = false;
   }
 
@@ -106,10 +106,11 @@ export class AppAssistant {
     this.api
       .post('apps/add', { ...this.stagingApp })
       .subscribe(
-        CreateApp.success(
+        CreateApp.success.bind(
+          this,
           this.stagingApp.name,
           this.stagingApp.originator
-        ).bind(this)
+        )
       );
 
     this.stagingApp = new App();
@@ -127,14 +128,14 @@ export class AppAssistant {
     if (idx != -1) {
       this.api
         .post('features/delete', body)
-        .subscribe(DeleteFeature.success(feature, idx, listener).bind(this));
+        .subscribe(DeleteFeature.success.bind(this, idx, listener));
     }
   }
 
   newFeatureSaved(listener: BehaviorSubject<boolean>) {
     // check:  empty input
     if (this.stagingFeature == '') {
-      return;
+      listener.next(true);
     }
     // check:  duplicates
     else if (this.selected.features.indexOf(this.stagingFeature) != -1) {
@@ -146,14 +147,14 @@ export class AppAssistant {
         });
         toastr.present();
       })();
-      return;
+    } else {
+      this.api
+        .post('features/save', {
+          _id: this.selected._id,
+          feature: this.stagingFeature,
+        })
+        .subscribe(NewFeature.success.bind(this, listener));
     }
-    this.api
-      .post('features/save', {
-        _id: this.selected._id,
-        feature: this.stagingFeature,
-      })
-      .subscribe(NewFeature.success(listener).bind(this));
   }
 
   initiateStartupClicked(): void {

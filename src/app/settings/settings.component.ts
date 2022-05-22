@@ -10,21 +10,28 @@ import {
 } from '@angular/core';
 
 import { Animation, AnimationController } from '@ionic/angular';
+import * as _ from 'lodash';
+import { GlobalsService } from '../services/globals.service';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
 })
-export class SettingsComponent implements OnInit, AfterViewInit {
-  constructor(public auth: AuthService, private anime: AnimationController) {}
+export class SettingsComponent implements AfterViewInit {
+  constructor(
+    public auth: AuthService,
+    private anime: AnimationController,
+    public globals: GlobalsService
+  ) {}
   @ViewChild('editImgBtn') editImgBtn: ElementRef;
   @ViewChild('profileImg') profileImg: ElementRef;
   aniEditImgBtn: Animation;
 
-  ngOnInit(): void {}
+  bgs: any[][] = _.chunk(Array.from(new Array(35).keys()), 6);
 
   ngAfterViewInit() {
+    console.log(this.bgs);
     this.aniEditImgBtn = this.anime
       .create()
       .addElement(this.editImgBtn.nativeElement)
@@ -40,6 +47,12 @@ export class SettingsComponent implements OnInit, AfterViewInit {
 
   async editimage(event: any) {
     await this.takePicture();
+  }
+
+  setBackgroundImage(idx: number) {
+    this.globals.backgroundImage$.next(
+      `url(../assets/images/bg-${idx + 1}.jpg)`
+    );
   }
 
   takePicture = async () => {

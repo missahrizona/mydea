@@ -7,10 +7,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './featurelist.component.html',
   styleUrls: ['./featurelist.component.scss'],
 })
-export class FeaturelistComponent implements OnInit {
+export class FeaturelistComponent {
   constructor(public apps: AppAssistant) {}
-
-  ngOnInit(): void {}
 
   deleteLoading: any = {};
 

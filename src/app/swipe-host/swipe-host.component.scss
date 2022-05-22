@@ -1,7 +1,8 @@
 swiper,
 .swipe-host-content,
 .slide-content,
-.slide-content>* {
-    width: 100%;
-    height: 100%;
+.slide-content > * {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
 }
