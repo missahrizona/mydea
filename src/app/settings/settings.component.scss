@@ -3,9 +3,18 @@ ion-card {
 }
 
 ion-card-title {
+  text-align: left;
+}
+
+ion-card-title#displayname {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+ion-grid {
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .tap-to-edit-btn {
@@ -16,17 +25,6 @@ ion-card-title {
   height: 10rem;
   display: flex;
   align-items: flex-end;
-  opacity: 0.5;
-  & .tap-to-edit-inner {
-    width: 100%;
-    height: 30%;
-    background: white;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-  }
 }
 
 .bg-col {
@@ -40,4 +38,11 @@ ion-card-title {
   background-size: contain;
   margin: 0;
   padding: 0;
+}
+
+ion-button {
+  & ion-text {
+    position: absolute;
+    bottom: 1em;
+  }
 }

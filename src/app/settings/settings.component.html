@@ -1,19 +1,48 @@
 <ion-card>
   <ion-card-header>
-    <ion-card-subtitle> </ion-card-subtitle>
-    <ion-card-title>
+    <ion-card-title id="displayname">
       <ion-avatar style="width: 10rem; height: 10rem" slot="">
         <img #profileImg src="../../assets/svg/avatar.svg" />
-        <div #editImgBtn (click)="editimage($event)" class="tap-to-edit-btn">
-          <div class="tap-to-edit-inner">Edit</div>
-        </div>
+        <ion-button
+          fill="clear"
+          #editImgBtn
+          (click)="editimage($event)"
+          class="tap-to-edit-btn">
+          <ion-text>Edit</ion-text>
+        </ion-button>
       </ion-avatar>
       <ion-text class="ion-padding-top">{{ auth.user.displayname }}</ion-text>
     </ion-card-title>
   </ion-card-header>
+</ion-card>
 
-  <ion-card-content
-    ><ion-item>Background </ion-item>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Background</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row *ngFor="let row of bgs">
+        <ion-col class="bg-col" *ngFor="let col of row">
+          <ion-button
+            (click)="setBackgroundImage(col)"
+            fill="clear"
+            size="small"
+            style="background-image: url('../../assets/images/bg-{{
+              col + 1
+            }}.jpg')"
+            class="bg-col-inner"></ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Background</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
     <ion-grid>
       <ion-row *ngFor="let row of bgs">
         <ion-col class="bg-col" *ngFor="let col of row">

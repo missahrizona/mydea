@@ -31,18 +31,17 @@ export class SettingsComponent implements AfterViewInit {
   bgs: any[][] = _.chunk(Array.from(new Array(35).keys()), 6);
 
   ngAfterViewInit() {
-    console.log(this.bgs);
-    this.aniEditImgBtn = this.anime
-      .create()
-      .addElement(this.editImgBtn.nativeElement)
-      .duration(100)
-      .keyframes([
-        { offset: 0.5, opacity: 0.75 },
-        { offset: 1, opacity: 0.5 },
-      ]);
-    this.editImgBtn.nativeElement.addEventListener('click', () => {
-      this.aniEditImgBtn.play();
-    });
+    // this.aniEditImgBtn = this.anime
+    //   .create()
+    //   .addElement(this.editImgBtn.nativeElement)
+    //   .duration(100)
+    //   .keyframes([
+    //     { offset: 0.5, opacity: 0.75 },
+    //     { offset: 1, opacity: 0.5 },
+    //   ]);
+    // this.editImgBtn.nativeElement.addEventListener('click', () => {
+    //   this.aniEditImgBtn.play();
+    // });
   }
 
   async editimage(event: any) {
