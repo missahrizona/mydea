@@ -31,6 +31,7 @@ export class AuthService {
   loginstep: number = 0;
   msg: any = null;
   user: User = new User({});
+  accountRequestLoading: boolean = false;
 
   codeprogress: Coder = new Coder();
 
@@ -43,10 +44,7 @@ export class AuthService {
       );
       this.setUser(userdata);
       if (this.user.authenticated) {
-        let bgurl = `url(../assets/images/backgrounds/bg-${this.user.settings.bgindex}.jpg)`;
-        this.globals.backgroundImage$.next(bgurl);
-        this.initData();
-        this.router.navigate(['/home']);
+        this.tohome();
       } else {
         this.router.navigate(['/login']);
         this.loginstep = Steps.VERIFY_CODE;
@@ -58,10 +56,6 @@ export class AuthService {
     }
   }
 
-  initData() {
-    this.apps.refresh(false);
-  }
-
   setUser(u: UserData) {
     this.user = new User(u);
     let then = this.lib.moment().subtract(7, 'days'),
@@ -69,6 +63,8 @@ export class AuthService {
     this.user.authenticated = this.user.validatedon?.isBetween(then, now);
     this.user.auth_date_diff = now.diff(this.lib.moment(this.user.validatedon));
     localStorage.setItem('user', JSON.stringify(this.user));
+    let bgurl = `url(../assets/images/backgrounds/bg-${this.user.settings.bgindex}.jpg)`;
+    this.globals.backgroundImage$.next(bgurl);
     this.d.user$.next(this.user);
   }
 
@@ -132,12 +128,18 @@ export class AuthService {
     }
   }
 
+  telsubmitted() {
+    this.accountRequestLoading = true;
+    this.accountexists();
+  }
+
   accountexists(): void {
     this.api
       .post('auth/exists', {
         tel: this.user.tel,
       })
       .subscribe(async (res: any) => {
+        this.accountRequestLoading = false;
         if (res == null) {
           // account doesnt exist
           this.requestcode();
@@ -169,7 +171,8 @@ export class AuthService {
     });
   }
 
-  getstarted() {
+  tohome() {
+    this.apps.refresh();
     this.router.navigate(['home']);
   }
 }

@@ -1,14 +1,16 @@
 <ion-card>
-    <ion-card-header>
-        <ion-card-title>Hey {{ auth.user.displayname }}!</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-        <div class="card-content">
-            <ion-item class="ion-text-center" lines="none">
-                <ion-label>
-                    <ion-button fill="clear" (click)="auth.getstarted()">Get Started</ion-button>
-                </ion-label>
-            </ion-item>
-        </div>
-    </ion-card-content>
+  <ion-card-header>
+    <ion-card-title>Hey {{ auth.user.displayname }}!</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <div class="card-content">
+      <ion-item class="ion-text-center" lines="none">
+        <ion-label>
+          <ion-button fill="clear" (click)="auth.tohome()"
+            >Get Started</ion-button
+          >
+        </ion-label>
+      </ion-item>
+    </div>
+  </ion-card-content>
 </ion-card>
