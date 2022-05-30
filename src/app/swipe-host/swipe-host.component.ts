@@ -12,7 +12,6 @@ export class SwipeHostComponent implements OnInit {
   constructor(private nav: NavigationService, private globals: GlobalsService) {
     this.globals.backgroundImage$.subscribe((val: string) => {
       this.backgroundImage = val;
-      console.log('setting bg', val);
     });
   }
 

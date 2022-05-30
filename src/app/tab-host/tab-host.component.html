@@ -1,27 +1,27 @@
 <ion-tabs #ionTabs>
-    <ion-header translucent="true">
-        <ion-toolbar>
-            <ion-title>
-                <ion-label>
-                    <app-logo></app-logo>
-                </ion-label>
-            </ion-title>
-        </ion-toolbar>
-    </ion-header>
-    <ion-tab-bar [translucent]="true" slot="bottom">
-        <ion-tab-button [selected]="tabsactive[0]" (click)="tabclicked($event, 0)">
-            <ion-icon name="home"></ion-icon>
-            <ion-label>Home</ion-label>
-        </ion-tab-button>
+  <ion-header translucent="true">
+    <ion-toolbar>
+      <ion-title>
+        <ion-label>
+          <app-logo></app-logo>
+        </ion-label>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-tab-bar [translucent]="true" slot="bottom">
+    <ion-tab-button [selected]="tabsactive[0]" (click)="tabclicked($event, 0)">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
 
-        <ion-tab-button [selected]="tabsactive[1]" (click)="tabclicked($event, 1)">
-            <ion-icon name="diamond-sharp"></ion-icon>
-            <ion-label>New</ion-label>
-        </ion-tab-button>
+    <ion-tab-button [selected]="tabsactive[1]" (click)="tabclicked($event, 1)">
+      <ion-icon name="diamond-sharp"></ion-icon>
+      <ion-label>Treasury</ion-label>
+    </ion-tab-button>
 
-        <ion-tab-button [selected]="tabsactive[2]" (click)="tabclicked($event, 2)">
-            <ion-icon name="person-circle"></ion-icon>
-            <ion-label>{{ auth.user.displayname }}</ion-label>
-        </ion-tab-button>
-    </ion-tab-bar>
+    <ion-tab-button [selected]="tabsactive[2]" (click)="tabclicked($event, 2)">
+      <ion-icon name="person-circle"></ion-icon>
+      <ion-label>{{ auth.user.displayname }}</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
 </ion-tabs>

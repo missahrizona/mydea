@@ -9,7 +9,7 @@ import { NodeStyleEventEmitter } from 'rxjs/internal/observable/fromEvent';
   templateUrl: './tab-host.component.html',
   styleUrls: ['./tab-host.component.scss'],
 })
-export class TabHostComponent implements OnInit {
+export class TabHostComponent implements OnInit, AfterViewInit {
   constructor(public auth: AuthService, private nav: NavigationService) {}
 
   @ViewChild('ionTabs') ionTabs: IonTabs;
@@ -21,6 +21,12 @@ export class TabHostComponent implements OnInit {
       if (navdata != null) {
         this.setTabStates(navdata.index);
       }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      document.querySelector('app-logo svg')?.classList.add('active');
     });
   }
 

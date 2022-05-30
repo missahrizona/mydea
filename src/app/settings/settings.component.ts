@@ -35,7 +35,7 @@ export class SettingsComponent implements OnInit {
   @ViewChild('profileImg') profileImg: ElementRef<HTMLImageElement>;
 
   //bgs: number[][] = _.chunk(Array.from(new Array(16).keys()), 3);
-  bgs: number[] = Array.from(new Array(15).keys());
+  bgs: number[] = Array.from(new Array(16).keys());
   bgImage: string = 'url(../../assets/images/bg-1.jpg)';
   pfp: string = 'url(../../assets/svg/avatar.svg)';
 
@@ -51,7 +51,7 @@ export class SettingsComponent implements OnInit {
     this.api
       .post('settings/save', {
         user: this.auth.user,
-        settings: { bgindex: idx },
+        settings: { bgindex: idx + 1 },
       })
       .subscribe();
     this.globals.backgroundImage$.next(

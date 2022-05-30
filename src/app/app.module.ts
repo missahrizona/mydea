@@ -31,6 +31,7 @@ import { ToggleLink } from './portfolio/child-classes/togglelink';
 import { SwipeHostComponent } from './swipe-host/swipe-host.component';
 import { TabHostComponent } from './tab-host/tab-host.component';
 import { TreasuryComponent } from './treasury/treasury.component';
+import { SplashscreenComponent } from './splashscreen/splashscreen.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { TreasuryComponent } from './treasury/treasury.component';
     SwipeHostComponent,
     TabHostComponent,
     TreasuryComponent,
+    SplashscreenComponent,
   ],
   imports: [
     BrowserModule,

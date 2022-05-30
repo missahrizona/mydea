@@ -14,6 +14,7 @@ export class User {
   public validatedon: Moment | undefined;
   public authenticated: boolean | undefined;
   public settings: any;
+  public auth_date_diff: number;
 }
 
 export interface UserData {

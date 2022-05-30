@@ -179,7 +179,6 @@ export class AppAssistant {
         if ((res.modifiedCount = 1)) {
           event.inProgress = true;
         }
-        console.log(res);
       });
   }
   setIsDone(event: any, idx: number) {

@@ -1,6 +1,8 @@
 @import url(./assets/styles/animista.css);
 @import url(./assets/styles/cssanimation.io.scss);
 @import url(./assets/styles/animatopy.scss);
+@import url(./assets/styles/charmee-logo-animation.css);
+
 @import "~swiper/scss";
 @import "~swiper/scss/autoplay";
 @import "~swiper/scss/keyboard";
@@ -8,8 +10,12 @@
 @import "~swiper/scss/scrollbar";
 @import "~swiper/scss/zoom";
 @import "~@ionic/angular/css/ionic-swiper";
+
 ion-content::part(background) {
   background: transparent !important;
+}
+app-splashscreen ion-content::part(scroll) {
+  padding-top: 0;
 }
 
 ion-card ion-label {
@@ -59,8 +65,8 @@ app-logo {
   justify-content: center;
   & svg {
     display: block;
-    width: 150px !important;
-    height: 40px !important;
+    // width: 150px !important;
+    // height: 40px !important;
   }
 }
 

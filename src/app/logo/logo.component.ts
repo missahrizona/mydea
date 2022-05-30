@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-logo',
   templateUrl: './logo.component.html',
-  styleUrls: ['./logo.component.scss']
+  styleUrls: ['./logo.component.scss'],
 })
-export class LogoComponent implements OnInit {
+export class LogoComponent implements OnInit, AfterViewInit {
+  constructor() {}
 
-  constructor() { }
+  @Input('width') width: string;
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
+  ngAfterViewInit() {}
 }

@@ -1,5 +1,6 @@
+import { AppAssistant } from './../portfolio/child-classes/AppAssistant';
 import { DispatcherService } from './dispatcher.service';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Router } from '@angular/router';
 import { LibService } from './lib.service';
@@ -20,35 +21,45 @@ export class AuthService {
     public lib: LibService,
     private router: Router,
     private api: ApiService,
-    private d: DispatcherService
+    private d: DispatcherService,
+    private apps: AppAssistant
   ) {}
 
   creatinginprogress: boolean = false;
   verifyingcode: boolean = false;
-  code: string;
+  codes: string[] = ['', '', '', '', '', ''];
   loginstep: number = 0;
   msg: any = null;
   user: User = new User({});
 
   codeprogress: Coder = new Coder();
 
-  initUser() {
+  async initUser() {
     let usr = localStorage.getItem('user');
     if (usr != null) {
       let u = JSON.parse(usr) as User;
-      this.api.post('auth/user', u).subscribe((userdata: UserData) => {
-        this.setUser(userdata);
-        if (this.user.authenticated) {
-          let bgurl = `url(../assets/images/backgrounds/bg-${this.user.settings.bgindex}.jpg)`;
-          this.globals.backgroundImage$.next(bgurl);
-          this.router.navigate(['/home']);
-        } else {
-          this.loginstep = Steps.VERIFY_CODE;
-        }
-      });
+      let userdata: UserData = await firstValueFrom(
+        this.api.post('auth/user', u)
+      );
+      this.setUser(userdata);
+      if (this.user.authenticated) {
+        let bgurl = `url(../assets/images/backgrounds/bg-${this.user.settings.bgindex}.jpg)`;
+        this.globals.backgroundImage$.next(bgurl);
+        this.initData();
+        this.router.navigate(['/home']);
+      } else {
+        this.router.navigate(['/login']);
+        this.loginstep = Steps.VERIFY_CODE;
+        this.requestcode();
+      }
     } else {
+      this.router.navigate(['/login']);
       this.loginstep = Steps.INPUT_TEL;
     }
+  }
+
+  initData() {
+    this.apps.refresh(false);
   }
 
   setUser(u: UserData) {
@@ -56,6 +67,7 @@ export class AuthService {
     let then = this.lib.moment().subtract(7, 'days'),
       now = this.lib.moment();
     this.user.authenticated = this.user.validatedon?.isBetween(then, now);
+    this.user.auth_date_diff = now.diff(this.lib.moment(this.user.validatedon));
     localStorage.setItem('user', JSON.stringify(this.user));
     this.d.user$.next(this.user);
   }
@@ -76,8 +88,10 @@ export class AuthService {
     // request code
   }
 
-  async codechanged(event: any) {
-    if (this.code.length == 6) {
+  codeschanged(event: any) {
+    if (this.codes.join('').length < 6) {
+      return;
+    } else {
       let progressbar = document.querySelector('.progress-bar') as HTMLElement;
       progressbar.style.opacity = '1';
       this.codeprogress.value = 0;
@@ -86,8 +100,16 @@ export class AuthService {
           this.codeprogress.value += 0.1;
           if (this.codeprogress.value >= 1) {
             clearInterval(this.codeprogress.interval);
-            if (this.msg.code == this.code) {
+            if (this.msg.code == this.codes.join('')) {
+              this.user.validatedon = this.lib.moment();
+              this.api
+                .post('auth/validated', {
+                  _id: this.user._id,
+                  validatedon: this.user.validatedon,
+                })
+                .subscribe();
               this.codeprogress.color = 'success';
+              this.apps.refresh(false);
               if (this.user.displayname == '')
                 this.loginstep = Steps.DISPLAY_NAME;
               else this.loginstep = Steps.GREETING;
@@ -108,7 +130,6 @@ export class AuthService {
         100
       );
     }
-    // verify code matches
   }
 
   accountexists(): void {

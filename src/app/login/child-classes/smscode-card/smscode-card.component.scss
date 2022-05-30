@@ -1,5 +1,15 @@
 .progress-bar {
-    padding: 3px 0 3px 0;
-    opacity: 0;
-    transition: opacity 0.1s linear;
+  padding: 3px 0 3px 0;
+  opacity: 0;
+  transition: opacity 0.1s linear;
+}
+
+.code-input {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.code-input-digit {
+  width: 15%;
+  max-width: 20%;
 }

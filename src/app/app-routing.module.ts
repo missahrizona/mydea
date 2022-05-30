@@ -1,3 +1,4 @@
+import { SplashscreenComponent } from './splashscreen/splashscreen.component';
 import { TabHostComponent } from './tab-host/tab-host.component';
 import { SwipeHostComponent } from './swipe-host/swipe-host.component';
 import { LoginComponent } from './login/login.component';
@@ -12,21 +13,14 @@ const routes: Routes = [
     children: [
       {
         path: '',
+
         component: SwipeHostComponent,
       },
-      // {
-      //   path: 'home',
-      //   redirectTo: '',
-      // },
-      // {
-      //   path: 'org',
-      //   component: OrgComponent,
-      // },
-      // {
-      //   path: 'profile',
-      //   component: SettingsComponent,
-      // },
     ],
+  },
+  {
+    path: 'splash',
+    component: SplashscreenComponent,
   },
   {
     path: 'login',
@@ -34,7 +28,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'splash',
     pathMatch: 'full',
   },
   {
