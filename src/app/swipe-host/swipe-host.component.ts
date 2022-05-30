@@ -1,3 +1,4 @@
+import { GlobalsService } from './../services/globals.service';
 import { NavigationService, NavData } from './../services/navigation.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SwiperComponent } from 'swiper/angular';
@@ -8,9 +9,15 @@ import { SwiperComponent } from 'swiper/angular';
   styleUrls: ['./swipe-host.component.scss'],
 })
 export class SwipeHostComponent implements OnInit {
-  constructor(private nav: NavigationService) {}
+  constructor(private nav: NavigationService, private globals: GlobalsService) {
+    this.globals.backgroundImage$.subscribe((val: string) => {
+      this.backgroundImage = val;
+      console.log('setting bg', val);
+    });
+  }
 
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+  backgroundImage: string = 'url(../assets/images/backgrounds/bg-0.jpg';
 
   ngOnInit(): void {
     this.nav.slideDispatcher.subscribe((navdata: NavData) => {

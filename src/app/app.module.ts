@@ -12,7 +12,6 @@ import { SwiperModule } from 'swiper/angular';
 
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { ErrorComponent } from './error/error.component';
-import { OrgComponent } from './org/org.component';
 import { SettingsComponent } from './settings/settings.component';
 import { IonicModule } from '@ionic/angular';
 import { AppAssistant } from './portfolio/child-classes/AppAssistant';
@@ -31,13 +30,13 @@ import { LogoComponent } from './logo/logo.component';
 import { ToggleLink } from './portfolio/child-classes/togglelink';
 import { SwipeHostComponent } from './swipe-host/swipe-host.component';
 import { TabHostComponent } from './tab-host/tab-host.component';
+import { TreasuryComponent } from './treasury/treasury.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PortfolioComponent,
     ErrorComponent,
-    OrgComponent,
     SettingsComponent,
     AppDetailModalComponent,
     DeleteModalComponent,
@@ -54,6 +53,7 @@ import { TabHostComponent } from './tab-host/tab-host.component';
     LogoComponent,
     SwipeHostComponent,
     TabHostComponent,
+    TreasuryComponent,
   ],
   imports: [
     BrowserModule,

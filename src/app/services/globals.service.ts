@@ -28,7 +28,7 @@ export class GlobalsService {
   }
 
   backgroundImage$: BehaviorSubject<string> = new BehaviorSubject(
-    'url(../assets/images/bg-1.jpg)'
+    'url(../assets/images/backgrounds/bg-0.jpg)'
   );
 
   iframe: boolean;

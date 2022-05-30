@@ -1,5 +1,6 @@
 <ion-content [scrollY]="false">
   <swiper
+    [style.backgroundImage]="backgroundImage"
     (slideChange)="slideChanged($event)"
     [initialSlide]="0"
     #swiper
@@ -14,9 +15,7 @@
       </div>
     </ng-template>
     <ng-template swiperSlide>
-      <div class="slide-content">
-        <app-org></app-org>
-      </div>
+      <div class="slide-content"><app-treasury></app-treasury></div>
     </ng-template>
     <ng-template swiperSlide>
       <div class="slide-content">

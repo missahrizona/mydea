@@ -1,59 +1,84 @@
+import { DispatcherService } from './../services/dispatcher.service';
+import { ApiService } from './../services/api.service';
+import { FotoService } from './../services/foto.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { Camera, CameraResultType } from '@capacitor/camera';
 
 import {
   Component,
   ElementRef,
-  OnInit,
   ViewChild,
+  OnInit,
   AfterViewInit,
 } from '@angular/core';
 
 import { Animation, AnimationController } from '@ionic/angular';
 import * as _ from 'lodash';
 import { GlobalsService } from '../services/globals.service';
+import { Photo } from '@capacitor/camera';
+import { UserData } from '../login/child-classes/User';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnInit {
   constructor(
     public auth: AuthService,
-    private anime: AnimationController,
-    public globals: GlobalsService
-  ) {}
-  @ViewChild('profileImg') profileImg: ElementRef;
-  aniEditImgBtn: Animation;
+    public globals: GlobalsService,
+    public foto: FotoService,
+    public api: ApiService,
+    public d: DispatcherService
+  ) {
+    this.pfp = 'url(../../assets/svg/avatar.svg)';
+  }
+  @ViewChild('profileImg') profileImg: ElementRef<HTMLImageElement>;
 
-  bgs: any[][] = _.chunk(Array.from(new Array(35).keys()), 6);
+  //bgs: number[][] = _.chunk(Array.from(new Array(16).keys()), 3);
+  bgs: number[] = Array.from(new Array(15).keys());
+  bgImage: string = 'url(../../assets/images/bg-1.jpg)';
+  pfp: string = 'url(../../assets/svg/avatar.svg)';
 
-  async editimage(event: any) {
-    await this.takePicture();
+  ngOnInit(): void {
+    this.d.user$.subscribe((user: UserData) => {
+      if (user.settings != undefined && user.settings.pfp) {
+        this.pfp = user.settings.pfp;
+      }
+    });
   }
 
   setBackgroundImage(idx: number) {
+    this.api
+      .post('settings/save', {
+        user: this.auth.user,
+        settings: { bgindex: idx },
+      })
+      .subscribe();
     this.globals.backgroundImage$.next(
-      `url(../assets/images/bg-${idx + 1}.jpg)`
+      `url(../assets/images/backgrounds/bg-${idx + 1}.jpg)`
     );
   }
 
-  takePicture = async () => {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Uri,
-    });
+  formatBgImgCss(i: number) {
+    let str = `url('../../assets/images/backgrounds/bg-${i + 1}.jpg')`;
+    return str;
+  }
 
-    // image.webPath will contain a path that can be set as an image src.
-    // You can access the original file using image.path, which can be
-    // passed to the Filesystem API to read the raw data of the image,
-    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-    var imageUrl = image.webPath;
-    console.log(image);
+  async takePicture() {
+    const image: Photo = await this.foto.capture();
 
-    // Can be set to the src of an image now
-    this.profileImg.nativeElement.src = imageUrl;
-  };
+    this.saveProfilePic(image);
+  }
+
+  saveProfilePic(image: Photo) {
+    this.auth.user.settings.pfp = image.dataUrl;
+    this.pfp = image.dataUrl || '';
+
+    this.api
+      .post('settings/save', {
+        user: this.auth.user,
+        settings: { pfp: image.dataUrl },
+      })
+      .subscribe();
+  }
 }
