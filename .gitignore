@@ -43,3 +43,4 @@ Thumbs.db
 
 src/assets/fa-pro-5.13/*
 !src/assets/fa-pro-5.13/css
+!src/assets/fa-pro-5.13/webfonts
