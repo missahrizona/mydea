@@ -29,15 +29,14 @@ export class HttpInterceptorService implements HttpInterceptor {
       req.url.indexOf('auth') == -1
     ) {
       //let usr = localStorage.getItem('user');
-      if (this.auth.user && !this.auth.user.authenticated) {
-        this.router.navigate(['/login']);
-      }
+      // if (this.auth.user && !this.auth.user.authenticated) {
+      //   this.router.navigate(['/login']);
+      // }
       // else {
       //   let u = JSON.parse(usr) as User;
       //   this.api.post('auth/user', u).subscribe((userdata: UserData) => {
       //     this.auth.setUser(userdata);
       //   });
-
       //   if (!u.authenticated) {
       //     this.router.navigate(['/login']);
       //   } else {

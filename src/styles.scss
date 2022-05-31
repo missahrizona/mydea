@@ -70,12 +70,6 @@ app-logo {
   }
 }
 
-ion-app {
-  // background-image: url(./assets/images/bg-10.jpg);
-  background-position: center;
-  background-size: cover;
-}
-
 app-login ion-card ion-card-content {
   min-height: 8em;
   align-items: center;
@@ -84,8 +78,26 @@ app-login ion-card ion-card-content {
   flex-direction: column;
 }
 
-swiper {
+ion-tabs {
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+app-treasury .swiper {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+app-treasury .swiper-slide {
   background-position: center;
   background-size: cover;
-  background-repeat: no-repeat;
+  width: 300px !important;
+  height: 300px !important;
+}
+
+app-treasury .swiper-slide ion-card {
+  display: block;
+  width: 100%;
 }

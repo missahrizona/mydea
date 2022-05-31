@@ -32,6 +32,7 @@ import { SwipeHostComponent } from './swipe-host/swipe-host.component';
 import { TabHostComponent } from './tab-host/tab-host.component';
 import { TreasuryComponent } from './treasury/treasury.component';
 import { SplashscreenComponent } from './splashscreen/splashscreen.component';
+import { LazyImgDirective } from './directives/lazy-img.directive';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { SplashscreenComponent } from './splashscreen/splashscreen.component';
     TabHostComponent,
     TreasuryComponent,
     SplashscreenComponent,
+    LazyImgDirective,
   ],
   imports: [
     BrowserModule,

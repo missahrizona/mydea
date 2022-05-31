@@ -1,16 +1,6 @@
 import { AppAssistant } from './../AppAssistant';
 import { Component, OnInit, Input } from '@angular/core';
 
-import SwiperCore, {
-  Autoplay,
-  Keyboard,
-  Pagination,
-  Scrollbar,
-  Zoom,
-} from 'swiper';
-
-SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom]);
-
 @Component({
   selector: 'app-app-detail-modal',
   templateUrl: './app-detail-modal.component.html',

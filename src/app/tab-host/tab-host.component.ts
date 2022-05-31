@@ -1,8 +1,10 @@
+import { GlobalsService } from 'src/app/services/globals.service';
 import { NavData, NavigationService } from './../services/navigation.service';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { IonTabs } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
-import { NodeStyleEventEmitter } from 'rxjs/internal/observable/fromEvent';
+
+declare const RainyDay: any;
 
 @Component({
   selector: 'app-tab-host',
@@ -10,17 +12,27 @@ import { NodeStyleEventEmitter } from 'rxjs/internal/observable/fromEvent';
   styleUrls: ['./tab-host.component.scss'],
 })
 export class TabHostComponent implements OnInit, AfterViewInit {
-  constructor(public auth: AuthService, private nav: NavigationService) {}
+  constructor(
+    public auth: AuthService,
+    private nav: NavigationService,
+    public globals: GlobalsService
+  ) {}
 
   @ViewChild('ionTabs') ionTabs: IonTabs;
 
   tabsactive: boolean[] = [true, false, false];
+  backgroundImage: string = 'url(../assets/images/backgrounds/bg-0.jpg';
 
   ngOnInit(): void {
     this.nav.tabDispatcher.subscribe((navdata: NavData) => {
       if (navdata != null) {
         this.setTabStates(navdata.index);
       }
+    });
+
+    this.globals.backgroundImage$.subscribe((val: string) => {
+      if (!val) return;
+      this.backgroundImage = val;
     });
   }
 

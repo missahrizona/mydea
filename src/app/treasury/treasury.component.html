@@ -1,1 +1,32 @@
-<p>Treasury coming soon</p>
+<div class="treasury-container">
+  <swiper
+    (slideChange)="slideChanged($event)"
+    [effect]="'coverflow'"
+    [grabCursor]="true"
+    [centeredSlides]="true"
+    [slidesPerView]="'auto'"
+    [coverflowEffect]="{
+      rotate: 50,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: false
+    }">
+    <ng-template swiperSlide *ngFor="let card of cards">
+      <div class="slide-content">
+        <ion-card>
+          <img [src]="card.img" />
+          <ion-card-header>
+            <ion-card-subtitle style="text-transform: none"
+              ><a [href]="card.link">{{ card.link }}</a></ion-card-subtitle
+            >
+            <ion-card-title>{{ card.name }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-button [disabled]="true">July 1st</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ng-template>
+  </swiper>
+</div>

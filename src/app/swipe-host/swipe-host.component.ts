@@ -9,14 +9,9 @@ import { SwiperComponent } from 'swiper/angular';
   styleUrls: ['./swipe-host.component.scss'],
 })
 export class SwipeHostComponent implements OnInit {
-  constructor(private nav: NavigationService, private globals: GlobalsService) {
-    this.globals.backgroundImage$.subscribe((val: string) => {
-      this.backgroundImage = val;
-    });
-  }
+  constructor(private nav: NavigationService) {}
 
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
-  backgroundImage: string = 'url(../assets/images/backgrounds/bg-0.jpg';
 
   ngOnInit(): void {
     this.nav.slideDispatcher.subscribe((navdata: NavData) => {
