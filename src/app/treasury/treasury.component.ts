@@ -24,7 +24,7 @@ export class TreasuryComponent implements OnInit {
     {
       name: 'MIT Professional Certificate in Coding for Women',
       link: 'https://executive-ed.xpro.mit.edu/professional-certificate-coding-womens-cohort',
-      img: '../../assets/images/cards/mit2.svg',
+      img: '../../assets/images/cards/mit.png',
     },
   ];
 

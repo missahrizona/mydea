@@ -15,7 +15,9 @@
     <ng-template swiperSlide *ngFor="let card of cards">
       <div class="slide-content">
         <ion-card>
-          <img [src]="card.img" />
+          <div class="card-header-img">
+            <img [src]="card.img" />
+          </div>
           <ion-card-header>
             <ion-card-subtitle style="text-transform: none"
               ><a [href]="card.link">{{ card.link }}</a></ion-card-subtitle
