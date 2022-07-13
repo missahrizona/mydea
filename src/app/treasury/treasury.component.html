@@ -15,8 +15,11 @@
     <ng-template swiperSlide *ngFor="let card of cards">
       <div class="slide-content">
         <ion-card>
-          <div class="card-header-img">
+          <div *ngIf="card.img != undefined" class="card-header-img">
             <img [src]="card.img" />
+          </div>
+          <div *ngIf="card.img == undefined" class="card-header-img">
+            <iframe loading="lazy" src="card.link"></iframe>
           </div>
           <ion-card-header>
             <ion-card-subtitle style="text-transform: none"
