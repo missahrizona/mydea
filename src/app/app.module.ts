@@ -33,6 +33,7 @@ import { TabHostComponent } from './tab-host/tab-host.component';
 import { TreasuryComponent } from './treasury/treasury.component';
 import { SplashscreenComponent } from './splashscreen/splashscreen.component';
 import { LazyImgDirective } from './directives/lazy-img.directive';
+import { SafePipeModule } from 'safe-pipe';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { LazyImgDirective } from './directives/lazy-img.directive';
     AppRoutingModule,
     HttpClientModule,
     SwiperModule,
+    SafePipeModule,
     IonicModule.forRoot({
       rippleEffect: true,
     }),

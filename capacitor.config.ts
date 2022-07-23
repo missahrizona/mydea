@@ -2,8 +2,8 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.charmee.app',
-  appName: 'internalapp-primeng',
-  webDir: 'dist/internalapp-primeng',
+  appName: 'mydea',
+  webDir: 'dist/mydea',
   bundledWebRuntime: false,
   plugins: {},
 };

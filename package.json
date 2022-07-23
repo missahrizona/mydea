@@ -1,5 +1,5 @@
 {
-  "name": "internalapp-primeng",
+  "name": "mydea",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -31,8 +31,10 @@
     "moment": "^2.29.3",
     "rainyday.js": "^0.1.7",
     "rxjs": "~7.5.0",
+    "safe-pipe": "^2.0.2",
     "swiper": "^8.1.4",
     "tslib": "^2.3.0",
+    "unsplash-js": "^7.0.15",
     "util": "^0.12.4",
     "zone.js": "~0.11.4"
   },

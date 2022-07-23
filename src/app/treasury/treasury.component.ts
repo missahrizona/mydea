@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,105 +7,123 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./treasury.component.scss'],
 })
 export class TreasuryComponent implements OnInit {
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {}
+  accessKey: string = 'guFi2sERZWAns62fdRbA_WAGW_RTGlmntE2eQ4sv75w';
+
+  ngOnInit(): void {
+    let requestOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Client-ID guFi2sERZWAns62fdRbA_WAGW_RTGlmntE2eQ4sv75w',
+      }),
+    };
+    // this.cards.forEach(async (card) => {
+    //   this.http
+    //     .get(
+    //       `https://api.unsplash.com/photos/random/?query=${card.name}&client_id=${this.accessKey}`,
+    //       requestOptions
+    //     )
+    //     .subscribe((result: any) => {
+    //       card.link = result.urls.small;
+    //     });
+    // });
+  }
 
   cards: any[] = [
     {
       name: 'Microsoft Office',
-      link: 'https://www.office.com/',
+      link: '',
       img: '../../assets/images/cards/office.png',
       user: 'missahrizona@outlook.com',
-      pass: 'familypass123'
+      pass: 'familypass123',
     },
     {
       name: 'Adobe Creative Cloud',
-      link: 'https://creativecloud.adobe.com/',
+      link: '',
       img: '../../assets/images/cards/adobe.png',
       user: 'markus.anthony.garcia@gmail.com',
-      pass: 'familypass123'
+      pass: 'familypass123',
     },
     {
       name: 'MIT Professional Certificate in Coding for Women',
-      link: 'https://executive-ed.xpro.mit.edu/professional-certificate-coding-womens-cohort',
+      link: '',
       img: '../../assets/images/cards/mit.png',
-      request: true
+      request: true,
     },
     {
       name: 'Netflix',
-      link: 'https://netflix.com',
+      link: '',
       iframe: true,
       user: 'markus.anthony.garcia@gmail.com',
       pass: 'familypass123',
     },
     {
       name: 'Hulu',
-      link: 'https://hulu.com',
+      link: '',
       iframe: true,
       user: 'markus.anthony.garcia@gmail.com',
       pass: 'familypass123',
     },
     {
       name: 'Disney+',
-      link: 'https://disneyplus.com',
+      link: '',
       iframe: true,
       user: 'markus.anthony.garcia@gmail.com',
       pass: 'familypass123',
     },
     {
       name: 'HBO Max',
-      link: 'https://hbomax.com',
+      link: '',
       iframe: true,
       user: 'markus.anthony.garcia@gmail.com',
       pass: 'familypass123',
     },
     {
       name: 'Amazon Prime',
-      link: 'https://amazon.com',
+      link: '',
       iframe: true,
       user: 'markus.anthony.garcia@gmail.com',
       pass: 'familypass123',
     },
     {
       name: 'Youtube Premium',
-      link: 'https://youtube.com',
-      invite: true
+      link: '',
+      invite: true,
     },
     {
       name: 'Apple Game Pass',
-      invite: true
+      invite: true,
     },
     {
       name: 'Xbox GamePass for PC',
-      link: 'https://www.xbox.com/en-US/xbox-game-pass/pc-game-pass',
-      invite: true
+      link: '',
+      invite: true,
     },
     {
       name: 'Playstation Plus',
       link: '',
-      invite: true
+      invite: true,
     },
     {
       name: 'EA Play Pro',
-      link: 'https://www.ea.com/ea-play',
-      invite: true
+      link: '',
+      invite: true,
     },
     {
       name: 'Apple TV+',
-      link: 'https://tv.apple.com',
-      invite: true
+      link: '',
+      invite: true,
     },
     {
       name: 'Spotify',
-      link: 'https://spotify.com',
-      invite: true
+      link: '',
+      invite: true,
     },
     {
       name: 'Google One',
-      link: 'https://families.google.com',
-      invite: true
-    }
+      link: '',
+      invite: true,
+    },
   ];
 
   slideChanged(event: any) {}

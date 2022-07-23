@@ -1,11 +1,6 @@
 <div class="treasury-container">
-  <swiper
-    (slideChange)="slideChanged($event)"
-    [effect]="'coverflow'"
-    [grabCursor]="true"
-    [centeredSlides]="true"
-    [slidesPerView]="'auto'"
-    [coverflowEffect]="{
+  <swiper (slideChange)="slideChanged($event)" [effect]="'coverflow'" [grabCursor]="true" [centeredSlides]="true"
+    [slidesPerView]="'auto'" [coverflowEffect]="{
       rotate: 50,
       stretch: 0,
       depth: 100,
@@ -15,16 +10,15 @@
     <ng-template swiperSlide *ngFor="let card of cards">
       <div class="slide-content">
         <ion-card>
-          <div *ngIf="card.img != undefined" class="card-header-img">
+          <div *ngIf="card.img !== undefined" class="card-header-img">
             <img [src]="card.img" />
           </div>
-          <div *ngIf="card.img == undefined" class="card-header-img">
-            <iframe loading="lazy" src="card.link"></iframe>
+          <div *ngIf="card.img === undefined" class="card-header-img">
+            <!-- <iframe loading="lazy" [src]="card.link | safe: 'resourceUrl'"></iframe> -->
           </div>
           <ion-card-header>
-            <ion-card-subtitle style="text-transform: none"
-              ><a [href]="card.link">{{ card.link }}</a></ion-card-subtitle
-            >
+            <ion-card-subtitle style="text-transform: none"><a [href]="card.link">{{ card.link }}</a>
+            </ion-card-subtitle>
             <ion-card-title>{{ card.name }}</ion-card-title>
           </ion-card-header>
           <ion-card-content>

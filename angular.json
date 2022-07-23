@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "internalapp-primeng": {
+    "mydea": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/internalapp-primeng",
+            "outputPath": "dist/mydea",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -110,10 +110,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "internalapp-primeng:build:production"
+              "browserTarget": "mydea:build:production"
             },
             "development": {
-              "browserTarget": "internalapp-primeng:build:development"
+              "browserTarget": "mydea:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -121,7 +121,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "internalapp-primeng:build"
+            "browserTarget": "mydea:build"
           }
         },
         "test": {
@@ -147,24 +147,24 @@
         "ionic-cordova-serve": {
           "builder": "@ionic/angular-toolkit:cordova-serve",
           "options": {
-            "cordovaBuildTarget": "internalapp-primeng:ionic-cordova-build",
-            "devServerTarget": "internalapp-primeng:serve"
+            "cordovaBuildTarget": "mydea:ionic-cordova-build",
+            "devServerTarget": "mydea:serve"
           },
           "configurations": {
             "production": {
-              "cordovaBuildTarget": "internalapp-primeng:ionic-cordova-build:production",
-              "devServerTarget": "internalapp-primeng:serve:production"
+              "cordovaBuildTarget": "mydea:ionic-cordova-build:production",
+              "devServerTarget": "mydea:serve:production"
             }
           }
         },
         "ionic-cordova-build": {
           "builder": "@ionic/angular-toolkit:cordova-build",
           "options": {
-            "browserTarget": "internalapp-primeng:build"
+            "browserTarget": "mydea:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "internalapp-primeng:build:production"
+              "browserTarget": "mydea:build:production"
             }
           }
         },
@@ -177,7 +177,7 @@
       }
     }
   },
-  "defaultProject": "internalapp-primeng",
+  "defaultProject": "mydea",
   "cli": {
     "defaultCollection": "@angular-eslint/schematics"
   }
