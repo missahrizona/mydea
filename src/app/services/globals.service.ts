@@ -33,7 +33,7 @@ export class GlobalsService {
 
   readonly envs: any = {
     dev: 'http://localhost:8080',
-    prod: 'https://girl-code-346204.uk.r.appspot.com',
+    prod: 'https://mydea-api.vercel.app',
   };
 
   readonly env =
